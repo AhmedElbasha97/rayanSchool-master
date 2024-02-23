@@ -7,11 +7,11 @@ class FileDetails {
     this.fileLink,
   });
 
-  String id;
-  String title;
-  DateTime date;
-  String fileDet;
-  String fileLink;
+  String? id;
+  String? title;
+  DateTime? date;
+  String? fileDet;
+  String? fileLink;
 
   factory FileDetails.fromJson(Map<String, dynamic> json) => FileDetails(
         id: json["id"],

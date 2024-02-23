@@ -9,7 +9,7 @@ import 'package:rayanSchool/services/appInfoService.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NewsDetailsScreen extends StatefulWidget {
-  final String id;
+  final String? id;
   NewsDetailsScreen({this.id});
   @override
   _NewsDetailsScreenState createState() => _NewsDetailsScreenState();
@@ -62,7 +62,7 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                         CarouselSlider(
                           options:
                               CarouselOptions(height: 150.0, autoPlay: true),
-                          items: news[index].images.map((i) {
+                          items: news[index].images?.map((i) {
                             return Builder(
                               builder: (BuildContext context) {
                                 return Container(
@@ -95,7 +95,7 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: AppBtn(
                                   label: AppLocalizations.of(context)
-                                      .translate('viewVideo'),
+                                      ?.translate('viewVideo')??"",
                                   onClick: () async {
                                     if (await canLaunch(
                                         "${news[index].video}")) {

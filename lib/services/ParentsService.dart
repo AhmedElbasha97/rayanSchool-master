@@ -20,7 +20,7 @@ class ParentService {
   String sentMessagesDetails = "${baseUrl}parent_msg_sent_view.php";
   String teachers = "${baseUrl}teachers_list.php";
 
-  Future<List<Report>> getReports({String id}) async {
+  Future<List<Report>> getReports({String? id}) async {
     List<Report> list = [];
     Response response;
     response = await Dio().get(
@@ -36,7 +36,7 @@ class ParentService {
   }
 
   Future<List<ReportDetails>> getReportDetails(
-      {String id, String reportId}) async {
+      {String? id, String? reportId}) async {
     List<ReportDetails> list = [];
     Response response;
     response = await Dio().get(
@@ -51,7 +51,7 @@ class ParentService {
     return list;
   }
 
-  Future<List<Attendance>> getAttendance({String id}) async {
+  Future<List<Attendance>> getAttendance({String? id}) async {
     List<Attendance> list = [];
     Response response;
     response = await Dio().get(
@@ -66,7 +66,7 @@ class ParentService {
     return list;
   }
 
-  Future<List<Messages>> getMessages({String id}) async {
+  Future<List<Messages>> getMessages({String? id}) async {
     List<Messages> list = [];
     Response response;
     response = await Dio().get(
@@ -81,7 +81,7 @@ class ParentService {
     return list;
   }
 
-  Future<List<MessageSentStudent>> getSentMessages({String id}) async {
+  Future<List<MessageSentStudent>> getSentMessages({String? id}) async {
     List<MessageSentStudent> list = [];
     Response response;
     response = await Dio().get(
@@ -97,7 +97,7 @@ class ParentService {
   }
 
   Future<List<MessageDetails>> getMessageDetails(
-      {String id, String msgId}) async {
+      {String? id, String? msgId}) async {
     List<MessageDetails> list = [];
     Response response;
     response = await Dio().get(
@@ -113,7 +113,7 @@ class ParentService {
   }
 
   Future<List<MessageDetailsStudent>> getSentMessageDetails(
-      {String id, String msgId}) async {
+      {String? id, String? msgId}) async {
     List<MessageDetailsStudent> list = [];
     Response response;
     response = await Dio().get(
@@ -129,11 +129,11 @@ class ParentService {
   }
 
   Future<String> sendMessage(
-      {String id,
-      String teacherId,
-      String msg,
-      String title,
-      String type}) async {
+      {String? id,
+      String? teacherId,
+      String? msg,
+      String? title,
+      String? type}) async {
     Response response;
     response = await Dio().post(
       "$sendMessageLink?parent_id=$id&sendto_type=$type&teacher_id=$teacherId&title=$title&text=$msg",

@@ -19,8 +19,8 @@ class _TeacherScheduleState extends State<TeacherSchedule> {
 
   getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String id = prefs.getString("id");
-    schedule = await TeacherScheduleService().getSchedule(id: id);
+    String? id = prefs.getString("id");
+    schedule = await TeacherScheduleService().getSchedule(id: id??"");
     isLoading = false;
     setState(() {});
   }

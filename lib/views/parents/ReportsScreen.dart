@@ -21,7 +21,7 @@ class _ReportScreenState extends State<ReportScreen> {
 
   getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String id = prefs.getString("id");
+    String? id = prefs.getString("id");
     reports = await ParentService().getReports(id: id);
     isLoading = false;
     setState(() {});

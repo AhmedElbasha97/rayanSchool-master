@@ -22,8 +22,8 @@ class _QuestionBankScreenState extends State<QuestionBankScreen> {
 
   getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String id = prefs.getString("id");
-    questions = await LoggedUser().getQuestions(id: id);
+    String? id = prefs.getString("id");
+    questions = await LoggedUser().getQuestions(id: id??"");
     isLoading = false;
     setState(() {});
   }
@@ -47,7 +47,7 @@ class _QuestionBankScreenState extends State<QuestionBankScreen> {
                       pushPage(
                           context,
                           QuestionDetailsScreen(
-                            id: questions[index].id,
+                            id: questions[index].id??"",
                           ));
                     },
                     child: HomeWorkCard(

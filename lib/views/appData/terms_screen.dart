@@ -19,7 +19,7 @@ class _TermsScreenState extends State<TermsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "${AppLocalizations.of(context).translate('terms')}",
+          "${AppLocalizations.of(context)?.translate('terms')}",
         ),
       ),
       body: Center(

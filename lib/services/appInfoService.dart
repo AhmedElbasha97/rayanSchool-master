@@ -88,7 +88,7 @@ class AppInfoService {
     return list;
   }
 
-  Future<List<SubjectDetails>> getSubjectDetails({String id}) async {
+  Future<List<SubjectDetails>> getSubjectDetails({String? id}) async {
     List<SubjectDetails> list = [];
     Response response;
     response = await Dio().get(
@@ -114,7 +114,7 @@ class AppInfoService {
     return list;
   }
 
-  Future<List<NewsDetails>> getNewsDetails({String id}) async {
+  Future<List<NewsDetails>> getNewsDetails({String? id}) async {
     List<NewsDetails> list = [];
     Response response;
     response = await Dio().get(

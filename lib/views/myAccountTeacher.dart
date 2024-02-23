@@ -26,7 +26,7 @@ class _MyAccountTeacherState extends State<MyAccountTeacher> {
                 pushPage(context, ReportScreen());
               },
               title: Text(
-                AppLocalizations.of(context).translate('reports'),
+                AppLocalizations.of(context)?.translate('reports')??"",
               ),
               trailing: Icon(Icons.book),
             ),
@@ -36,7 +36,7 @@ class _MyAccountTeacherState extends State<MyAccountTeacher> {
                 pushPage(context, SendReport());
               },
               title: Text(
-                AppLocalizations.of(context).translate('sendReport'),
+                AppLocalizations.of(context)?.translate('sendReport')??"",
               ),
               trailing: Icon(Icons.message),
             ),
@@ -46,7 +46,7 @@ class _MyAccountTeacherState extends State<MyAccountTeacher> {
                   pushPage(context, TeacherSchedule());
                 },
                 title: Text(
-                  AppLocalizations.of(context).translate('schedule'),
+                  AppLocalizations.of(context)?.translate('schedule')??"",
                 ),
                 trailing: Icon(Icons.timer)),
             Divider(),
@@ -55,7 +55,7 @@ class _MyAccountTeacherState extends State<MyAccountTeacher> {
                 pushPage(context, MessagesScreen());
               },
               title: Text(
-                AppLocalizations.of(context).translate('sentMessages'),
+                AppLocalizations.of(context)?.translate('sentMessages')??"",
               ),
               trailing: Icon(Icons.message),
             ),
@@ -65,7 +65,7 @@ class _MyAccountTeacherState extends State<MyAccountTeacher> {
                 pushPage(context, SendReport());
               },
               title: Text(
-                AppLocalizations.of(context).translate('homeWorks'),
+                AppLocalizations.of(context)?.translate('homeWorks')??"",
               ),
               trailing: Icon(Icons.message),
             ),
@@ -75,7 +75,7 @@ class _MyAccountTeacherState extends State<MyAccountTeacher> {
                 pushPage(context, QuestionBankScreen());
               },
               title: Text(
-                AppLocalizations.of(context).translate('questionsBank'),
+                AppLocalizations.of(context)?.translate('questionsBank')??"",
               ),
               trailing: Icon(Icons.help),
             ),

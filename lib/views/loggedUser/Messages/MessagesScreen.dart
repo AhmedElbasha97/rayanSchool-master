@@ -24,7 +24,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
 
   getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String id = prefs.getString("id");
+    String? id = prefs.getString("id");
     messages = widget.type != 1
         ? await ParentService().getMessages(
             id: id,
@@ -55,7 +55,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                           context,
                           MessageDetailsScreen(
                             type: widget.type,
-                            id: messages[index].msgId,
+                            id: messages[index].msgId??"",
                           ));
                     },
                     title: Text("${messages[index].title}"),

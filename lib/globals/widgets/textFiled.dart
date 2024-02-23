@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:rayanSchool/globals/commonStyles.dart';
 
 class InputFiled extends StatefulWidget {
-  final TextEditingController controller;
-  final String hintText;
+  final TextEditingController? controller;
+  final String? hintText;
   final TextInputType inputType;
   InputFiled(
       {this.controller, this.hintText, this.inputType = TextInputType.text});

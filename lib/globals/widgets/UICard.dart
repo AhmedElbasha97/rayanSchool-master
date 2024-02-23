@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class UICard extends StatefulWidget {
-  final Widget cardContent;
-  final Color borderColor;
+  final Widget? cardContent;
+  final Color? borderColor;
   UICard({this.cardContent, this.borderColor});
 
   @override

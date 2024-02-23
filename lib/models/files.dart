@@ -5,9 +5,9 @@ class Files {
     this.date,
   });
 
-  String id;
-  String title;
-  String date;
+  String? id;
+  String? title;
+  String? date;
 
   factory Files.fromJson(Map<String, dynamic> json) => Files(
         id: json["id"],

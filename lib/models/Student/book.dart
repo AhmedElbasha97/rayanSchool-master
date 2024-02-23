@@ -4,8 +4,8 @@ class Books {
     this.file,
   });
 
-  String title;
-  String file;
+  String? title;
+  String? file;
 
   factory Books.fromJson(Map<String, dynamic> json) => Books(
         title: json["title"] == null ? null : json["title"],

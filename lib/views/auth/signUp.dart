@@ -33,7 +33,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text(
-            "${AppLocalizations.of(context).translate('signUp')}",
+            "${AppLocalizations.of(context)?.translate('signUp')}",
             style: TextStyle(color: Colors.white),
           ),
           automaticallyImplyLeading: true,
@@ -50,7 +50,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   padding: EdgeInsets.only(
                       top: MediaQuery.of(context).padding.top + 20)),
               InputFiled(
-                hintText: "${AppLocalizations.of(context).translate('name')}",
+                hintText: "${AppLocalizations.of(context)?.translate('name')}",
                 controller: nameController,
                 inputType: TextInputType.text,
               ),
@@ -62,7 +62,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   : Container(),
               Padding(padding: EdgeInsets.only(top: 10)),
               InputFiled(
-                hintText: "${AppLocalizations.of(context).translate('email')}",
+                hintText: "${AppLocalizations.of(context)?.translate('email')}",
                 controller: emailController,
                 inputType: TextInputType.emailAddress,
               ),
@@ -75,7 +75,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Padding(padding: EdgeInsets.only(top: 10)),
               InputFiled(
                 hintText:
-                    "${AppLocalizations.of(context).translate('phoneNumber')}",
+                    "${AppLocalizations.of(context)?.translate('phoneNumber')}",
                 controller: phoneController,
                 inputType: TextInputType.phone,
               ),
@@ -88,7 +88,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Padding(padding: EdgeInsets.only(top: 10)),
               InputFiled(
                 hintText:
-                    "${AppLocalizations.of(context).translate('password')}",
+                    "${AppLocalizations.of(context)?.translate('password')}",
                 controller: passwordController,
                 inputType: TextInputType.text,
               ),
@@ -103,7 +103,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 onClick: () {
                   validate();
                 },
-                label: "${AppLocalizations.of(context).translate('login')}",
+                label: "${AppLocalizations.of(context)?.translate('login')}",
               ),
               Padding(
                   padding: EdgeInsets.only(

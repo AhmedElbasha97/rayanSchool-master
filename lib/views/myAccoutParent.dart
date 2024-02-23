@@ -26,7 +26,7 @@ class _MyAccountParentState extends State<MyAccountParent> {
                   pushPage(context, ReportScreen());
                 },
                 title: Text(
-                  AppLocalizations.of(context).translate('reports'),
+                  AppLocalizations.of(context)?.translate('reports')??"",
                 ),
                 trailing: Icon(Icons.book),
               ),
@@ -36,7 +36,7 @@ class _MyAccountParentState extends State<MyAccountParent> {
                     pushPage(context, AttendanceScreen());
                   },
                   title: Text(
-                    AppLocalizations.of(context).translate('attendance'),
+                    AppLocalizations.of(context)?.translate('attendance')??"",
                   ),
                   trailing: Icon(Icons.person)),
               Divider(),
@@ -49,7 +49,7 @@ class _MyAccountParentState extends State<MyAccountParent> {
                       ));
                 },
                 title: Text(
-                  AppLocalizations.of(context).translate('sentMessages'),
+                  AppLocalizations.of(context)?.translate('sentMessages')??"",
                 ),
                 trailing: Icon(Icons.message),
               ),
@@ -63,7 +63,7 @@ class _MyAccountParentState extends State<MyAccountParent> {
                       ));
                 },
                 title: Text(
-                  AppLocalizations.of(context).translate('messages'),
+                  AppLocalizations.of(context)?.translate('messages')??"",
                 ),
                 trailing: Icon(Icons.message),
               ),
@@ -77,7 +77,7 @@ class _MyAccountParentState extends State<MyAccountParent> {
                       ));
                 },
                 title: Text(
-                  AppLocalizations.of(context).translate('sendMessage'),
+                  AppLocalizations.of(context)?.translate('sendMessage')??"",
                 ),
                 trailing: Icon(Icons.message_rounded),
               ),

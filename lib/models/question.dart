@@ -5,9 +5,9 @@ class Question {
     this.date,
   });
 
-  String id;
-  String title;
-  String date;
+  String? id;
+  String? title;
+  String? date;
 
   factory Question.fromJson(Map<String, dynamic> json) => Question(
         id: json["id"],

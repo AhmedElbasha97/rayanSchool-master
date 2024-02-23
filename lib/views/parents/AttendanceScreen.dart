@@ -19,7 +19,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
 
   getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String id = prefs.getString("id");
+    String? id = prefs.getString("id");
     attendance = await ParentService().getAttendance(
       id: id,
     );

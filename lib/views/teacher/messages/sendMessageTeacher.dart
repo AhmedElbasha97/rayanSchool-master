@@ -19,7 +19,6 @@ class _SendMessageStudentScreenState extends State<SendMessageStudentScreen> {
   final _formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  TextEditingController _titleController = new TextEditingController();
   TextEditingController _msgController = new TextEditingController();
 
   FocusNode _titleNode = new FocusNode();
@@ -28,7 +27,7 @@ class _SendMessageStudentScreenState extends State<SendMessageStudentScreen> {
   String type = 'اختار المرسل له';
   String selected = "";
   List<Teachers> teachers = [];
-  Teachers selectedTeacher;
+  Teachers? selectedTeacher;
   Teachers selectTeacher = Teachers(name: "اختر مدرس");
 
   @override
@@ -47,19 +46,19 @@ class _SendMessageStudentScreenState extends State<SendMessageStudentScreen> {
   }
 
   sendMessage() async {
-    if (_formKey.currentState.validate()) {
+    if (_formKey.currentState!.validate()) {
       isLoading = true;
       setState(() {});
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      String id = prefs.getString("id");
-      String done = await TeacherService().sendMessages(id:id);
+      String? id = prefs.getString("id");
+      String done = await TeacherService().sendMessages(id:id??"");
       isLoading = false;
       setState(() {});
       if (done == "true") {
         pushPageReplacement(context, HomeScreen());
       } else {
         final snackBar = SnackBar(content: Text(done));
-        scaffoldKey.currentState.showSnackBar(snackBar);
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
       }
       popPage(context);
     }
@@ -90,7 +89,7 @@ class _SendMessageStudentScreenState extends State<SendMessageStudentScreen> {
                     Container(
                       width: MediaQuery.of(context).size.width * 0.8,
                       child: Text(
-                        AppLocalizations.of(context).translate('sendMessage'),
+                        AppLocalizations.of(context)?.translate('sendMessage')??"",
                         style: TextStyle(fontSize: 17),
                         textAlign: TextAlign.center,
                       ),
@@ -107,7 +106,7 @@ class _SendMessageStudentScreenState extends State<SendMessageStudentScreen> {
                           prefixIcon: Icon(Icons.message),
                           counterText: "",
                           hintText:
-                              AppLocalizations.of(context).translate('title'),
+                              AppLocalizations.of(context)?.translate('title'),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                                 color: Color(0xFF184e7a), width: 2.0),
@@ -120,9 +119,9 @@ class _SendMessageStudentScreenState extends State<SendMessageStudentScreen> {
                           ),
                         ),
                         validator: (value) {
-                          if (value.length < 1) {
+                          if (value!.length < 1) {
                             return AppLocalizations.of(context)
-                                .translate('titleError');
+                                ?.translate('titleError');
                           }
                           return null;
                         },
@@ -141,7 +140,7 @@ class _SendMessageStudentScreenState extends State<SendMessageStudentScreen> {
                           prefixIcon: Icon(Icons.message_rounded),
                           counterText: "",
                           hintText:
-                              AppLocalizations.of(context).translate('message'),
+                              AppLocalizations.of(context)?.translate('message'),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                                 color: Color(0xFF184e7a), width: 2.0),
@@ -154,9 +153,9 @@ class _SendMessageStudentScreenState extends State<SendMessageStudentScreen> {
                           ),
                         ),
                         validator: (value) {
-                          if (value.length < 1) {
+                          if (value!.length < 1) {
                             return AppLocalizations.of(context)
-                                .translate('MessageError');
+                                ?.translate('MessageError');
                           }
                           return null;
                         },
@@ -182,7 +181,7 @@ class _SendMessageStudentScreenState extends State<SendMessageStudentScreen> {
                           );
                         }).toList(),
                         onChanged: (value) {
-                          type = value;
+                          type = value!;
                           selected = type == 'مدرس' ? "teacher" : "admin";
                           setState(() {});
                         },
@@ -203,7 +202,7 @@ class _SendMessageStudentScreenState extends State<SendMessageStudentScreen> {
                                 );
                               }).toList(),
                               onChanged: (value) {
-                                selectTeacher = value;
+                                selectTeacher = value!;
                                 selectedTeacher = value;
                                 setState(() {});
                               },
@@ -225,7 +224,7 @@ class _SendMessageStudentScreenState extends State<SendMessageStudentScreen> {
                                     BorderRadius.all(Radius.circular(10))),
                             alignment: Alignment.center,
                             child: Text(
-                              AppLocalizations.of(context).translate('send'),
+                              AppLocalizations.of(context)?.translate('send')??"",
                               style: TextStyle(color: Colors.white),
                             ),
                           ),

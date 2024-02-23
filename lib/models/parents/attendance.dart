@@ -4,8 +4,8 @@ class Attendance {
     this.status,
   });
 
-  DateTime date;
-  String status;
+  DateTime? date;
+  String? status;
 
   factory Attendance.fromJson(Map<String, dynamic> json) => Attendance(
         date: DateTime.parse(json["date"]),

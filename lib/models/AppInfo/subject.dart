@@ -4,8 +4,8 @@ class Subjects {
     this.miName,
   });
 
-  String id;
-  String miName;
+  String? id;
+  String? miName;
 
   factory Subjects.fromJson(Map<String, dynamic> json) => Subjects(
         id: json["id"],

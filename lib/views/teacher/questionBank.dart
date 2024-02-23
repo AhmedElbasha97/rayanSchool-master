@@ -20,8 +20,8 @@ class _QuestionBankScreenState extends State<QuestionBankScreen> {
 
   getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String id = prefs.getString("id");
-    questions = await TeacherService().getQuestionBank(id: id);
+    String? id = prefs.getString("id");
+    questions = await TeacherService().getQuestionBank(id: id??"");
     isLoading = false;
     setState(() {});
   }

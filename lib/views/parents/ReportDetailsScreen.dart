@@ -5,7 +5,7 @@ import 'package:rayanSchool/services/ParentsService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ReportsDetailScreen extends StatefulWidget {
-  final String id;
+  final String? id;
   ReportsDetailScreen({this.id});
   @override
   _ReportsDetailScreenState createState() => _ReportsDetailScreenState();
@@ -22,7 +22,7 @@ class _ReportsDetailScreenState extends State<ReportsDetailScreen> {
 
   getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String id = prefs.getString("id");
+    String? id = prefs.getString("id");
     reports =
         await ParentService().getReportDetails(id: id, reportId: widget.id);
     isLoading = false;

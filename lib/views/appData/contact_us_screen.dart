@@ -31,15 +31,15 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
   }
 
   sendMessage() async {
-    if (_formKey.currentState.validate()) {
+    if (_formKey.currentState!.validate()) {
       isLoading = true;
       setState(() {});
       await ContactUsService().sendComplain(
-          _nameController.text ?? "",
-          _msgController.text ?? "",
-          _emailController.text ?? "",
+          _nameController.text,
+          _msgController.text,
+          _emailController.text,
           "",
-          _phoneController.text ?? "");
+          _phoneController.text);
       isLoading = false;
       setState(() {});
       popPage(context);
@@ -66,7 +66,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            "${AppLocalizations.of(context).translate('callUs')}",
+            "${AppLocalizations.of(context)?.translate('callUs')??''}",
           ),
           automaticallyImplyLeading: true,
         ),
@@ -78,7 +78,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
               Container(
                 width: MediaQuery.of(context).size.width * 0.8,
                 child: Text(
-                  AppLocalizations.of(context).translate('complaientMsg'),
+                  AppLocalizations.of(context)?.translate('complaientMsg')??"",
                   style: TextStyle(fontSize: 17),
                   textAlign: TextAlign.center,
                 ),
@@ -95,7 +95,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.people),
                     counterText: "",
-                    hintText: AppLocalizations.of(context).translate('name'),
+                    hintText: AppLocalizations.of(context)?.translate('name')??"",
                     focusedBorder: OutlineInputBorder(
                       borderSide:
                           BorderSide(color: Color(0xFF184e7a), width: 2.0),
@@ -108,9 +108,9 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                     ),
                   ),
                   validator: (value) {
-                    if (value.length < 1) {
+                    if (value!.length < 1) {
                       return AppLocalizations.of(context)
-                          .translate('nameError');
+                          ?.translate('nameError')??"";
                     }
                     return null;
                   },
@@ -129,7 +129,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                     prefixIcon: Icon(Icons.phone),
                     counterText: "",
                     hintText:
-                        AppLocalizations.of(context).translate('phoneNumber'),
+                        AppLocalizations.of(context)?.translate('phoneNumber')??"",
                     focusedBorder: OutlineInputBorder(
                       borderSide:
                           BorderSide(color: Color(0xFF184e7a), width: 2.0),
@@ -142,9 +142,9 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                     ),
                   ),
                   validator: (value) {
-                    if (value.length < 1) {
+                    if (value!.length < 1) {
                       return AppLocalizations.of(context)
-                          .translate('phoneError');
+                          ?.translate('phoneError')??"";
                     }
                     return null;
                   },
@@ -162,7 +162,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.email),
                     counterText: "",
-                    hintText: AppLocalizations.of(context).translate('email'),
+                    hintText: AppLocalizations.of(context)?.translate('email')??"",
                     focusedBorder: OutlineInputBorder(
                       borderSide:
                           BorderSide(color: Color(0xFF184e7a), width: 2.0),
@@ -175,9 +175,9 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                     ),
                   ),
                   validator: (value) {
-                    if (value == "" || emailvalidator(value) == false) {
+                    if (value == "" || emailvalidator(value!) == false) {
                       return AppLocalizations.of(context)
-                          .translate('emailError');
+                          ?.translate('emailError')??"";
                     }
                     return null;
                   },
@@ -188,9 +188,9 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
               ),
               TextFormField(
                   validator: (value) {
-                    if (value.length < 2) {
+                    if (value!.length < 2) {
                       return AppLocalizations.of(context)
-                          .translate('MessageError');
+                          ?.translate('MessageError')??"";
                     }
                     return null;
                   },
@@ -199,7 +199,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                   maxLines: 4,
                   textAlign: TextAlign.right,
                   decoration: InputDecoration(
-                    hintText: AppLocalizations.of(context).translate('typeMsg'),
+                    hintText: AppLocalizations.of(context)?.translate('typeMsg')??"",
                     focusedBorder: OutlineInputBorder(
                       borderSide:
                           BorderSide(color: Color(0xFF184e7a), width: 2.0),
@@ -229,7 +229,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                           borderRadius: BorderRadius.all(Radius.circular(10))),
                       alignment: Alignment.center,
                       child: Text(
-                        AppLocalizations.of(context).translate('send'),
+                        AppLocalizations.of(context)?.translate('send')??"",
                         style: TextStyle(color: Colors.white),
                       ),
                     ),

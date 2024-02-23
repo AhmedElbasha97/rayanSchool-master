@@ -100,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    AppLocalizations.of(context).translate('aboutTheSchool'),
+                    AppLocalizations.of(context)?.translate('aboutTheSchool')??"",
                     style: appText.copyWith(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
@@ -122,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           pushPage(context, SchoolWord());
                         },
                         title:
-                            "${AppLocalizations.of(context).translate('schoolWord')}",
+                            "${AppLocalizations.of(context)?.translate('schoolWord')}",
                         imageLink: "assets/images/school.png",
                       ),
                       // HomeCard(
@@ -146,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ));
                         },
                         title:
-                            "${AppLocalizations.of(context).translate('schoolVision')}",
+                            "${AppLocalizations.of(context)?.translate('schoolVision')}",
                         imageLink: "assets/images/vision.png",
                       ),
                     ],
@@ -159,7 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    AppLocalizations.of(context).translate('news'),
+                    AppLocalizations.of(context)?.translate('news')??"",
                     style: appText.copyWith(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
@@ -182,7 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           pushPage(context, SchoolWord());
                         },
                         title:
-                            "${AppLocalizations.of(context).translate('activity')}",
+                            "${AppLocalizations.of(context)?.translate('activity')}",
                         imageLink: "assets/images/activities.png",
                       ),
                       HomeCard(
@@ -191,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           pushPage(context, SchoolWord());
                         },
                         title:
-                            "${AppLocalizations.of(context).translate('newNews')}",
+                            "${AppLocalizations.of(context)?.translate('newNews')}",
                         imageLink: "assets/images/newNews.png",
                       ),
                     ],
@@ -205,7 +205,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    AppLocalizations.of(context).translate('PhotosAlbum'),
+                    AppLocalizations.of(context)?.translate('PhotosAlbum')??"",
                     style: appText.copyWith(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
@@ -243,7 +243,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    AppLocalizations.of(context).translate('videosAlbum'),
+                    AppLocalizations.of(context)?.translate('videosAlbum')??"",
                     style: appText.copyWith(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,

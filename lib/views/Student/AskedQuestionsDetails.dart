@@ -5,7 +5,7 @@ import 'package:rayanSchool/services/loggedUser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AskedQuestionsDetailsScreen extends StatefulWidget {
-  final String id;
+  final String? id;
   AskedQuestionsDetailsScreen({this.id});
   @override
   _AskedQuestionsDetailsScreenState createState() =>
@@ -24,7 +24,7 @@ class _AskedQuestionsDetailsScreenState
 
   getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String id = prefs.getString("id");
+    String? id = prefs.getString("id");
     details = await LoggedUser()
         .getAskedQuestionsDetails(id: id, qid: widget.id ?? "");
     isLoading = false;

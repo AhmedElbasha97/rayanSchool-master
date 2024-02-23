@@ -22,7 +22,7 @@ class LoggedUser {
   String books = "${baseUrl}student_books.php";
   String askedQuestions = "${baseUrl}student_ask_income.php";
   String askedQuestionsDetails = "${baseUrl}student_ask_income_view.php";
-  Future<List<Files>> getFiles({String id}) async {
+  Future<List<Files>> getFiles({String? id}) async {
     List<Files> list = [];
     Response response;
     response = await Dio().get(
@@ -37,7 +37,7 @@ class LoggedUser {
     return list;
   }
 
-  Future<List<ImportantFile>> getImportantFiles({String id}) async {
+  Future<List<ImportantFile>> getImportantFiles({String? id}) async {
     List<ImportantFile> list = [];
     Response response;
     response = await Dio().get(
@@ -52,7 +52,7 @@ class LoggedUser {
     return list;
   }
 
-  Future<List<FileDetails>> getFilesDetails({String id, String fileID}) async {
+  Future<List<FileDetails>> getFilesDetails({String? id, String? fileID}) async {
     List<FileDetails> list = [];
     Response response;
     response = await Dio().get(
@@ -67,7 +67,7 @@ class LoggedUser {
     return list;
   }
 
-  Future<List<HomeWork>> getHomeWorks({String id}) async {
+  Future<List<HomeWork>> getHomeWorks({String? id}) async {
     List<HomeWork> list = [];
     Response response;
     response = await Dio().get(
@@ -83,7 +83,7 @@ class LoggedUser {
   }
 
   Future<List<HomeWorkDetails>> gethomeWorkDetails(
-      {String id, String homeWorkId}) async {
+      {String? id, String? homeWorkId}) async {
     List<HomeWorkDetails> list = [];
     Response response;
     response = await Dio().get(
@@ -98,7 +98,7 @@ class LoggedUser {
     return list;
   }
 
-  Future<List<Question>> getQuestions({String id}) async {
+  Future<List<Question>> getQuestions({String? id}) async {
     List<Question> list = [];
     Response response;
     response = await Dio().get(
@@ -114,7 +114,7 @@ class LoggedUser {
   }
 
   Future<List<QuestionDetails>> getQuestionsDetails(
-      {String id, String qId}) async {
+      {String? id, String? qId}) async {
     List<QuestionDetails> list = [];
     Response response;
     response = await Dio().get(
@@ -129,7 +129,7 @@ class LoggedUser {
     return list;
   }
 
-  Future<List<Books>> getBooks({String id}) async {
+  Future<List<Books>> getBooks({String? id}) async {
     List<Books> list = [];
     Response response;
     response = await Dio().get(
@@ -144,7 +144,7 @@ class LoggedUser {
     return list;
   }
 
-  Future<List<AskedQuestion>> getAskedQuestions({String id}) async {
+  Future<List<AskedQuestion>> getAskedQuestions({String? id}) async {
     List<AskedQuestion> list = [];
     Response response;
     response = await Dio().get(
@@ -160,7 +160,7 @@ class LoggedUser {
   }
 
   Future<List<AskedQuestionDetails>> getAskedQuestionsDetails(
-      {String id, String qid}) async {
+      {String? id, String? qid}) async {
     List<AskedQuestionDetails> list = [];
     Response response;
     response = await Dio().get(

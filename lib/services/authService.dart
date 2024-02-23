@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AuthService {
   String loginLink = "${baseUrl}login.php";
 
-  Future<String> login({String userName, String type, String password}) async {
+  Future<String> login({String? userName, String? type, String? password}) async {
     String message = "";
     Response response;
     response = await Dio().get(

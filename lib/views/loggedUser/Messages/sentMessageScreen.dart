@@ -25,7 +25,7 @@ class _SentMessagesScreenState extends State<SentMessagesScreen> {
 
   getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String id = prefs.getString("id");
+    String? id = prefs.getString("id");
     messages = widget.type != 1
         ? await ParentService().getSentMessages(
             id: id,

@@ -53,9 +53,9 @@ class _AlbumsScreenState extends State<AlbumsScreen> {
                             pushPage(
                                 context,
                                 PhotosAlbum(
-                                  id: list[index].id,
+                                  id: list[index].id??"",
                                   isImg: widget.isImg,
-                                  title: list[index].title,
+                                  title: list[index].title??"",
                                 ));
                           } else {
                             if (widget.isImg == false) {

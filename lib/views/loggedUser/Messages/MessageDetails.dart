@@ -25,7 +25,7 @@ class _MessageDetailsScreenState extends State<MessageDetailsScreen> {
 
   getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String id = prefs.getString("id");
+    String? id = prefs.getString("id");
     msg = widget.type != 1
         ? await ParentService().getMessageDetails(id: id, msgId: widget.id)
         : await MessagesService().getMessageDetails(id: id, msgId: widget.id);

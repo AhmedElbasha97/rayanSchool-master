@@ -6,10 +6,10 @@ class MessageDetailsTeacherModel {
     this.date,
   });
 
-  String to;
-  String title;
-  String text;
-  String date;
+  String? to;
+  String? title;
+  String? text;
+  String? date;
 
   factory MessageDetailsTeacherModel.fromJson(Map<String, dynamic> json) =>
       MessageDetailsTeacherModel(

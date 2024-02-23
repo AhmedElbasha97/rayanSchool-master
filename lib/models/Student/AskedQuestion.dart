@@ -6,10 +6,10 @@ class AskedQuestion {
     this.date,
   });
 
-  String msgId;
-  String from;
-  String title;
-  DateTime date;
+  String? msgId;
+  String? from;
+  String? title;
+  DateTime? date;
 
   factory AskedQuestion.fromJson(Map<String, dynamic> json) => AskedQuestion(
         msgId: json["msg_id"] == null ? null : json["msg_id"],

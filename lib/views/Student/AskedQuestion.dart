@@ -21,7 +21,7 @@ class _AskedQuestionsState extends State<AskedQuestions> {
 
   getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String id = prefs.getString("id");
+    String? id = prefs.getString("id");
     question = await LoggedUser().getAskedQuestions(id: id);
     isLoading = false;
     setState(() {});
@@ -45,7 +45,7 @@ class _AskedQuestionsState extends State<AskedQuestions> {
                       pushPage(
                           context,
                           AskedQuestionsDetailsScreen(
-                              id: question[index].msgId));
+                              id: question[index].msgId??""));
                     },
                     title: Text("${question[index].title}"),
                   ),

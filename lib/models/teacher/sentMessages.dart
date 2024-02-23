@@ -6,10 +6,10 @@ class SentMessagesTeacher {
     this.date,
   });
 
-  String msgId;
-  String to;
-  String title;
-  String date;
+  String? msgId;
+  String? to;
+  String? title;
+  String? date;
 
   factory SentMessagesTeacher.fromJson(Map<String, dynamic> json) =>
       SentMessagesTeacher(

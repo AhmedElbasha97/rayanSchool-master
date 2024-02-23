@@ -4,7 +4,7 @@ import 'package:rayanSchool/models/AppInfo/subjectDetails.dart';
 import 'package:rayanSchool/services/appInfoService.dart';
 
 class SubjectDetailsScreen extends StatefulWidget {
-  final String id;
+  final String? id;
   SubjectDetailsScreen({this.id});
   @override
   _SubjectDetailsScreenState createState() => _SubjectDetailsScreenState();

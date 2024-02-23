@@ -11,7 +11,7 @@ class Schedule {
     this.class8,
   });
 
-  String day;
+  String? day;
   dynamic class1;
   dynamic class2;
   dynamic class3;

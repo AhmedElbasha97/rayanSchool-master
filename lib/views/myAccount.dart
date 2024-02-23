@@ -31,7 +31,7 @@ class _MyAccountState extends State<MyAccount> {
                 pushPage(context, HomeWorkScreen());
               },
               title: Text(
-                AppLocalizations.of(context).translate('homeWorks'),
+                AppLocalizations.of(context)?.translate('homeWorks')??"",
               ),
               trailing: Icon(Icons.book),
             ),
@@ -41,7 +41,7 @@ class _MyAccountState extends State<MyAccount> {
                 pushPage(context, QuestionBankScreen());
               },
               title: Text(
-                AppLocalizations.of(context).translate('questionsBank'),
+                AppLocalizations.of(context)?.translate('questionsBank')??"",
               ),
               trailing: Icon(Icons.help),
             ),
@@ -51,7 +51,7 @@ class _MyAccountState extends State<MyAccount> {
                 pushPage(context, FilesScreen());
               },
               title: Text(
-                AppLocalizations.of(context).translate('files'),
+                AppLocalizations.of(context)?.translate('files')??"",
               ),
               trailing: Icon(Icons.file_present),
             ),
@@ -61,7 +61,7 @@ class _MyAccountState extends State<MyAccount> {
                 pushPage(context, FilesImportantScreen());
               },
               title: Text(
-                AppLocalizations.of(context).translate('impProg'),
+                AppLocalizations.of(context)?.translate('impProg')??"",
               ),
               trailing: Icon(Icons.file_present),
             ),
@@ -71,7 +71,7 @@ class _MyAccountState extends State<MyAccount> {
                 pushPage(context, SendMessageStudentScreen());
               },
               title: Text(
-                AppLocalizations.of(context).translate('sendMessage'),
+                AppLocalizations.of(context)?.translate('sendMessage')??"",
               ),
               trailing: Icon(Icons.message_rounded),
             ),
@@ -79,7 +79,7 @@ class _MyAccountState extends State<MyAccount> {
             ListTile(
               onTap: () {},
               title: Text(
-                AppLocalizations.of(context).translate('results'),
+                AppLocalizations.of(context)?.translate('results')??"",
               ),
               trailing: Icon(Icons.check_box),
             ),
@@ -89,7 +89,7 @@ class _MyAccountState extends State<MyAccount> {
                 pushPage(context, AskedQuestions());
               },
               title: Text(
-                AppLocalizations.of(context).translate('questionsStudent'),
+                AppLocalizations.of(context)?.translate('questionsStudent')??"",
               ),
               trailing: Icon(Icons.help_center),
             ),
@@ -99,7 +99,7 @@ class _MyAccountState extends State<MyAccount> {
                 pushPage(context, BooksScreen());
               },
               title: Text(
-                AppLocalizations.of(context).translate('booksnref'),
+                AppLocalizations.of(context)?.translate('booksnref')??"",
               ),
               trailing: Icon(Icons.book),
             ),
@@ -109,7 +109,7 @@ class _MyAccountState extends State<MyAccount> {
                 pushPage(context, MessagesScreen());
               },
               title: Text(
-                AppLocalizations.of(context).translate('messages'),
+                AppLocalizations.of(context)?.translate('messages')??"",
               ),
               trailing: Icon(Icons.message),
             ),
@@ -119,7 +119,7 @@ class _MyAccountState extends State<MyAccount> {
                 pushPage(context, SentMessagesScreen());
               },
               title: Text(
-                AppLocalizations.of(context).translate('sentMessages'),
+                AppLocalizations.of(context)?.translate('sentMessages')??"",
               ),
               trailing: Icon(Icons.message),
             ),
@@ -127,7 +127,7 @@ class _MyAccountState extends State<MyAccount> {
             ListTile(
                 onTap: () {},
                 title: Text(
-                  AppLocalizations.of(context).translate('schedule'),
+                  AppLocalizations.of(context)?.translate('schedule')??"",
                 ),
                 trailing: Icon(Icons.timer)),
             Divider(),

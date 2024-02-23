@@ -6,10 +6,10 @@ class AskedQuestionDetails {
     this.date,
   });
 
-  String from;
-  String title;
-  String text;
-  DateTime date;
+  String? from;
+  String? title;
+  String? text;
+  DateTime? date;
 
   factory AskedQuestionDetails.fromJson(Map<String, dynamic> json) =>
       AskedQuestionDetails(

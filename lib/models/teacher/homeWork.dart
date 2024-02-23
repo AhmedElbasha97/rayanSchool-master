@@ -6,10 +6,10 @@ class HomeWorkTeacher {
     this.homeWorkTeacherClass,
   });
 
-  String id;
-  String title;
-  String date;
-  String homeWorkTeacherClass;
+  String? id;
+  String? title;
+  String? date;
+  String? homeWorkTeacherClass;
 
   factory HomeWorkTeacher.fromJson(Map<String, dynamic> json) =>
       HomeWorkTeacher(

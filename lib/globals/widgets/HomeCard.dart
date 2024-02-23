@@ -3,10 +3,10 @@ import 'package:rayanSchool/globals/widgets/UICard.dart';
 
 class HomeCard extends StatefulWidget {
   final Function onTap;
-  final String title;
-  final String imageLink;
-  final double width;
-  HomeCard({this.imageLink, this.onTap, this.title, this.width = 130});
+  final String? title;
+  final String? imageLink;
+  final double? width;
+  HomeCard({this.imageLink, required this.onTap, this.title, this.width = 130});
   @override
   _HomeCardState createState() => _HomeCardState();
 }
@@ -20,7 +20,7 @@ class _HomeCardState extends State<HomeCard> {
         width: widget.width,
         height: 100,
         child: InkWell(
-          onTap: widget.onTap,
+          onTap: (){widget.onTap();},
           child: UICard(
             cardContent: Container(
               height: 80,

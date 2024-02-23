@@ -6,10 +6,10 @@ class QuestionBankTeacher {
     this.questionBankTeacherClass,
   });
 
-  String id;
-  String title;
-  String date;
-  String questionBankTeacherClass;
+  String? id;
+  String? title;
+  String? date;
+  String? questionBankTeacherClass;
 
   factory QuestionBankTeacher.fromJson(Map<String, dynamic> json) =>
       QuestionBankTeacher(

@@ -22,8 +22,8 @@ class _FilesScreenState extends State<FilesScreen> {
 
   getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String id = prefs.getString("id");
-    files = await LoggedUser().getFiles(id: id);
+    String? id = prefs.getString("id");
+    files = await LoggedUser().getFiles(id: id??"");
     isLoading = false;
     setState(() {});
   }
@@ -47,7 +47,7 @@ class _FilesScreenState extends State<FilesScreen> {
                       pushPage(
                           context,
                           FileDetailsScreen(
-                            id: files[index].id,
+                            id: files[index].id??"",
                           ));
                     },
                     child: HomeWorkCard(

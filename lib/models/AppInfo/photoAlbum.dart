@@ -5,9 +5,9 @@ class PhotoAlbum {
     this.img,
   });
 
-  String id;
-  String title;
-  String img;
+  String? id;
+  String? title;
+  String? img;
 
   factory PhotoAlbum.fromJson(Map<String, dynamic> json) => PhotoAlbum(
         id: json["id"],

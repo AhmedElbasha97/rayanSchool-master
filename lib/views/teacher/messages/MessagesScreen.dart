@@ -21,9 +21,9 @@ class _MessagesScreenState extends State<MessagesScreen> {
 
   getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String id = prefs.getString("id");
+    String? id = prefs.getString("id");
     messages = await TeacherService().getSentMessages(
-      id: id,
+      id: id??"",
     );
     isLoading = false;
     setState(() {});

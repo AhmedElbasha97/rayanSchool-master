@@ -36,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text(
-            "${AppLocalizations.of(context).translate('login')}",
+            "${AppLocalizations.of(context)?.translate('login')}",
           ),
           automaticallyImplyLeading: true,
         ),
@@ -57,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Padding(padding: EdgeInsets.only(top: 10)),
               InputFiled(
                 hintText:
-                    "${AppLocalizations.of(context).translate('userName')}",
+                    "${AppLocalizations.of(context)?.translate('userName')}",
                 controller: usernameController,
               ),
               usernameError
@@ -69,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Padding(padding: EdgeInsets.only(top: 10)),
               InputFiled(
                 hintText:
-                    "${AppLocalizations.of(context).translate('password')}",
+                    "${AppLocalizations.of(context)?.translate('password')}",
                 controller: passwordController,
                 inputType: TextInputType.text,
               ),
@@ -103,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         : value == "مدرس"
                             ? "TEACHER"
                             : "STUDENT";
-                    selectedType = value;
+                    selectedType = value!;
                     setState(() {});
                   },
                 ),
@@ -121,11 +121,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       pushPageReplacement(context, HomeScreen());
                     } else {
                       final snackBar = SnackBar(content: Text(msg));
-                      scaffoldKey.currentState.showSnackBar(snackBar);
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
                     }
                   }
                 },
-                label: "${AppLocalizations.of(context).translate('login')}",
+                label: "${AppLocalizations.of(context)?.translate('login')}",
               ),
               Padding(
                   padding: EdgeInsets.only(

@@ -5,9 +5,9 @@ class Photo {
     this.img,
   });
 
-  String id;
-  String title;
-  String img;
+  String? id;
+  String? title;
+  String? img;
 
   factory Photo.fromJson(Map<String, dynamic> json) => Photo(
         id: json["id"],

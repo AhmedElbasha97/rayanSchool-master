@@ -8,9 +8,9 @@ import 'package:url_launcher/url_launcher.dart';
 Widget changeLangPopUp(BuildContext context) {
   var appLanguage = Provider.of<AppLanguage>(context);
   return CupertinoActionSheet(
-    title: new Text('${AppLocalizations.of(context).translate('language')}'),
+    title: new Text('${AppLocalizations.of(context)?.translate('language')}'),
     message:
-        new Text('${AppLocalizations.of(context).translate('changeLanguage')}'),
+        new Text('${AppLocalizations.of(context)?.translate('changeLanguage')}'),
     actions: <Widget>[
       CupertinoActionSheetAction(
         child: new Text('English'),
@@ -67,31 +67,41 @@ bool emailvalidator(String email) {
 ////////////////////////////////////////////////
 
 void showTheDialog(BuildContext context, String title, String body,
-    {Widget extraAction}) {
+    {required Widget extraAction}) {
   showDialog(
     barrierDismissible: false,
     context: context,
     builder: (BuildContext context) {
       List<Widget> actions = [];
       actions.add(
-        new FlatButton(
-          child: new Text(AppLocalizations.of(context).translate('back')),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
+
+       TextButton(
+      style: TextButton.styleFrom(
+      minimumSize: Size(200, 100),
+      backgroundColor: Colors.grey,
+      padding: EdgeInsets.all(0),
+      ),
+      child: new Text(AppLocalizations.of(context)?.translate('back')??""),
+      onPressed: () {
+      Navigator.of(context).pop();
+      },
+      )
+
       );
+      // ignore: unnecessary_null_comparison
       if (extraAction != null) {
         actions.add(extraAction);
       }
       return AlertDialog(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(15))),
+        // ignore: unnecessary_null_comparison
         title: new Text(title == null ? "" : title),
         content: Container(
           height: MediaQuery.of(context).size.height * 0.1,
           child: Column(
             children: <Widget>[
+              // ignore: unnecessary_null_comparison
               new Text(body == null ? "" : body),
             ],
           ),

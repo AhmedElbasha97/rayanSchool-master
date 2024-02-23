@@ -5,9 +5,9 @@ class AboutSchool {
     this.image,
   });
 
-  String title;
-  String description;
-  String image;
+  String? title;
+  String? description;
+  String? image;
 
   factory AboutSchool.fromJson(Map<String, dynamic> json) => AboutSchool(
         title: json["title"],

@@ -5,9 +5,9 @@ class News {
     this.brief,
   });
 
-  String id;
-  String title;
-  String brief;
+  String? id;
+  String? title;
+  String? brief;
 
   factory News.fromJson(Map<String, dynamic> json) => News(
         id: json["id"] == null ? null : json["id"],

@@ -25,9 +25,9 @@ class _HomeWorkDetailsScreenState extends State<HomeWorkDetailsScreen> {
 
   getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String id = prefs.getString("id");
+    String? id = prefs.getString("id");
     homework = await TeacherService()
-        .getHomeworkDetails(id: id, homeworkId: widget.id);
+        .getHomeworkDetails(id: id??"", homeworkId: widget.id);
     isLoading = false;
     setState(() {});
   }
@@ -60,7 +60,7 @@ class _HomeWorkDetailsScreenState extends State<HomeWorkDetailsScreen> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: AppBtn(
                                   label: AppLocalizations.of(context)
-                                      .translate('download'),
+                                      ?.translate('download')??"",
                                   onClick: () async {
                                     if (await canLaunch(
                                         "${homework[index].homeworkFile}")) {

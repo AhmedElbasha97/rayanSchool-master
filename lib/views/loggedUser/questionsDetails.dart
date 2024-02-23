@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class QuestionDetailsScreen extends StatefulWidget {
-  final String id;
+  final String? id;
   QuestionDetailsScreen({this.id});
   @override
   _QuestionDetailsScreenState createState() => _QuestionDetailsScreenState();
@@ -25,7 +25,7 @@ class _QuestionDetailsScreenState extends State<QuestionDetailsScreen> {
 
   getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String id = prefs.getString("id");
+    String? id = prefs.getString("id");
     qustions =
         await LoggedUser().getQuestionsDetails(id: id, qId: widget.id ?? "");
     isLoading = false;
@@ -59,7 +59,7 @@ class _QuestionDetailsScreenState extends State<QuestionDetailsScreen> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: AppBtn(
                                   label: AppLocalizations.of(context)
-                                      .translate('download'),
+                                      ?.translate('download')??"",
                                   onClick: () async {
                                     if (await canLaunch(
                                         "${qustions[index].fileLink}")) {

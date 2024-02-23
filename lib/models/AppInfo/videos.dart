@@ -7,9 +7,9 @@ class Videos {
   });
 
   dynamic id;
-  String title;
-  String img;
-  String link;
+  String? title;
+  String? img;
+  String? link;
 
   factory Videos.fromJson(Map<String, dynamic> json) => Videos(
         id: json["id"],

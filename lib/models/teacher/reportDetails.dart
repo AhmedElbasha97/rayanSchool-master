@@ -6,10 +6,10 @@ class TeacherReportDetails {
     this.text,
   });
 
-  String reportId;
-  String student;
-  String date;
-  String text;
+  String? reportId;
+  String? student;
+  String? date;
+  String? text;
 
   factory TeacherReportDetails.fromJson(Map<String, dynamic> json) =>
       TeacherReportDetails(

@@ -8,12 +8,12 @@ class HomeWorkDetails {
     this.homeworkFile,
   });
 
-  String id;
-  String title;
-  DateTime date;
+  String? id;
+  String? title;
+  DateTime? date;
   dynamic teacherName;
-  String homeworkDet;
-  String homeworkFile;
+  String? homeworkDet;
+  String? homeworkFile;
 
   factory HomeWorkDetails.fromJson(Map<String, dynamic> json) =>
       HomeWorkDetails(

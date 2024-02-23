@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SentMessageDetails extends StatefulWidget {
   final int type;
-  final String id;
+  final String? id;
   SentMessageDetails({this.id, this.type = 1});
   @override
   _SentMessageDetailsState createState() => _SentMessageDetailsState();
@@ -24,7 +24,7 @@ class _SentMessageDetailsState extends State<SentMessageDetails> {
 
   getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String id = prefs.getString("id");
+    String? id = prefs.getString("id");
     msg = widget.type != 1
         ? await ParentService().getSentMessageDetails(id: id, msgId: widget.id)
         : await MessagesService()

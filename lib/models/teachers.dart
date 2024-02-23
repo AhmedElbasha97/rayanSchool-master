@@ -6,10 +6,10 @@ class Teachers {
     this.email,
   });
 
-  String id;
-  String name;
-  String phone;
-  String email;
+  String? id;
+  String? name;
+  String? phone;
+  String? email;
 
   factory Teachers.fromJson(Map<String, dynamic> json) => Teachers(
         id: json["id"],

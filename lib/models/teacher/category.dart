@@ -4,8 +4,8 @@ class Category {
     this.ctgName,
   });
 
-  String id;
-  String ctgName;
+  String? id;
+  String? ctgName;
 
   factory Category.fromJson(Map<String, dynamic> json) => Category(
         id: json["id"],

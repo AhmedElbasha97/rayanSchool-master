@@ -4,8 +4,8 @@ class Student {
     this.name,
   });
 
-  String id;
-  String name;
+  String? id;
+  String? name;
 
   factory Student.fromJson(Map<String, dynamic> json) => Student(
         id: json["id"],

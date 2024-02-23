@@ -6,10 +6,10 @@ class NewsDetails {
     this.video,
   });
 
-  String title;
-  String description;
-  List<String> images = [];
-  String video;
+  String? title;
+  String? description;
+  List<String>? images = [];
+  String? video;
 
   factory NewsDetails.fromJson(Map<String, dynamic> json) {
     NewsDetails data = NewsDetails(
@@ -19,11 +19,11 @@ class NewsDetails {
       video: json["video"] == null ? null : json["video"],
     );
     if (json["image"] != null) {
-      data.images.add(json["image"]);
+      data.images?.add(json["image"]);
     }
     for (int index = 2; index <= 8; index++) {
       if (json["image$index"] != null) {
-        data.images.add(json["image$index"]);
+        data.images?.add(json["image$index"]);
       }
     }
     return data;

@@ -20,7 +20,7 @@ class _BooksScreenState extends State<BooksScreen> {
 
   getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String id = prefs.getString("id");
+    String? id = prefs.getString("id");
     books = await LoggedUser().getBooks(id: id);
     isLoading = false;
     setState(() {});

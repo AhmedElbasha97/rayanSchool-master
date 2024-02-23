@@ -72,7 +72,7 @@ class _JoinRequestState extends State<JoinRequest> {
       pushPageReplacement(context, HomeScreen());
     } else {
       final snackBar = SnackBar(content: Text("حدث خطأ"));
-      scaffoldKey.currentState.showSnackBar(snackBar);
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
   }
 
@@ -83,7 +83,7 @@ class _JoinRequestState extends State<JoinRequest> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
-          "${AppLocalizations.of(context).translate('joinRequest')}",
+          "${AppLocalizations.of(context)?.translate('joinRequest')}",
         ),
         automaticallyImplyLeading: true,
       ),
@@ -99,7 +99,7 @@ class _JoinRequestState extends State<JoinRequest> {
                 ),
                 InputFiled(
                   controller: _nameController,
-                  hintText: "${AppLocalizations.of(context).translate('name')}",
+                  hintText: "${AppLocalizations.of(context)?.translate('name')}",
                 ),
                 SizedBox(
                   height: 15,
@@ -107,7 +107,7 @@ class _JoinRequestState extends State<JoinRequest> {
                 InputFiled(
                   controller: _genderController,
                   hintText:
-                      "${AppLocalizations.of(context).translate('gender')}",
+                      "${AppLocalizations.of(context)?.translate('gender')}",
                 ),
                 SizedBox(
                   height: 15,
@@ -115,7 +115,7 @@ class _JoinRequestState extends State<JoinRequest> {
                 InputFiled(
                   controller: _birthdateController,
                   hintText:
-                      "${AppLocalizations.of(context).translate('birthday')}",
+                      "${AppLocalizations.of(context)?.translate('birthday')}",
                 ),
                 SizedBox(
                   height: 15,
@@ -123,7 +123,7 @@ class _JoinRequestState extends State<JoinRequest> {
                 InputFiled(
                   controller: _addressController,
                   hintText:
-                      "${AppLocalizations.of(context).translate('address')}",
+                      "${AppLocalizations.of(context)?.translate('address')}",
                 ),
                 SizedBox(
                   height: 15,
@@ -131,7 +131,7 @@ class _JoinRequestState extends State<JoinRequest> {
                 InputFiled(
                   controller: _notesController,
                   hintText:
-                      "${AppLocalizations.of(context).translate('notes')}",
+                      "${AppLocalizations.of(context)?.translate('notes')}",
                 ),
                 SizedBox(
                   height: 15,
@@ -139,7 +139,7 @@ class _JoinRequestState extends State<JoinRequest> {
                 InputFiled(
                   controller: _emailController,
                   hintText:
-                      "${AppLocalizations.of(context).translate('email')}",
+                      "${AppLocalizations.of(context)?.translate('email')}",
                 ),
                 SizedBox(
                   height: 15,
@@ -147,7 +147,7 @@ class _JoinRequestState extends State<JoinRequest> {
                 InputFiled(
                   controller: _mobileController,
                   hintText:
-                      "${AppLocalizations.of(context).translate('mobile')}",
+                      "${AppLocalizations.of(context)?.translate('mobile')}",
                 ),
                 SizedBox(
                   height: 15,
@@ -155,7 +155,7 @@ class _JoinRequestState extends State<JoinRequest> {
                 InputFiled(
                   controller: _phoneController,
                   hintText:
-                      "${AppLocalizations.of(context).translate('phone')}",
+                      "${AppLocalizations.of(context)?.translate('phone')}",
                 ),
                 SizedBox(
                   height: 15,
@@ -163,7 +163,7 @@ class _JoinRequestState extends State<JoinRequest> {
                 InputFiled(
                   controller: _oldSchoolController,
                   hintText:
-                      "${AppLocalizations.of(context).translate('oldSchool')}",
+                      "${AppLocalizations.of(context)?.translate('oldSchool')}",
                 ),
                 SizedBox(
                   height: 15,
@@ -171,7 +171,7 @@ class _JoinRequestState extends State<JoinRequest> {
                 InputFiled(
                   controller: _joinSchoolYearController,
                   hintText:
-                      "${AppLocalizations.of(context).translate('joinDate')}",
+                      "${AppLocalizations.of(context)?.translate('joinDate')}",
                 ),
                 SizedBox(
                   height: 15,
@@ -179,7 +179,7 @@ class _JoinRequestState extends State<JoinRequest> {
                 InputFiled(
                   controller: _provinceController,
                   hintText:
-                      "${AppLocalizations.of(context).translate('province')}",
+                      "${AppLocalizations.of(context)?.translate('province')}",
                 ),
                 SizedBox(
                   height: 15,
@@ -187,7 +187,7 @@ class _JoinRequestState extends State<JoinRequest> {
                 InputFiled(
                   controller: _regNumberController,
                   hintText:
-                      "${AppLocalizations.of(context).translate('regNum')}",
+                      "${AppLocalizations.of(context)?.translate('regNum')}",
                 ),
                 SizedBox(
                   height: 30,
@@ -198,14 +198,14 @@ class _JoinRequestState extends State<JoinRequest> {
                 InputFiled(
                   controller: _regStatusController,
                   hintText:
-                      "${AppLocalizations.of(context).translate('regStatus')}",
+                      "${AppLocalizations.of(context)?.translate('regStatus')}",
                 ),
                                 SizedBox(
                   height: 15,
                 ),
                 InputFiled(
                   controller: _cityController,
-                  hintText: "${AppLocalizations.of(context).translate('city')}",
+                  hintText: "${AppLocalizations.of(context)?.translate('city')}",
                 ),
                 SizedBox(
                   height: 30,
@@ -213,7 +213,7 @@ class _JoinRequestState extends State<JoinRequest> {
                 InputFiled(
                   controller: _religionController,
                   hintText:
-                      "${AppLocalizations.of(context).translate('religion')}",
+                      "${AppLocalizations.of(context)?.translate('religion')}",
                 ),
                 SizedBox(
                   height: 30,
@@ -221,7 +221,7 @@ class _JoinRequestState extends State<JoinRequest> {
                 InputFiled(
                   controller: _idNumberController,
                   hintText:
-                      "${AppLocalizations.of(context).translate('DocNo')}",
+                      "${AppLocalizations.of(context)?.translate('DocNo')}",
                 ),
                 SizedBox(
                   height: 30,
@@ -229,7 +229,7 @@ class _JoinRequestState extends State<JoinRequest> {
                 InputFiled(
                   controller: _yearController,
                   hintText:
-                      "${AppLocalizations.of(context).translate('studyYear')}",
+                      "${AppLocalizations.of(context)?.translate('studyYear')}",
                 ),
                 SizedBox(
                   height: 30,
@@ -237,7 +237,7 @@ class _JoinRequestState extends State<JoinRequest> {
                 InputFiled(
                   controller: _parentNameController,
                   hintText:
-                      "${AppLocalizations.of(context).translate('parentName')}",
+                      "${AppLocalizations.of(context)?.translate('parentName')}",
                 ),
                 SizedBox(
                   height: 30,
@@ -245,7 +245,7 @@ class _JoinRequestState extends State<JoinRequest> {
                 InputFiled(
                   controller: _parentJobController,
                   hintText:
-                      "${AppLocalizations.of(context).translate('parentJob')}",
+                      "${AppLocalizations.of(context)?.translate('parentJob')}",
                 ),
                 SizedBox(
                   height: 30,
@@ -253,7 +253,7 @@ class _JoinRequestState extends State<JoinRequest> {
                 InputFiled(
                   controller: _nationaltyController,
                   hintText:
-                      "${AppLocalizations.of(context).translate('Nationality')}",
+                      "${AppLocalizations.of(context)?.translate('Nationality')}",
                 ),
                 SizedBox(
                   height: 30,
@@ -261,7 +261,7 @@ class _JoinRequestState extends State<JoinRequest> {
                 InputFiled(
                   controller: _relationController,
                   hintText:
-                      "${AppLocalizations.of(context).translate('relation')}",
+                      "${AppLocalizations.of(context)?.translate('relation')}",
                 ),
                 SizedBox(
                   height: 30,
@@ -269,7 +269,7 @@ class _JoinRequestState extends State<JoinRequest> {
                 InputFiled(
                   controller: _birthPlaceController,
                   hintText:
-                      "${AppLocalizations.of(context).translate('bornPlace')}",
+                      "${AppLocalizations.of(context)?.translate('bornPlace')}",
                 ),
                 SizedBox(
                   height: 30,
@@ -277,7 +277,7 @@ class _JoinRequestState extends State<JoinRequest> {
                 InputFiled(
                   controller: _zipCodeController,
                   hintText:
-                      "${AppLocalizations.of(context).translate('PostalBox')}",
+                      "${AppLocalizations.of(context)?.translate('PostalBox')}",
                 ),
                 SizedBox(
                   height: 30,
@@ -286,7 +286,7 @@ class _JoinRequestState extends State<JoinRequest> {
                     onClick: () {
                       sendRequest();
                     },
-                    label: "${AppLocalizations.of(context).translate('send')}")
+                    label: "${AppLocalizations.of(context)?.translate('send')}")
               ],
             ),
     );

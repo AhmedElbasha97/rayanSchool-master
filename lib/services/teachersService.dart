@@ -23,7 +23,7 @@ class TeacherService {
   String homeworkDetails = "${baseUrl}teacher_homework_view.php";
   String sentMessageDetails = "${baseUrl}teacher_msg_sent_view.php";
 
-  Future<List<TeacherReport>> getReports({String id}) async {
+  Future<List<TeacherReport>> getReports({String? id}) async {
     List<TeacherReport> list = [];
     Response response;
     response = await Dio().get(
@@ -39,7 +39,7 @@ class TeacherService {
   }
 
   Future<List<TeacherReportDetails>> getReportDetails(
-      {String id, String reportId}) async {
+      {String? id, String? reportId}) async {
     List<TeacherReportDetails> list = [];
     Response response;
     response = await Dio().get(
@@ -69,7 +69,7 @@ class TeacherService {
     return list;
   }
 
-  Future<List<Category>> getLevels({String id}) async {
+  Future<List<Category>> getLevels({String? id}) async {
     List<Category> list = [];
     Response response;
     response = await Dio().get(
@@ -84,7 +84,7 @@ class TeacherService {
     return list;
   }
 
-  Future<List<Student>> getStudents({String id}) async {
+  Future<List<Student>> getStudents({String? id}) async {
     List<Student> list = [];
     Response response;
     response = await Dio().get(
@@ -99,7 +99,7 @@ class TeacherService {
     return list;
   }
 
-  Future<bool> sendReport({String id, String studentId, String msg}) async {
+  Future<bool> sendReport({String? id, String? studentId, String? msg}) async {
     DateTime date = DateTime.now();
     String dateString = "${date.year}-${date.month}-${date.day}";
     Response response;
@@ -114,7 +114,7 @@ class TeacherService {
     }
   }
 
-  Future<List<HomeWorkTeacher>> getHomeWork({String id}) async {
+  Future<List<HomeWorkTeacher>> getHomeWork({String? id}) async {
     List<HomeWorkTeacher> list = [];
     Response response;
     response = await Dio().get(
@@ -129,7 +129,7 @@ class TeacherService {
     return list;
   }
 
-  Future<List<SentMessagesTeacher>> getSentMessages({String id}) async {
+  Future<List<SentMessagesTeacher>> getSentMessages({String? id}) async {
     List<SentMessagesTeacher> list = [];
     Response response;
     response = await Dio().get(
@@ -145,12 +145,12 @@ class TeacherService {
   }
 
   Future<String> sendMessages(
-      {String id,
-      String type,
-      String toId,
-      String title,
-      String body,
-      String text}) async {
+      {String? id,
+      String? type,
+      String? toId,
+      String? title,
+      String? body,
+       String? text}) async {
     Response response;
     response = await Dio().get(
       "$sendMessage?teacher_id=$id&sendto_type=$type&to_id=$toId&title=$title&text=$text",
@@ -160,7 +160,7 @@ class TeacherService {
     return data;
   }
 
-  Future<List<QuestionBankTeacher>> getQuestionBank({String id}) async {
+  Future<List<QuestionBankTeacher>> getQuestionBank({required String id}) async {
     List<QuestionBankTeacher> list = [];
     Response response;
     response = await Dio().get(
@@ -176,7 +176,7 @@ class TeacherService {
   }
 
   Future<List<HomeWorkDetailsTeacherModel>> getHomeworkDetails(
-      {String id, String homeworkId}) async {
+      {required String id, String? homeworkId}) async {
     List<HomeWorkDetailsTeacherModel> list = [];
     Response response;
     response = await Dio()
@@ -191,7 +191,7 @@ class TeacherService {
   }
 
   Future<List<MessageDetailsTeacherModel>> getsentMessageDetails(
-      {String id, String msgId}) async {
+      {required String id, required String msgId}) async {
     List<MessageDetailsTeacherModel> list = [];
     Response response;
     response =

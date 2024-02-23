@@ -4,8 +4,8 @@ import 'package:rayanSchool/models/AppInfo/videos.dart';
 import 'package:rayanSchool/services/albums.dart';
 
 class PhotosAlbum extends StatefulWidget {
-  final String id;
-  final String title;
+  final String? id;
+  final String? title;
   final bool isImg;
   PhotosAlbum({this.id, this.title, this.isImg = true});
   @override
@@ -19,7 +19,7 @@ class _PhotosAlbumState extends State<PhotosAlbum> {
 
   getData() async {
     if (widget.isImg) {
-      list = await AlbumsService().getphotoAlbum(widget.id);
+      list = await AlbumsService().getphotoAlbum(widget.id??"");
     }
 
     isLoading = false;

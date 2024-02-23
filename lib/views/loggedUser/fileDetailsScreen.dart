@@ -25,8 +25,8 @@ class _FileDetailsScreenState extends State<FileDetailsScreen> {
 
   getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String id = prefs.getString("id");
-    files = await LoggedUser().getFilesDetails(id: id, fileID: widget.id ?? "");
+    String? id = prefs.getString("id");
+    files = await LoggedUser().getFilesDetails(id: id, fileID: widget.id);
     isLoading = false;
     setState(() {});
   }
@@ -58,7 +58,7 @@ class _FileDetailsScreenState extends State<FileDetailsScreen> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: AppBtn(
                                   label: AppLocalizations.of(context)
-                                      .translate('download'),
+                                      ?.translate('download')??"",
                                   onClick: () async {
                                     if (await canLaunch(
                                         "${files[index].fileLink}")) {

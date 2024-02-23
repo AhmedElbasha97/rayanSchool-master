@@ -5,9 +5,9 @@ class SliderData {
     this.img,
   });
 
-  String id;
-  String title;
-  String img;
+  String? id;
+  String? title;
+  String? img;
 
   factory SliderData.fromJson(Map<String, dynamic> json) => SliderData(
         id: json["id"],

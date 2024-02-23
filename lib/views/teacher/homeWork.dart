@@ -22,7 +22,7 @@ class _HomeWorkScreenState extends State<HomeWorkScreen> {
 
   getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String id = prefs.getString("id");
+    String? id = prefs.getString("id");
     homeworks = await TeacherService().getHomeWork(id: id);
     isLoading = false;
     setState(() {});
@@ -45,7 +45,7 @@ class _HomeWorkScreenState extends State<HomeWorkScreen> {
                     pushPage(
                         context,
                         HomeWorkDetailsScreen(
-                          id: homeworks[index].id,
+                          id: homeworks[index].id??"",
                         ));
                   },
                   child: Padding(

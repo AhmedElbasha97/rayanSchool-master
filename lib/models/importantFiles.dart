@@ -5,9 +5,9 @@ class ImportantFile {
         this.file,
     });
 
-    String title;
-    String desc;
-    String file;
+    String? title;
+    String? desc;
+    String? file;
 
     factory ImportantFile.fromJson(Map<String, dynamic> json) => ImportantFile(
         title: json["title"],

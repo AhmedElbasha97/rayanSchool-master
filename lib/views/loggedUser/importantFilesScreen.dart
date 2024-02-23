@@ -21,8 +21,8 @@ class _FilesImportantScreenState extends State<FilesImportantScreen> {
 
   getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String id = prefs.getString("id");
-    files = await LoggedUser().getImportantFiles(id: id);
+    String? id = prefs.getString("id");
+    files = await LoggedUser().getImportantFiles(id: id??"");
     isLoading = false;
     setState(() {});
   }

@@ -32,9 +32,9 @@ class _SendReportState extends State<SendReport> {
   Category selectLevel = Category(ctgName: "اختار المرحلة");
   Student selectStudent = Student(name: "اختار طالب");
 
-  Category selectedCatogory;
-  Category selectedLevel;
-  Student selectedStudent;
+  Category? selectedCatogory;
+  Category? selectedLevel;
+  Student? selectedStudent;
 
   getCatgories() async {
     categories = await TeacherService().getCategories();
@@ -44,14 +44,14 @@ class _SendReportState extends State<SendReport> {
   }
 
   getLevels() async {
-    levels = await TeacherService().getLevels(id: selectedCatogory.id);
+    levels = await TeacherService().getLevels(id: selectedCatogory?.id??"");
     levels.add(selectLevel);
     levelLoading = false;
     setState(() {});
   }
 
   getStudent() async {
-    student = await TeacherService().getStudents(id: selectedLevel.id);
+    student = await TeacherService().getStudents(id: selectedLevel?.id??"");
     student.add(selectStudent);
     studentsLoading = false;
     setState(() {});
@@ -63,14 +63,14 @@ class _SendReportState extends State<SendReport> {
   }
 
   sendMessage() async {
-    if (_formKey.currentState.validate()) {
+    if (_formKey.currentState!.validate()) {
       if (selectedStudent != null) {
         isLoading = true;
         setState(() {});
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        String id = prefs.getString("id");
+        String? id = prefs.getString("id");
         TeacherService().sendReport(
-            id: id, msg: _msgController.text, studentId: selectedStudent.id);
+            id: id??"", msg: _msgController.text, studentId: selectedStudent?.id??"");
         popPage(context);
       }
     }
@@ -108,7 +108,7 @@ class _SendReportState extends State<SendReport> {
                           prefixIcon: Icon(Icons.message_rounded),
                           counterText: "",
                           hintText: AppLocalizations.of(context)
-                              .translate('writeReport'),
+                              ?.translate('writeReport'),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                                 color: Color(0xFF184e7a), width: 2.0),
@@ -121,9 +121,9 @@ class _SendReportState extends State<SendReport> {
                           ),
                         ),
                         validator: (value) {
-                          if (value.length < 1) {
+                          if (value!.length < 1) {
                             return AppLocalizations.of(context)
-                                .translate('reportError');
+                                ?.translate('reportError');
                           }
                           return null;
                         },
@@ -145,7 +145,7 @@ class _SendReportState extends State<SendReport> {
                           );
                         }).toList(),
                         onChanged: (value) {
-                          selectCatogory = value;
+                          selectCatogory = value!;
                           selectedCatogory = value;
                           levelLoading = true;
                           getLevels();
@@ -175,7 +175,7 @@ class _SendReportState extends State<SendReport> {
                                     );
                                   }).toList(),
                                   onChanged: (value) {
-                                    selectLevel = value;
+                                    selectLevel = value!;
                                     selectedLevel = value;
                                     studentsLoading = true;
                                     getStudent();
@@ -205,7 +205,7 @@ class _SendReportState extends State<SendReport> {
                                     );
                                   }).toList(),
                                   onChanged: (value) {
-                                    selectStudent = value;
+                                    selectStudent = value!;
                                     selectedStudent = value;
                                     setState(() {});
                                   },
@@ -227,7 +227,7 @@ class _SendReportState extends State<SendReport> {
                                     BorderRadius.all(Radius.circular(10))),
                             alignment: Alignment.center,
                             child: Text(
-                              AppLocalizations.of(context).translate('send'),
+                              AppLocalizations.of(context)?.translate('send')??"",
                               style: TextStyle(color: Colors.white),
                             ),
                           ),

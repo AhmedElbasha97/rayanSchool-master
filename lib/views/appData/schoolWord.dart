@@ -11,7 +11,7 @@ class SchoolWord extends StatefulWidget {
 }
 
 class _SchoolWordState extends State<SchoolWord> {
-  AboutSchool word;
+  AboutSchool? word;
   bool loading = true;
   @override
   void initState() {
@@ -42,14 +42,14 @@ class _SchoolWordState extends State<SchoolWord> {
                   margin: EdgeInsets.symmetric(horizontal: 5.0),
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage("${word.image}"),
+                      image: NetworkImage("${word?.image}"),
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Html(data: word.description),
+                  child: Html(data: word?.description),
                 )
               ],
             ),

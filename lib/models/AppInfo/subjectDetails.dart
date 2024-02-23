@@ -5,9 +5,9 @@ class SubjectDetails {
     this.image,
   });
 
-  String title;
-  String description;
-  String image;
+  String? title;
+  String? description;
+  String? image;
 
   factory SubjectDetails.fromJson(Map<String, dynamic> json) => SubjectDetails(
         title: json["title"],

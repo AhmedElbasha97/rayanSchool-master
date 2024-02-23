@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rayanSchool/I10n/app_localizations.dart';
 import 'package:rayanSchool/globals/commonStyles.dart';
@@ -27,9 +26,9 @@ class AppDrawer extends StatefulWidget {
 }
 
 class _AppDrawerState extends State<AppDrawer> {
-  bool userLogged;
-  bool isStudent;
-  bool isTeacher;
+   bool? userLogged;
+   bool? isStudent;
+   bool? isTeacher;
 
   @override
   void initState() {
@@ -57,7 +56,7 @@ class _AppDrawerState extends State<AppDrawer> {
           SizedBox(height: 50),
           ListTile(
             title: Text(
-              "${AppLocalizations.of(context).translate('homePage')}",
+              "${AppLocalizations.of(context)?.translate('homePage')}",
               style: TextStyle(
                   color: mainColor, fontWeight: FontWeight.bold, fontSize: 14),
             ),
@@ -74,7 +73,7 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
           ListTile(
             title: Text(
-              "${AppLocalizations.of(context).translate('joinRequest')}",
+              "${AppLocalizations.of(context)?.translate('joinRequest')}",
               style: TextStyle(
                   color: mainColor, fontWeight: FontWeight.bold, fontSize: 14),
             ),
@@ -92,10 +91,10 @@ class _AppDrawerState extends State<AppDrawer> {
             endIndent: 30,
             indent: 30,
           ),
-          userLogged
+          userLogged??false
               ? ListTile(
                   title: Text(
-                    "${AppLocalizations.of(context).translate('myAccount')}",
+                    "${AppLocalizations.of(context)?.translate('myAccount')}",
                     style: TextStyle(
                         color: mainColor,
                         fontWeight: FontWeight.bold,
@@ -105,9 +104,9 @@ class _AppDrawerState extends State<AppDrawer> {
                   onTap: () {
                     popPage(context);
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => isStudent
+                      builder: (context) => isStudent??false
                           ? MyAccount()
-                          : isTeacher
+                          : isTeacher??false
                               ? MyAccountTeacher()
                               : MyAccountParent(),
                     ));
@@ -115,7 +114,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 )
               : ListTile(
                   title: Text(
-                    "${AppLocalizations.of(context).translate('login')}",
+                    "${AppLocalizations.of(context)?.translate('login')}",
                     style: TextStyle(
                         color: mainColor,
                         fontWeight: FontWeight.bold,
@@ -154,7 +153,7 @@ class _AppDrawerState extends State<AppDrawer> {
           // ),
           ListTile(
             title: Text(
-              "${AppLocalizations.of(context).translate('complains')}",
+              "${AppLocalizations.of(context)?.translate('complains')}",
               style: TextStyle(
                   color: mainColor, fontWeight: FontWeight.bold, fontSize: 14),
             ),
@@ -174,7 +173,7 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
           ListTile(
             title: Text(
-              "${AppLocalizations.of(context).translate('PhotosAlbum')}",
+              "${AppLocalizations.of(context)?.translate('PhotosAlbum')}",
               style: TextStyle(
                   color: mainColor, fontWeight: FontWeight.bold, fontSize: 14),
             ),
@@ -195,7 +194,7 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
           ListTile(
             title: Text(
-              "${AppLocalizations.of(context).translate('videosAlbum')}",
+              "${AppLocalizations.of(context)?.translate('videosAlbum')}",
               style: TextStyle(
                   color: mainColor, fontWeight: FontWeight.bold, fontSize: 14),
             ),
@@ -217,7 +216,7 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
           ListTile(
             title: Text(
-              "${AppLocalizations.of(context).translate('books')}",
+              "${AppLocalizations.of(context)?.translate('books')}",
               style: TextStyle(
                   color: mainColor, fontWeight: FontWeight.bold, fontSize: 14),
             ),
@@ -236,7 +235,7 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
           ListTile(
             title: Text(
-              "${AppLocalizations.of(context).translate('newNews')}",
+              "${AppLocalizations.of(context)?.translate('newNews')}",
               style: TextStyle(
                   color: mainColor, fontWeight: FontWeight.bold, fontSize: 14),
             ),
@@ -256,7 +255,7 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
           ListTile(
               title: Text(
-                "${AppLocalizations.of(context).translate('aboutTheApp')}",
+                "${AppLocalizations.of(context)?.translate('aboutTheApp')}",
                 style: TextStyle(
                     color: mainColor,
                     fontWeight: FontWeight.bold,
@@ -277,7 +276,7 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
           ListTile(
               title: Text(
-                "${AppLocalizations.of(context).translate('privacyPolicy')}",
+                "${AppLocalizations.of(context)?.translate('privacyPolicy')}",
                 style: TextStyle(
                     color: mainColor,
                     fontWeight: FontWeight.bold,
@@ -298,7 +297,7 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
           ListTile(
             title: Text(
-              "${AppLocalizations.of(context).translate('share')}",
+              "${AppLocalizations.of(context)?.translate('share')}",
               style: TextStyle(
                   color: mainColor, fontWeight: FontWeight.bold, fontSize: 14),
             ),
@@ -319,10 +318,10 @@ class _AppDrawerState extends State<AppDrawer> {
             endIndent: 30,
             indent: 30,
           ),
-          userLogged
+          userLogged??false
               ? ListTile(
                   title: Text(
-                    "${AppLocalizations.of(context).translate('signOut')}",
+                    "${AppLocalizations.of(context)?.translate('signOut')}",
                     style: TextStyle(
                         color: mainColor,
                         fontWeight: FontWeight.bold,
@@ -387,7 +386,7 @@ class _AppDrawerState extends State<AppDrawer> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Text(
-              "${AppLocalizations.of(context).translate('policy1')}",
+              "${AppLocalizations.of(context)?.translate('policy1')}",
               style: TextStyle(fontSize: 15),
             ),
           ),
@@ -395,7 +394,7 @@ class _AppDrawerState extends State<AppDrawer> {
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Row(
               children: [
-                Text("${AppLocalizations.of(context).translate('policy2')}",
+                Text("${AppLocalizations.of(context)?.translate('policy2')}",
                     style: TextStyle(fontSize: 16)),
                 InkWell(
                   onTap: () => launchURL("https://syncqatar.com"),
