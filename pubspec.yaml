@@ -39,7 +39,10 @@ dependencies:
   url_launcher: ^6.0.3
   share_it: ^0.7.0
   flutter_math_fork: ^0.6.1
+  firebase_messaging: ^14.7.16
+  flutter_local_notifications: ^14.1.1
 
+  firebase_core: ^2.25.4
 
 
 

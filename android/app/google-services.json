@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "369500893245",
+    "project_id": "alrayyanprivateschools-1d46b",
+    "storage_bucket": "alrayyanprivateschools-1d46b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:369500893245:android:bae5e55be1d93c53b43a54",
+        "android_client_info": {
+          "package_name": "com.syncQatar.rayanSchool"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-Xpkte7WaAt3NhLLw-OIhP-4HJwXJpqw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

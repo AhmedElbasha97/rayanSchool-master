@@ -10,7 +10,10 @@ import 'package:rayanSchool/models/AppInfo/sliderPhotos.dart';
 import 'package:rayanSchool/models/AppInfo/videos.dart';
 import 'package:rayanSchool/services/albums.dart';
 import 'package:rayanSchool/services/appInfoService.dart';
+import 'package:rayanSchool/views/Notification/notification_list.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../globals/widgets/notification_icon.dart';
 import 'appData/schoolWord.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -22,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<SliderData> sliderData = [];
   List<PhotoAlbum> list = [];
   List<Videos> list2 = [];
-
+  bool userLogged = false;
   bool loading = true;
   @override
   void initState() {
@@ -31,7 +34,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   getHomeData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     sliderData = await AppInfoService().getSliderPhotos();
+    userLogged = prefs.getString("id") == null ? false : true;
     await getAlbumsData();
     loading = false;
     setState(() {});
@@ -54,6 +59,23 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          userLogged?InkWell(
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationsListScreen())).then((value) {
+                setState(() {});
+                print("dfhngjkhdfjghj hiiiiiiiiiii");
+              }
+
+              );
+
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: NotificationIcon(),
+            ),
+          ):Container(),
+        ],
         iconTheme: new IconThemeData(color: mainColor),
         backgroundColor: Color(0xFFdcdbdb),
         title: Image.asset(

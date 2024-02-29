@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rayanSchool/I10n/app_localizations.dart';
+import 'package:rayanSchool/globals/commonStyles.dart';
 import 'package:rayanSchool/globals/helpers.dart';
 import 'package:rayanSchool/globals/widgets/mainButton.dart';
 import 'package:rayanSchool/globals/widgets/textFiled.dart';
@@ -109,8 +110,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               Padding(padding: EdgeInsets.only(top: 35)),
-              AppBtn(
+              !isServerLoading? AppBtn(
                 onClick: () async {
+                  if(!isServerLoading){
+                    setState(() {
+                      isServerLoading = true;
+                    });
                   validate();
                   if (!passwordError && !usernameError) {
                     String msg = await AuthService().login(
@@ -118,15 +123,36 @@ class _LoginScreenState extends State<LoginScreen> {
                         userName: usernameController.text,
                         type: accountType);
                     if (msg == "done") {
+                      setState(() {
+                        isServerLoading = false;
+                      });
                       pushPageReplacement(context, HomeScreen());
                     } else {
+                      setState(() {
+                        isServerLoading = false;
+                      });
                       final snackBar = SnackBar(content: Text(msg));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
                     }
                   }
+                  }
                 },
                 label: "${AppLocalizations.of(context)?.translate('login')}",
+              ):Container(
+                decoration: BoxDecoration(
+                  color: mainColor,
+                  shape: BoxShape.circle
+                ),
+
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: CircularProgressIndicator(
+
+                    ),
+                  ),
+                ),
               ),
               Padding(
                   padding: EdgeInsets.only(
