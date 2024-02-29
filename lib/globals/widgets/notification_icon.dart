@@ -43,9 +43,7 @@ class _NotificationIconState extends State<NotificationIcon> {
           top: 5,
           child: IconButton(icon:  Icon(Icons.notifications_none,color: mainColor,size: 35), onPressed: () {
 
-             setState(() {
-
-             });
+            pushPage(context,NotificationsListScreen());
 
           }),
         ),
