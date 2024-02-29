@@ -61,18 +61,18 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         actions: [
           userLogged?InkWell(
-            onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationsListScreen())).then((value) {
-                setState(() {});
-                print("dfhngjkhdfjghj hiiiiiiiiiii");
-              }
+            onTap: ()=>
+             pushPage(context,NotificationsListScreen(),
 
-              );
 
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: NotificationIcon(),
+              ),
+
+
+            child: Ink(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: NotificationIcon(),
+              ),
             ),
           ):Container(),
         ],
