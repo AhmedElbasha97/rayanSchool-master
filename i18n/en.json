@@ -104,6 +104,9 @@
   "phone": "phone",
   "regStatus": "reg. Status",
   "parentJob": "parent job",
-  "viewVideo":"view video"
+  "viewVideo":"view video",
+  "changePass": "Change password",
+  "oldPass": "old password",
+  "newPass": "new password"
 
 }

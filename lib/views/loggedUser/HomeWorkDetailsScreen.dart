@@ -62,12 +62,29 @@ class _HomeWorkDetailsScreenState extends State<HomeWorkDetailsScreen> {
                                   label: AppLocalizations.of(context)
                                       ?.translate('download')??"",
                                   onClick: () async {
-                                    if (await canLaunch(
-                                        "${homework[index].homeworkFile}")) {
-                                      await launch(
-                                          "${homework[index].homeworkFile}");
-                                    } else {
-                                      throw 'Could not launch ${homework[index].homeworkFile}';
+                                    if(homework[index].homeworkFile != "") {
+                                      if (await canLaunch(
+                                          "${homework[index].homeworkFile}")) {
+                                        await launch(
+                                            "${homework[index].homeworkFile}");
+                                      } else {
+                                        throw 'Could not launch ${homework[index]
+                                            .homeworkFile}';
+                                      }
+                                    }else{
+                                      final snackBar = SnackBar(content:
+                                      Row(children: [
+                                        Icon(Icons.close,color: Colors.white,),
+                                        SizedBox(width: 10,),
+                                        Text(Localizations.localeOf(context).languageCode == "en" ?'There is no file available for download':'ليس هناك ملف متاح للتحميل',style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold
+                                        ),
+                                        ),
+                                      ],),
+                                          backgroundColor:Colors.red
+                                      );
+                                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                     }
                                   },
                                 ),

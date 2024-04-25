@@ -21,6 +21,7 @@ class _TeacherScheduleState extends State<TeacherSchedule> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? id = prefs.getString("id");
     schedule = await TeacherScheduleService().getSchedule(id: id??"");
+
     isLoading = false;
     setState(() {});
   }
@@ -48,14 +49,36 @@ class _TeacherScheduleState extends State<TeacherSchedule> {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         Divider(),
-                        Text("${schedule[index].class1??""}"),
-                        Text("${schedule[index].class2??""}"),
-                        Text("${schedule[index].class3??""}"),
-                        Text("${schedule[index].class4??""}"),
-                        Text("${schedule[index].class5??""}"),
-                        Text("${schedule[index].class6??""}"),
-                        Text("${schedule[index].class7??""}"),
-                        Text("${schedule[index].class8??""}"),
+                        schedule[index].class1==""&&
+                            schedule[index].class2==""&&
+                            schedule[index].class3==""&&
+                            schedule[index].class4==""&&
+                            schedule[index].class5==""&&
+                            schedule[index].class6==""&&
+                            schedule[index].class7==""&&
+                            schedule[index].class8==""
+                            ?Center(
+                          child: Text(
+
+                            Localizations.localeOf(context).languageCode == "en"
+                                ?"You have no appointments today":"لا يوجد مواعيد لديك اليوم",
+
+
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ):Column(
+                          children: [
+                            Text("${schedule[index].class1??""}"),
+                            Text("${schedule[index].class2??""}"),
+                            Text("${schedule[index].class3??""}"),
+                            Text("${schedule[index].class4??""}"),
+                            Text("${schedule[index].class5??""}"),
+                            Text("${schedule[index].class6??""}"),
+                            Text("${schedule[index].class7??""}"),
+                            Text("${schedule[index].class8??""}"),
+                          ],
+                        ),
+
                       ],
                     ),
                   ),

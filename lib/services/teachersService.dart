@@ -9,6 +9,10 @@ import 'package:rayanSchool/models/teacher/reportDetails.dart';
 import 'package:rayanSchool/models/teacher/sentMessages.dart';
 import 'package:rayanSchool/models/teacher/student.dart';
 import 'package:rayanSchool/models/teacher/teacherReport.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../models/activity_detailed_model.dart';
+import '../models/teacher/homework_teacher_list_model.dart';
 
 class TeacherService {
   String reports = "${baseUrl}teacher_reports.php";
@@ -22,10 +26,16 @@ class TeacherService {
   String questionBank = "${baseUrl}teacher_quest_bank.php";
   String homeworkDetails = "${baseUrl}teacher_homework_view.php";
   String sentMessageDetails = "${baseUrl}teacher_msg_sent_view.php";
+  String GetRecommendationsURL = "${baseUrl}report2_list.php";
+  String sendRecommendationsURL = "${baseUrl}teacher_reports2.php";
+  String addHomeWorkURL = "${baseUrl}teacher_homework_add.php";
+  String getHomeWorksURL = "${baseUrl}teacher_homework.php";
+  String getSchedulesTeacherURL = "${baseUrl}teacher_table.php";
 
   Future<List<TeacherReport>> getReports({String? id}) async {
     List<TeacherReport> list = [];
     Response response;
+    print("$reports?teacher_id=$id");
     response = await Dio().get(
       "$reports?teacher_id=$id",
     );
@@ -33,6 +43,21 @@ class TeacherService {
     if (response.data != null) {
       data.forEach((element) {
         list.add(TeacherReport.fromJson(element));
+      });
+    }
+    return list;
+  }
+  Future<List<Map<String?,String?>>> getRecommendations(String type) async {
+    List<Map<String?,String?>> list = [];
+    Response response;
+    response = await Dio().get(
+      "$GetRecommendationsURL?type=$type",
+    );
+    var data = response.data as Map;
+    print(data);
+    if (response.data != null) {
+      data.forEach((k,v) {
+        list.add({"$k":"$v"});
       });
     }
     return list;
@@ -53,7 +78,67 @@ class TeacherService {
     }
     return list;
   }
+  Future<String> sentRecommendation({String? recommendationType, String? recommendationValue,String? notes,String? studentId}) async {
+    String message = "";
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var userId = await prefs.getString("id");
+    Response? response;
+    print("$sendRecommendationsURL?type=$recommendationType&type_id=$recommendationValue&teacher_id=$userId&student_id=$studentId&notes=$notes");
+    response = await Dio().get(
+      "$sendRecommendationsURL?type=$recommendationType&type_id=$recommendationValue&teacher_id=$userId&student_id=$studentId&notes=$notes",
+    );
 
+
+    if (response.data["status"] == "true") {
+
+      message = "done";
+    } else {
+      message = response.data["msg"];
+    }
+    return message;
+  }
+  Future<String> addHomeWork({String? classId, String? title,String? details}) async {
+    String message = "";
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var userId = await prefs.getString("id");
+    print("$addHomeWorkURL?teacher_id=$userId&class_id=$classId&title=$title&detail=$details");
+    var dio =Dio();
+    dio.options.connectTimeout = const Duration(milliseconds: 800000) ;
+    dio.options.receiveTimeout =  const Duration(milliseconds: 800000) ;
+    Response? response = await dio.get(
+      "$addHomeWorkURL?teacher_id$userId&class_id$classId&title=$title&detail=$details",
+    );
+    print(response.statusCode.toString());
+    if(response.data != null) {
+      if (response.data["status"] == "true") {
+        message = "done";
+      } else {
+        message = response.data["msg"];
+      }
+    }else{
+      if(response.statusCode == 200){
+        message = "done";
+      }else{
+        message = "failed";
+      }
+    }
+    return message;
+  }
+  Future<List<HomeworkTeacherListModel>> getTeacherHomeWorksList() async {
+    List<HomeworkTeacherListModel> list = [];
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    var userId = await prefs.getString("id");
+    Response response;
+    response = await Dio().get(
+      "$getHomeWorksURL?teacher_id=$userId",
+    );
+    var data = response.data;
+    data.forEach((element) {
+      list.add(HomeworkTeacherListModel.fromJson(element));
+    });
+    return list;
+  }
   Future<List<Category>> getCategories() async {
     List<Category> list = [];
     Response response;
@@ -87,6 +172,7 @@ class TeacherService {
   Future<List<Student>> getStudents({String? id}) async {
     List<Student> list = [];
     Response response;
+    print("$studentList?class_id=$id");
     response = await Dio().get(
       "$studentList?class_id=$id",
     );
@@ -163,6 +249,7 @@ class TeacherService {
   Future<List<QuestionBankTeacher>> getQuestionBank({required String id}) async {
     List<QuestionBankTeacher> list = [];
     Response response;
+    print("$questionBank?teacher_id=$id");
     response = await Dio().get(
       "$questionBank?teacher_id=$id",
     );
@@ -190,7 +277,7 @@ class TeacherService {
     return list;
   }
 
-  Future<List<MessageDetailsTeacherModel>> getsentMessageDetails(
+  Future<List<MessageDetailsTeacherModel>> getMessageDetails(
       {required String id, required String msgId}) async {
     List<MessageDetailsTeacherModel> list = [];
     Response response;
@@ -204,5 +291,16 @@ class TeacherService {
     }
     return list;
   }
-
+  Future<ActivitiesDetailedModel> getSchedulesTeacher() async {
+    ActivitiesDetailedModel data;
+    Response response;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var userId = await prefs.getString("id");
+    response = await Dio().get(
+      "$getSchedulesTeacherURL?student_id=$userId",
+    );
+    var resData = response.data;
+    data = ActivitiesDetailedModel.fromJson(resData[0]);
+    return data;
+  }
 }

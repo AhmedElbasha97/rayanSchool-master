@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rayanSchool/models/parents/attendance.dart';
 import 'package:rayanSchool/services/ParentsService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
 
 class AttendanceScreen extends StatefulWidget {
   @override
@@ -11,6 +12,20 @@ class AttendanceScreen extends StatefulWidget {
 class _AttendanceScreenState extends State<AttendanceScreen> {
   bool isLoading = true;
   List<Attendance> attendance = [];
+  String returnDateAndTime(Attendance? chat){
+    String dateOrTime = "" ;
+    print(chat?.date??"");
+    final format = DateFormat('HH:mm a');
+    DateFormat formatDate = DateFormat("MMM dd");
+
+    final dateTime = DateTime.parse(chat?.date.toString()??"2024-02-28 11:55:54");
+    if(dateTime.day == DateTime.now().day){
+      dateOrTime = format.format(dateTime);
+    }else{
+      dateOrTime = formatDate.format(dateTime);
+    }
+    return dateOrTime;
+  }
   @override
   void initState() {
     super.initState();
@@ -42,7 +57,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: ListTile(
                     title: Text("${attendance[index].status}"),
-                    trailing: Text("${attendance[index].date}"),
+                    trailing: Text("${returnDateAndTime(attendance[index])}"),
                   ),
                 );
               },

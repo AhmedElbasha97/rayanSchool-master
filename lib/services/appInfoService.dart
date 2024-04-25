@@ -7,12 +7,15 @@ import 'package:rayanSchool/models/AppInfo/sliderPhotos.dart';
 import 'package:rayanSchool/models/AppInfo/subject.dart';
 import 'package:rayanSchool/models/AppInfo/subjectDetails.dart';
 
+import '../models/school_social_media_link_model.dart';
+
 class AppInfoService {
   String sliderLink = "${baseUrl}slide.php";
   String aboutSchool = "${baseUrl}about.php";
   String schoolWord = "${baseUrl}school_desc.php";
   String aboutApp = "${baseUrl}about_app.php";
   String privacyPolicy = "${baseUrl}privacy.php";
+  String schoolSocialMediaLink = "${baseUrl}social_links.php";
   String subjects = "${baseUrl}subjects.php";
   String subjectsDetails = "${baseUrl}art.php";
   String news = "${baseUrl}news.php";
@@ -72,6 +75,16 @@ class AppInfoService {
     );
     var resData = response.data;
     data = AboutSchool.fromJson(resData[0]);
+    return data;
+  }
+  Future<SchoolSocialMediaLinkModel> getSchoolSocialMediaLink() async {
+    SchoolSocialMediaLinkModel data;
+    Response response;
+    response = await Dio().get(
+      "$schoolSocialMediaLink",
+    );
+    var resData = response.data;
+    data = SchoolSocialMediaLinkModel.fromJson(resData);
     return data;
   }
 

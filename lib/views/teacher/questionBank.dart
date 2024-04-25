@@ -34,7 +34,27 @@ class _QuestionBankScreenState extends State<QuestionBankScreen> {
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : ListView.builder(
+          : questions.isEmpty??true?
+      Container(
+        height: MediaQuery.of(context).size.height*0.75,
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Image.asset("assets/images/noData.png"),
+            ),
+            SizedBox(height: 20,),
+            Text(Localizations.localeOf(context).languageCode == "en"
+                ?"no Questions available":"لا يوجد أسأله متوفره لان",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20
+
+              ),),
+          ],
+        ),
+      ):ListView.builder(
               itemCount: questions.length,
               padding: EdgeInsets.all(10),
               itemBuilder: (BuildContext context, int index) {

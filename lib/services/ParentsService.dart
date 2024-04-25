@@ -8,6 +8,10 @@ import 'package:rayanSchool/models/parents/attendance.dart';
 import 'package:rayanSchool/models/parents/reportDetails.dart';
 import 'package:rayanSchool/models/parents/reports.dart';
 import 'package:rayanSchool/models/teachers.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../models/penalties_list_model.dart';
+import '../models/recommendation_list_model.dart';
 
 class ParentService {
   String reports = "${baseUrl}parent_report_about.php";
@@ -19,6 +23,8 @@ class ParentService {
   String sentMessages = "${baseUrl}parent_msg_sent.php";
   String sentMessagesDetails = "${baseUrl}parent_msg_sent_view.php";
   String teachers = "${baseUrl}teachers_list.php";
+  String recommendationList = "${baseUrl}parent_report2.php";
+  String penaltiesList = "${baseUrl}parent_attu.php";
 
   Future<List<Report>> getReports({String? id}) async {
     List<Report> list = [];
@@ -46,6 +52,40 @@ class ParentService {
     if (response.data != null) {
       data.forEach((element) {
         list.add(ReportDetails.fromJson(element));
+      });
+    }
+    return list;
+  }
+  Future<List<RecommendationListModel>> getRecommendationList(
+      {String? typeId, }) async {
+    List<RecommendationListModel> list = [];
+    Response response;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var userId = await prefs.getString("id");
+    response = await Dio().get(
+      "$recommendationList?parent_id=$userId&type=$typeId",
+    );
+    var data = response.data;
+    if (response.data != null) {
+      data.forEach((element) {
+        list.add(RecommendationListModel.fromJson(element));
+      });
+    }
+    return list;
+  }
+Future<List<PenaltiesListModel>> getPenaltiesList(
+       ) async {
+    List<PenaltiesListModel> list = [];
+    Response response;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var userId = await prefs.getString("id");
+    response = await Dio().get(
+      "$penaltiesList?parent_id=$userId",
+    );
+    var data = response.data;
+    if (response.data != null) {
+      data.forEach((element) {
+        list.add(PenaltiesListModel.fromJson(element));
       });
     }
     return list;

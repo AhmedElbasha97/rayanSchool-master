@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
   String loginLink = "${baseUrl}login.php";
+  String changePassLink = "${baseUrl}change_password.php?";
 
   Future<String> login({String? userName, String? type, String? password}) async {
     String message = "";
@@ -28,6 +29,26 @@ class AuthService {
       message = "done";
     } else {
       message = response?.data["msg"];
+    }
+    return message;
+  }
+  Future<String> changePassword({String? oldPass, String? newPass,}) async {
+    String message = "";
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var userId = await prefs.getString("id");
+    var userType = await prefs.getString("type");
+    Response? response;
+      print("$changePassLink?type=$userType&user_id=$userId&password_old=$oldPass&password=$newPass");
+      response = await Dio().get(
+        "$changePassLink?type=$userType&user_id=$userId&password_old=$oldPass&password=$newPass",
+      );
+
+
+    if (response.data["status"] == "true") {
+
+      message = "done";
+    } else {
+      message = response.data["msg"];
     }
     return message;
   }

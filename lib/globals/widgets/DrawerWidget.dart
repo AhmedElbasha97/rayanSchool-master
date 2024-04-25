@@ -20,6 +20,8 @@ import 'package:share_it/share_it.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../views/auth/change_password_screen.dart';
+
 class AppDrawer extends StatefulWidget {
   @override
   _AppDrawerState createState() => _AppDrawerState();
@@ -253,6 +255,26 @@ class _AppDrawerState extends State<AppDrawer> {
             endIndent: 30,
             indent: 30,
           ),
+          userLogged??false?ListTile(
+            title: Text(
+              "${AppLocalizations.of(context)?.translate('changePass')}",
+              style: TextStyle(
+                  color: mainColor, fontWeight: FontWeight.bold, fontSize: 14),
+            ),
+            leading: Icon(Icons.password_rounded),
+            onTap: () async {
+              popPage(context);
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => ChangePasswordScreen(),
+              ));
+            },
+          ):Container(),
+          userLogged??false?Divider(
+            height: 1,
+            thickness: 2,
+            endIndent: 30,
+            indent: 30,
+          ):Container(),
           ListTile(
               title: Text(
                 "${AppLocalizations.of(context)?.translate('aboutTheApp')}",

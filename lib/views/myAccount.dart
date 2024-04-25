@@ -10,6 +10,7 @@ import 'package:rayanSchool/views/loggedUser/homeWork.dart';
 import 'package:rayanSchool/views/loggedUser/importantFilesScreen.dart';
 import 'package:rayanSchool/views/loggedUser/questionBank.dart';
 
+import 'Student/schadules_screen.dart';
 import 'loggedUser/fileScreen.dart';
 
 class MyAccount extends StatefulWidget {
@@ -36,36 +37,7 @@ class _MyAccountState extends State<MyAccount> {
               trailing: Icon(Icons.book),
             ),
             Divider(),
-            ListTile(
-              onTap: () {
-                pushPage(context, QuestionBankScreen());
-              },
-              title: Text(
-                AppLocalizations.of(context)?.translate('questionsBank')??"",
-              ),
-              trailing: Icon(Icons.help),
-            ),
-            Divider(),
-            ListTile(
-              onTap: () {
-                pushPage(context, FilesScreen());
-              },
-              title: Text(
-                AppLocalizations.of(context)?.translate('files')??"",
-              ),
-              trailing: Icon(Icons.file_present),
-            ),
-            Divider(),
-            ListTile(
-              onTap: () {
-                pushPage(context, FilesImportantScreen());
-              },
-              title: Text(
-                AppLocalizations.of(context)?.translate('impProg')??"",
-              ),
-              trailing: Icon(Icons.file_present),
-            ),
-            Divider(),
+
             ListTile(
               onTap: () {
                 pushPage(context, SendMessageStudentScreen());
@@ -75,35 +47,10 @@ class _MyAccountState extends State<MyAccount> {
               ),
               trailing: Icon(Icons.message_rounded),
             ),
+
+
             Divider(),
-            ListTile(
-              onTap: () {},
-              title: Text(
-                AppLocalizations.of(context)?.translate('results')??"",
-              ),
-              trailing: Icon(Icons.check_box),
-            ),
-            Divider(),
-            ListTile(
-              onTap: () {
-                pushPage(context, AskedQuestions());
-              },
-              title: Text(
-                AppLocalizations.of(context)?.translate('questionsStudent')??"",
-              ),
-              trailing: Icon(Icons.help_center),
-            ),
-            Divider(),
-            ListTile(
-              onTap: () {
-                pushPage(context, BooksScreen());
-              },
-              title: Text(
-                AppLocalizations.of(context)?.translate('booksnref')??"",
-              ),
-              trailing: Icon(Icons.book),
-            ),
-            Divider(),
+
             ListTile(
               onTap: () {
                 pushPage(context, MessagesScreen());
@@ -125,7 +72,19 @@ class _MyAccountState extends State<MyAccount> {
             ),
             Divider(),
             ListTile(
-                onTap: () {},
+              onTap: () {
+                pushPage(context, BooksScreen());
+              },
+              title: Text(
+                AppLocalizations.of(context)?.translate('booksnref')??"",
+              ),
+              trailing: Icon(Icons.book),
+            ),
+            Divider(),
+            ListTile(
+                onTap: () {
+                  pushPage(context, SchadulesScreen());
+                },
                 title: Text(
                   AppLocalizations.of(context)?.translate('schedule')??"",
                 ),

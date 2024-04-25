@@ -4,6 +4,9 @@ import 'package:rayanSchool/globals/helpers.dart';
 import 'package:rayanSchool/views/loggedUser/Messages/sendMessageStudent.dart';
 import 'package:rayanSchool/views/parents/AttendanceScreen.dart';
 import 'package:rayanSchool/views/parents/ReportsScreen.dart';
+import 'package:rayanSchool/views/parents/penalties_list_screen.dart';
+import 'package:rayanSchool/views/parents/recommendation_academic_list_screen.dart';
+import 'package:rayanSchool/views/parents/recommendation_list_screen.dart';
 
 import 'loggedUser/Messages/MessagesScreen.dart';
 import 'loggedUser/Messages/sentMessageScreen.dart';
@@ -80,6 +83,48 @@ class _MyAccountParentState extends State<MyAccountParent> {
                   AppLocalizations.of(context)?.translate('sendMessage')??"",
                 ),
                 trailing: Icon(Icons.message_rounded),
+              ),
+              Divider(),
+              ListTile(
+                onTap: () {
+                  pushPage(
+                      context,
+                      RecommendationsListScreen(
+                      ));
+                },
+                title: Text(
+                    Localizations.localeOf(context).languageCode == "en"
+                        ?"Recommendation Behavioural list":"قائمة التوصيات السلوكيه",
+                ),
+                trailing: Icon(Icons.contact_page_rounded),
+              ),
+              Divider(),
+              ListTile(
+                onTap: () {
+                  pushPage(
+                      context,
+                      RecommendationAcademicListScreen(
+                      ));
+                },
+                title: Text(
+                    Localizations.localeOf(context).languageCode == "en"
+                        ?"Recommendation academic list":"قائمة التوصيات الأكدميه",
+                ),
+                trailing: Icon(Icons.contact_page_rounded),
+              ),
+              Divider(),
+              ListTile(
+                onTap: () {
+                  pushPage(
+                      context,
+                      PenaltiesListScreen(
+                      ));
+                },
+                title: Text(
+                    Localizations.localeOf(context).languageCode == "en"
+                        ?"Conduct and penalties":"السلوك و الجزاءات",
+                ),
+                trailing: Icon(Icons.close),
               ),
             ])));
   }

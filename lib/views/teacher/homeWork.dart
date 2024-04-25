@@ -36,7 +36,27 @@ class _HomeWorkScreenState extends State<HomeWorkScreen> {
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : ListView.builder(
+          : homeworks.isEmpty??true?
+      Container(
+        height: MediaQuery.of(context).size.height*0.75,
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Image.asset("assets/images/noData.png"),
+            ),
+            SizedBox(height: 20,),
+            Text(Localizations.localeOf(context).languageCode == "en"
+                ?"no Homework available":"لا يوجد واجب منزلى متوفره لان",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20
+
+              ),),
+          ],
+        ),
+      ):ListView.builder(
               padding: EdgeInsets.all(10),
               itemCount: homeworks.length,
               itemBuilder: (BuildContext context, int index) {

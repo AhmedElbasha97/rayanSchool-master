@@ -8,6 +8,7 @@ class TeacherScheduleService {
   Future<List<Schedule>> getSchedule({String? id}) async {
     List<Schedule> list = [];
     Response response;
+    print("$schedule?teacher_id=$id");
     response = await Dio().get(
       "$schedule?teacher_id=$id",
     );

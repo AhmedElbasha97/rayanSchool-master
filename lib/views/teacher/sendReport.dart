@@ -21,19 +21,23 @@ class _SendReportState extends State<SendReport> {
 
   List<Category> categories = [];
   List<Category> levels = [];
+  List<Category> levels2 = [];
   List<Student> student = [];
 
   bool isLoading = false;
   bool categoryloading = true;
   bool levelLoading = false;
+  bool level2Loading = false;
   bool studentsLoading = false;
 
   Category selectCatogory = Category(ctgName: "اختار القسم");
   Category selectLevel = Category(ctgName: "اختار المرحلة");
+  Category selectLevel2 = Category(ctgName: "اختار الفصل");
   Student selectStudent = Student(name: "اختار طالب");
 
   Category? selectedCatogory;
   Category? selectedLevel;
+  Category? selectedLevel2;
   Student? selectedStudent;
 
   getCatgories() async {
@@ -49,9 +53,15 @@ class _SendReportState extends State<SendReport> {
     levelLoading = false;
     setState(() {});
   }
+  getLevels2() async {
+    levels2 = await TeacherService().getLevels(id: selectedLevel?.id??"");
+    levels2.add(selectLevel2);
+    level2Loading = false;
+    setState(() {});
+  }
 
   getStudent() async {
-    student = await TeacherService().getStudents(id: selectedLevel?.id??"");
+    student = await TeacherService().getStudents(id: selectedLevel2?.id??"");
     student.add(selectStudent);
     studentsLoading = false;
     setState(() {});
@@ -177,11 +187,42 @@ class _SendReportState extends State<SendReport> {
                                   onChanged: (value) {
                                     selectLevel = value!;
                                     selectedLevel = value;
-                                    studentsLoading = true;
-                                    getStudent();
+                                    level2Loading = true;
+                                    getLevels2();
                                     setState(() {});
                                   },
                                 ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+
+                    Container(
+                      width: 300,
+                      height: 50,
+                      child: level2Loading
+                          ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                          : levels.isEmpty
+                          ? Container()
+                          : DropdownButton<Category>(
+                        icon: Container(),
+                        value: selectLevel2,
+                        items: levels2.map((Category value) {
+                          return DropdownMenuItem<Category>(
+                            value: value,
+                            child: Text("${value.ctgName}"),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          selectLevel2 = value!;
+                          selectedLevel2 = value;
+                          studentsLoading = true;
+                          getStudent();
+                          setState(() {});
+                        },
+                      ),
                     ),
                     SizedBox(
                       height: 15,

@@ -10,6 +10,11 @@ import 'package:rayanSchool/models/homeWorkDetails.dart';
 import 'package:rayanSchool/models/importantFiles.dart';
 import 'package:rayanSchool/models/question.dart';
 import 'package:rayanSchool/models/questionDetails.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../models/Student/schadules_student_model.dart';
+import '../models/activity_detailed_model.dart';
+import '../models/activity_list_model.dart';
 
 class LoggedUser {
   String filesLink = "${baseUrl}student_download_files.php";
@@ -22,6 +27,10 @@ class LoggedUser {
   String books = "${baseUrl}student_books.php";
   String askedQuestions = "${baseUrl}student_ask_income.php";
   String askedQuestionsDetails = "${baseUrl}student_ask_income_view.php";
+  String getHomeWorksURL = "${baseUrl}student_homework.php";
+  String getHomeWorkDetailURL = "${baseUrl}student_homework_view.php";
+  String getSchadulesURL = "${baseUrl}student_table.php";
+
   Future<List<Files>> getFiles({String? id}) async {
     List<Files> list = [];
     Response response;
@@ -173,5 +182,44 @@ class LoggedUser {
       });
     }
     return list;
+  }
+  Future<List<ActivitiesListModel>> getStudentHomeWorksList() async {
+    List<ActivitiesListModel> list = [];
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    var userId = await prefs.getString("id");
+    Response response;
+    response = await Dio().get(
+      "$getHomeWorksURL?student_id=$userId",
+    );
+    var data = response.data;
+    data.forEach((element) {
+      list.add(ActivitiesListModel.fromJson(element));
+    });
+    return list;
+  }
+  Future<ActivitiesDetailedModel> getHomeWorkDetails( String homeWorkId) async {
+    ActivitiesDetailedModel data;
+    Response response;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var userId = await prefs.getString("id");
+    response = await Dio().get(
+      "$getHomeWorkDetailURL?student_id=$userId&homework_id=$homeWorkDetails",
+    );
+    var resData = response.data;
+    data = ActivitiesDetailedModel.fromJson(resData[0]);
+    return data;
+  }
+  Future<SchadulesStudentModel> getSchadules() async {
+    SchadulesStudentModel data;
+    Response response;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var userId = await prefs.getString("id");
+    response = await Dio().get(
+      "$getSchadulesURL?student_id=$userId",
+    );
+    var resData = response.data;
+    data = SchadulesStudentModel.fromJson(resData[0]);
+    return data;
   }
 }

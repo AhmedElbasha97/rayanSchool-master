@@ -14,7 +14,15 @@ import 'package:rayanSchool/views/Notification/notification_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../globals/widgets/notification_icon.dart';
+import '../models/school_social_media_link_model.dart';
+import '../models/school_social_media_link_model.dart';
+import '../models/school_social_media_link_model.dart';
+import 'appData/NewsScreen.dart';
+import 'appData/activity_screen.dart';
+import 'appData/contact_us_screen.dart';
 import 'appData/schoolWord.dart';
+import 'auth/login.dart';
+import 'other/joinRequest.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -25,7 +33,8 @@ class _HomeScreenState extends State<HomeScreen> {
   List<SliderData> sliderData = [];
   List<PhotoAlbum> list = [];
   List<Videos> list2 = [];
-  bool userLogged = false;
+  bool userLogged = true;
+  SchoolSocialMediaLinkModel? dataLink ;
   bool loading = true;
   @override
   void initState() {
@@ -36,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
   getHomeData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     sliderData = await AppInfoService().getSliderPhotos();
+    dataLink = await AppInfoService().getSchoolSocialMediaLink();
     userLogged = prefs.getString("id") == null ? false : true;
     await getAlbumsData();
     loading = false;
@@ -63,11 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
           userLogged?InkWell(
             onTap: ()=>
              pushPage(context,NotificationsListScreen(),
-
-
               ),
-
-
             child: Ink(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -85,219 +91,494 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
       ),
       drawer: AppDrawer(),
-      body: loading
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : ListView(
-              padding: EdgeInsets.symmetric(horizontal: 5, vertical: 15),
-              shrinkWrap: true,
+      body:userLogged?loading
+          ?Container(
+          width: MediaQuery.of(context).size.width ,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/images/bcakGroundImg.png"),
+              fit: BoxFit.fitHeight,
+            ),
+          ),
+            child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+          )
+          :Container(
+        width: MediaQuery.of(context).size.width ,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/bcakGroundImg.png"),
+            fit: BoxFit.fitHeight,
+          ),
+        ),
+            child: ListView(
+                    padding: EdgeInsets.symmetric(horizontal: 5, vertical: 15),
+                    shrinkWrap: true,
+                    children: [
+            SizedBox(
+              height: 20,
+            ),
+            CarouselSlider(
+              options: CarouselOptions(height: 150.0, autoPlay: true),
+              items: sliderData.map((i) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return Container(
+                      width: MediaQuery.of(context).size.width,
+                      margin: EdgeInsets.symmetric(horizontal: 5.0),
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage("${i.img}"),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(15))),
+                    );
+                  },
+                );
+              }).toList(),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                AppLocalizations.of(context)?.translate('aboutTheSchool')??"",
+                style: appText.copyWith(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16),
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.2,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                children: [
+                  HomeCard(
+                    width: MediaQuery.of(context).size.width*0.45,
+
+                    onTap: () {
+                      pushPage(context, SchoolWord());
+                    },
+                    title:
+                    "${AppLocalizations.of(context)?.translate('schoolWord')}",
+                    imageLink: "assets/images/school.png",
+                  ),
+
+                  HomeCard(
+                    width: MediaQuery.of(context).size.width*0.45,
+
+                    onTap: () {
+                      pushPage(
+                          context,
+                          SchoolWord(
+                            isAbout: true,
+                          ));
+                    },
+                    title:
+                    "${AppLocalizations.of(context)?.translate('schoolVision')}",
+                    imageLink: "assets/images/vision.png",
+                  ),
+                ],
+              ),
+            ),
+            //====================================================================
+            SizedBox(
+              height: 20,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                AppLocalizations.of(context)?.translate('news')??"",
+                style: appText.copyWith(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16),
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.2,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                children: [
+                  HomeCard(
+                    width: MediaQuery.of(context).size.width*0.45,
+
+                    onTap: () {
+                      pushPage(context, ActivityScreen());
+                    },
+                    title:
+                    "${AppLocalizations.of(context)?.translate('activity')}",
+                    imageLink: "assets/images/activities.png",
+                  ),
+                  HomeCard(
+                    width: MediaQuery.of(context).size.width*0.45,
+                    onTap: () {
+                      pushPage(context, SchoolWord());
+                    },
+                    title:
+                    "${AppLocalizations.of(context)?.translate('newNews')}",
+                    imageLink: "assets/images/newNews.png",
+                  ),
+                ],
+              ),
+            ),
+            // ====================================================================
+            SizedBox(
+              height: 20,
+            ),
+                      // ====================================================================
+
+                      Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                AppLocalizations.of(context)?.translate('PhotosAlbum')??"",
+                style: appText.copyWith(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16),
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            CarouselSlider(
+              options: CarouselOptions(height: 150.0, autoPlay: true),
+              items: list.map((i) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return Container(
+                      width: MediaQuery.of(context).size.width,
+                      margin: EdgeInsets.symmetric(horizontal: 5.0),
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage("${i.img}"),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(15))),
+                    );
+                  },
+                );
+              }).toList(),
+            ),
+            //====================================================================
+            SizedBox(
+              height: 20,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                AppLocalizations.of(context)?.translate('videosAlbum')??"",
+                style: appText.copyWith(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16),
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            CarouselSlider(
+              options: CarouselOptions(height: 150.0, autoPlay: true),
+              items: list2.map((i) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return Container(
+                      width: MediaQuery.of(context).size.width,
+                      margin: EdgeInsets.symmetric(horizontal: 5.0),
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage("${i.img}"),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(15))),
+                    );
+                  },
+                );
+              }).toList(),
+            ),
+            //====================================================================
+                    ],
+                  ),
+          ):
+      Container(
+        width: MediaQuery.of(context).size.width ,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/bcakGroundImg.png"),
+            fit: BoxFit.fitHeight,
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Image.asset(
+              "assets/images/logoname.jpg",
+              height: MediaQuery.of(context).size.height*0.1 ,
+              width: MediaQuery.of(context).size.width*0.7 ,
+            ),
+            InkWell(
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => LoginScreen(),
+                ));
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    "assets/images/signInicons.png",
+                    height: MediaQuery.of(context).size.height*0.06 ,
+                    width: MediaQuery.of(context).size.width*0.12,
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: mainColor,
+                      borderRadius: BorderRadius.circular(50.0),
+                    ),
+                    height: MediaQuery.of(context).size.height*0.06 ,
+                    width: MediaQuery.of(context).size.width*0.6 ,
+                    child: Center(
+                      child: Text(
+                        Localizations.localeOf(context).languageCode == "en"
+                            ?"Login":"تسجيل دخول",
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.bold, fontSize: 14),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            InkWell(
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => JoinRequest(),
+                ));
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                  "assets/images/2icons.png",
+                  height: MediaQuery.of(context).size.height*0.06 ,
+                  width: MediaQuery.of(context).size.width*0.12,
+                ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: mainColor,
+                      borderRadius: BorderRadius.circular(50.0),
+                    ),
+                    height: MediaQuery.of(context).size.height*0.06 ,
+                    width: MediaQuery.of(context).size.width*0.6 ,
+                    child: Center(
+                      child: Text(
+                        Localizations.localeOf(context).languageCode == "en"
+                            ?"Submit an application for admission":"تقديم طلب التحاق",
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.bold, fontSize: 14),
+                      ),
+                    ),
+                  ),
+
+
+                ],
+              ),
+            ),
+            InkWell(
+              onTap: (){
+                pushPage(
+                    context,
+                    SchoolWord(
+                      isAbout: true,
+                    ));
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+
+                children: [
+                  Image.asset(
+                    "assets/images/3icons.png",
+                    height: MediaQuery.of(context).size.height*0.06 ,
+                    width: MediaQuery.of(context).size.width*0.12,
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: mainColor,
+                      borderRadius: BorderRadius.circular(50.0),
+                    ),
+                    height: MediaQuery.of(context).size.height*0.06 ,
+                    width: MediaQuery.of(context).size.width*0.6 ,
+                    child: Center(
+                      child: Text(
+                        Localizations.localeOf(context).languageCode == "en"
+                            ?"School policies":"السياسات المدرسيه",
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.bold, fontSize: 14),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width ,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  InkWell(
+                    onTap: (){
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => ContactUsScreen(),
+                      ));
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: mainColor,
+                        borderRadius: BorderRadius.circular(50.0),
+                      ),
+                      height: MediaQuery.of(context).size.height*0.045 ,
+                      width: MediaQuery.of(context).size.width*0.3 ,
+                      child: Center(
+                        child: Text(
+                          Localizations.localeOf(context).languageCode == "en"
+                              ?"Suggestions":"الأقتراحات",
+                          style: TextStyle(
+                              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 14),
+                        ),
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: (){
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => NewsScreen(),
+                      ));
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: mainColor,
+                        borderRadius: BorderRadius.circular(50.0),
+                      ),
+                      height: MediaQuery.of(context).size.height*0.045 ,
+                      width: MediaQuery.of(context).size.width*0.3 ,
+                      child: Center(
+                        child: Text(
+                          Localizations.localeOf(context).languageCode == "en"
+                              ?"new news":"جديد الأخبار",
+                          style: TextStyle(
+                              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 14),
+                        ),
+                      ),
+                    ),
+                  ),
+
+                ],
+              ),
+            ),
+           loading?SizedBox(): Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                SizedBox(
-                  height: 20,
-                ),
-                CarouselSlider(
-                  options: CarouselOptions(height: 150.0, autoPlay: true),
-                  items: sliderData.map((i) {
-                    return Builder(
-                      builder: (BuildContext context) {
-                        return Container(
-                          width: MediaQuery.of(context).size.width,
-                          margin: EdgeInsets.symmetric(horizontal: 5.0),
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: NetworkImage("${i.img}"),
-                                fit: BoxFit.cover,
-                              ),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15))),
-                        );
-                      },
-                    );
-                  }).toList(),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    AppLocalizations.of(context)?.translate('aboutTheSchool')??"",
-                    style: appText.copyWith(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16),
-                  ),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.2,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    children: [
-                      HomeCard(
-                        onTap: () {
-                          pushPage(context, SchoolWord());
-                        },
-                        title:
-                            "${AppLocalizations.of(context)?.translate('schoolWord')}",
-                        imageLink: "assets/images/school.png",
+                Padding(padding: EdgeInsets.symmetric(horizontal: 1)),
+                InkWell(
+                   onTap: () => launchURL(dataLink?.facebook??""),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.asset(
+                        "assets/images/facebookIcon.png",
+                        height: MediaQuery.of(context).size.height*0.06 ,
+                        width: MediaQuery.of(context).size.width*0.12,
                       ),
-                      // HomeCard(
-                      //   onTap: () {
-                      //     // pushPage(
-                      //     //     context,
-                      //     //     SchoolWord(
-                      //     //       isAbout: true,
-                      //     //     ));
-                      //   },
-                      //   title:
-                      //       "${AppLocalizations.of(context).translate('schoolMessage')}",
-                      //   imageLink: "assets/images/message.png",
-                      // ),
-                      HomeCard(
-                        onTap: () {
-                          pushPage(
-                              context,
-                              SchoolWord(
-                                isAbout: true,
-                              ));
-                        },
-                        title:
-                            "${AppLocalizations.of(context)?.translate('schoolVision')}",
-                        imageLink: "assets/images/vision.png",
+                    ),
+                  ),
+                ),
+                InkWell(
+                   onTap: () => launchURL(dataLink?.instagram??""),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.asset(
+                        "assets/images/InstagramIcon.png",
+                        height: MediaQuery.of(context).size.height*0.06 ,
+                        width: MediaQuery.of(context).size.width*0.12,
                       ),
-                    ],
+                    ),
                   ),
                 ),
-// ====================================================================
-                SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    AppLocalizations.of(context)?.translate('news')??"",
-                    style: appText.copyWith(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16),
-                  ),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.2,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    children: [
-                      HomeCard(
-                        width: 250,
-                        onTap: () {
-                          pushPage(context, SchoolWord());
-                        },
-                        title:
-                            "${AppLocalizations.of(context)?.translate('activity')}",
-                        imageLink: "assets/images/activities.png",
+                InkWell(
+                   onTap: () => launchURL(dataLink?.twitter??""),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.asset(
+                        "assets/images/twitter_icon.png",
+                        height: MediaQuery.of(context).size.height*0.06 ,
+                        width: MediaQuery.of(context).size.width*0.12,
                       ),
-                      HomeCard(
-                        width: 250,
-                        onTap: () {
-                          pushPage(context, SchoolWord());
-                        },
-                        title:
-                            "${AppLocalizations.of(context)?.translate('newNews')}",
-                        imageLink: "assets/images/newNews.png",
+                    ),
+                  ),
+                ),
+                InkWell(
+                   onTap: () => launchURL(dataLink?.youtube??""),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.asset(
+                        "assets/images/youtubeIcon.png",
+                        height: MediaQuery.of(context).size.height*0.06 ,
+                        width: MediaQuery.of(context).size.width*0.12,
                       ),
-                    ],
+                    ),
                   ),
                 ),
-// ====================================================================
-// ====================================================================
-                SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    AppLocalizations.of(context)?.translate('PhotosAlbum')??"",
-                    style: appText.copyWith(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16),
-                  ),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                CarouselSlider(
-                  options: CarouselOptions(height: 150.0, autoPlay: true),
-                  items: list.map((i) {
-                    return Builder(
-                      builder: (BuildContext context) {
-                        return Container(
-                          width: MediaQuery.of(context).size.width,
-                          margin: EdgeInsets.symmetric(horizontal: 5.0),
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: NetworkImage("${i.img}"),
-                                fit: BoxFit.cover,
-                              ),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15))),
-                        );
-                      },
-                    );
-                  }).toList(),
-                ),
-// ====================================================================
-// ====================================================================
-                SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    AppLocalizations.of(context)?.translate('videosAlbum')??"",
-                    style: appText.copyWith(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16),
-                  ),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                CarouselSlider(
-                  options: CarouselOptions(height: 150.0, autoPlay: true),
-                  items: list2.map((i) {
-                    return Builder(
-                      builder: (BuildContext context) {
-                        return Container(
-                          width: MediaQuery.of(context).size.width,
-                          margin: EdgeInsets.symmetric(horizontal: 5.0),
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: NetworkImage("${i.img}"),
-                                fit: BoxFit.cover,
-                              ),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15))),
-                        );
-                      },
-                    );
-                  }).toList(),
-                ),
-// ====================================================================
+                Padding(padding: EdgeInsets.symmetric(horizontal: 1)),
               ],
             ),
+          ],
+        ),
+      ),
+
     );
   }
 }
