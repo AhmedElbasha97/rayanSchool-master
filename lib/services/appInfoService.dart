@@ -12,6 +12,7 @@ import '../models/school_social_media_link_model.dart';
 class AppInfoService {
   String sliderLink = "${baseUrl}slide.php";
   String aboutSchool = "${baseUrl}about.php";
+  String schoolPolicyUrl = "${baseUrl}privacy2.php";
   String schoolWord = "${baseUrl}school_desc.php";
   String aboutApp = "${baseUrl}about_app.php";
   String privacyPolicy = "${baseUrl}privacy.php";
@@ -39,6 +40,16 @@ class AppInfoService {
     Response response;
     response = await Dio().get(
       "$aboutSchool",
+    );
+    var resData = response.data;
+    data = AboutSchool.fromJson(resData[0]);
+    return data;
+  }
+  Future<AboutSchool> getSchoolPolicy() async {
+    AboutSchool data;
+    Response response;
+    response = await Dio().get(
+      "$schoolPolicyUrl",
     );
     var resData = response.data;
     data = AboutSchool.fromJson(resData[0]);

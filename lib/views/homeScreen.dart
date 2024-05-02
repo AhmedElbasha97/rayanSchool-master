@@ -21,6 +21,7 @@ import 'appData/NewsScreen.dart';
 import 'appData/activity_screen.dart';
 import 'appData/contact_us_screen.dart';
 import 'appData/schoolWord.dart';
+import 'appData/school_policy_screen.dart';
 import 'auth/login.dart';
 import 'other/joinRequest.dart';
 
@@ -44,9 +45,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   getHomeData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    sliderData = await AppInfoService().getSliderPhotos();
-    dataLink = await AppInfoService().getSchoolSocialMediaLink();
     userLogged = prefs.getString("id") == null ? false : true;
+
+    if(!userLogged){
+      dataLink = await AppInfoService().getSchoolSocialMediaLink();
+    }else{
+      sliderData = await AppInfoService().getSliderPhotos();
+    }
     await getAlbumsData();
     loading = false;
     setState(() {});
@@ -410,9 +415,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: (){
                 pushPage(
                     context,
-                    SchoolWord(
-                      isAbout: true,
-                    ));
+                    SchoolPolicyScreen());
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

@@ -115,61 +115,59 @@ class _PenaltiesListScreenState extends State<PenaltiesListScreen> {
                       width: double.infinity,
                       child:  Padding(
                         padding: const EdgeInsets.all(10.0),
-                        child: Expanded(
-                          child: Padding(
-                            padding:
-                            const EdgeInsets.symmetric(horizontal: 10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  penaltiesList?[index].student??"",
-                                  style:
-                                  TextStyle(fontSize: 16, fontWeight:FontWeight.normal ),
-                                  maxLines: null,
-                                ),
-                                SizedBox(height: 8),
-                                Text(
-                                  penaltiesList?[index].penaltiesListModelClass??"",
-                                  style:
-                                  TextStyle(fontSize: 16, fontWeight:FontWeight.normal ),
-                                  maxLines: null,
-                                ),
-                                SizedBox(height: 8),
-                                Text(
-                                  penaltiesList?[index].level??"",
-                                  style:
-                                  TextStyle(fontSize: 16, fontWeight:FontWeight.normal ),
-                                  maxLines: null,
-                                ),
-                                SizedBox(height: 8),
-                                Text(
-                                  penaltiesList?[index].action??""??"",
-                                  style:
-                                  TextStyle(fontSize: 16, fontWeight:FontWeight.normal ),
-                                  maxLines: null,
-                                ),
-                                SizedBox(height: 8),
-                                Text(
-                                  penaltiesList?[index].notes??""??"",
-                                  style:
-                                  TextStyle(fontSize: 16, fontWeight:FontWeight.normal),
-                                  maxLines: null,
-                                ),
-                                SizedBox(height: 8),
-                                Opacity(
-                                  opacity: 0.64,
-                                  child: Text(
-                                    returnDateAndTime(penaltiesList?[index]),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.normal,
-                                    ),
+                        child: Padding(
+                          padding:
+                          const EdgeInsets.symmetric(horizontal: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                penaltiesList?[index].student??"",
+                                style:
+                                TextStyle(fontSize: 16, fontWeight:FontWeight.normal ),
+                                maxLines: null,
+                              ),
+                              SizedBox(height: 8),
+                              Text(
+                                penaltiesList?[index].penaltiesListModelClass??"",
+                                style:
+                                TextStyle(fontSize: 16, fontWeight:FontWeight.normal ),
+                                maxLines: null,
+                              ),
+                              SizedBox(height: 8),
+                              Text(
+                                penaltiesList?[index].level??"",
+                                style:
+                                TextStyle(fontSize: 16, fontWeight:FontWeight.normal ),
+                                maxLines: null,
+                              ),
+                              SizedBox(height: 8),
+                              Text(
+                                penaltiesList?[index].action??""??"",
+                                style:
+                                TextStyle(fontSize: 16, fontWeight:FontWeight.normal ),
+                                maxLines: null,
+                              ),
+                              SizedBox(height: 8),
+                              Text(
+                                penaltiesList?[index].notes??""??"",
+                                style:
+                                TextStyle(fontSize: 16, fontWeight:FontWeight.normal),
+                                maxLines: null,
+                              ),
+                              SizedBox(height: 8),
+                              Opacity(
+                                opacity: 0.64,
+                                child: Text(
+                                  returnDateAndTime(penaltiesList?[index]),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.normal,
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       ),

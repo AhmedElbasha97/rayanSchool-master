@@ -120,61 +120,59 @@ class _RecommendationsListScreenState extends State<RecommendationsListScreen> {
             width: double.infinity,
             child:  Padding(
               padding: const EdgeInsets.all(10.0),
-              child: Expanded(
-                child: Padding(
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        recommendationList?[index].title??"",
-                        style:
-                        TextStyle(fontSize: 16, fontWeight:FontWeight.normal ),
-                        maxLines: null,
-                      ),
-                      SizedBox(height: 8),
-                      Text(
-                        recommendationList?[index].student??"",
-                        style:
-                        TextStyle(fontSize: 16, fontWeight:FontWeight.normal ),
-                        maxLines: null,
-                      ),
-                      SizedBox(height: 8),
-                      Text(
-                        recommendationList?[index].subject??"",
-                        style:
-                        TextStyle(fontSize: 16, fontWeight:FontWeight.normal ),
-                        maxLines: null,
-                      ),
-                      SizedBox(height: 8),
-                      Text(
-                        recommendationList?[index].teacher??"",
-                        style:
-                        TextStyle(fontSize: 16, fontWeight:FontWeight.normal ),
-                        maxLines: null,
-                      ),
-                      SizedBox(height: 8),
-                      Text(
-                          recommendationList?[index].notes??"",
-                        style:
-                        TextStyle(fontSize: 16, fontWeight:FontWeight.normal),
-                        maxLines: null,
-                      ),
-                      SizedBox(height: 8),
-                      Opacity(
-                        opacity: 0.64,
-                        child: Text(
-                          returnDateAndTime(recommendationList?[index]),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontWeight: FontWeight.normal,
-                          ),
+              child: Padding(
+                padding:
+                const EdgeInsets.symmetric(horizontal: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      recommendationList?[index].title??"",
+                      style:
+                      TextStyle(fontSize: 16, fontWeight:FontWeight.normal ),
+                      maxLines: null,
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      recommendationList?[index].student??"",
+                      style:
+                      TextStyle(fontSize: 16, fontWeight:FontWeight.normal ),
+                      maxLines: null,
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      recommendationList?[index].subject??"",
+                      style:
+                      TextStyle(fontSize: 16, fontWeight:FontWeight.normal ),
+                      maxLines: null,
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      recommendationList?[index].teacher??"",
+                      style:
+                      TextStyle(fontSize: 16, fontWeight:FontWeight.normal ),
+                      maxLines: null,
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                        recommendationList?[index].notes??"",
+                      style:
+                      TextStyle(fontSize: 16, fontWeight:FontWeight.normal),
+                      maxLines: null,
+                    ),
+                    SizedBox(height: 8),
+                    Opacity(
+                      opacity: 0.64,
+                      child: Text(
+                        returnDateAndTime(recommendationList?[index]),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontWeight: FontWeight.normal,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),

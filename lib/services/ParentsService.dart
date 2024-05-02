@@ -62,6 +62,7 @@ class ParentService {
     Response response;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var userId = await prefs.getString("id");
+    print("$recommendationList?parent_id=$userId&type=$typeId");
     response = await Dio().get(
       "$recommendationList?parent_id=$userId&type=$typeId",
     );
@@ -79,6 +80,7 @@ Future<List<PenaltiesListModel>> getPenaltiesList(
     Response response;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var userId = await prefs.getString("id");
+    print("$penaltiesList?parent_id=$userId");
     response = await Dio().get(
       "$penaltiesList?parent_id=$userId",
     );
@@ -109,6 +111,7 @@ Future<List<PenaltiesListModel>> getPenaltiesList(
   Future<List<Messages>> getMessages({String? id}) async {
     List<Messages> list = [];
     Response response;
+    print("$messages?parent_id=$id");
     response = await Dio().get(
       "$messages?parent_id=$id",
     );
@@ -124,6 +127,7 @@ Future<List<PenaltiesListModel>> getPenaltiesList(
   Future<List<MessageSentStudent>> getSentMessages({String? id}) async {
     List<MessageSentStudent> list = [];
     Response response;
+    print("$sentMessages?parent_id=$id");
     response = await Dio().get(
       "$sentMessages?parent_id=$id",
     );
