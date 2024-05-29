@@ -17,6 +17,7 @@ class MyAccountTeacher extends StatefulWidget {
 }
 
 class _MyAccountTeacherState extends State<MyAccountTeacher> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,6 +26,7 @@ class _MyAccountTeacherState extends State<MyAccountTeacher> {
         padding: const EdgeInsets.all(8.0),
         child: ListView(
           children: [
+
             ListTile(
               onTap: () {
                 pushPage(context, ReportScreen());

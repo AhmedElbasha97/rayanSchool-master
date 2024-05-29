@@ -10,6 +10,7 @@ import 'package:rayanSchool/models/parents/reports.dart';
 import 'package:rayanSchool/models/teachers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../models/parents/child_model.dart';
 import '../models/penalties_list_model.dart';
 import '../models/recommendation_list_model.dart';
 
@@ -25,6 +26,7 @@ class ParentService {
   String teachers = "${baseUrl}teachers_list.php";
   String recommendationList = "${baseUrl}parent_report2.php";
   String penaltiesList = "${baseUrl}parent_attu.php";
+  String childList = "${baseUrl}parent_all_students.php";
 
   Future<List<Report>> getReports({String? id}) async {
     List<Report> list = [];
@@ -151,6 +153,22 @@ Future<List<PenaltiesListModel>> getPenaltiesList(
     if (response.data != null) {
       data.forEach((element) {
         list.add(MessageDetails.fromJson(element));
+      });
+    }
+    return list;
+  }
+  Future<List<ChildModel>> getChildList() async {
+    List<ChildModel> list = [];
+    Response response;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var userId = await prefs.getString("id");
+    response = await Dio().get(
+      "$childList?parent_id=$userId",
+    );
+    var data = response.data;
+    if (response.data != null) {
+      data.forEach((element) {
+        list.add(ChildModel.fromJson(element));
       });
     }
     return list;
