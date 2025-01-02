@@ -32,7 +32,6 @@ class _SchadulesDetailedImageScreenState extends State<SchadulesDetailedImageScr
           child: Hero(
             tag: 'imageHero',
             child: PinchZoom(
-              resetDuration: const Duration(milliseconds: 100),
               maxScale: 3.5,
               onZoomStart: (){print('Start zooming');},
               onZoomEnd: (){print('Stop zooming');},

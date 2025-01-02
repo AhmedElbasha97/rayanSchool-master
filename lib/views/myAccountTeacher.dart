@@ -114,7 +114,7 @@ class _MyAccountTeacherState extends State<MyAccountTeacher> {
               },
               title: Text(
                 Localizations.localeOf(context).languageCode == "en"
-                    ?"Send a academic recommendation":"أرسال توصية الأكدميه",
+                    ?"Send a academic recommendation":"أرسال توصية أكاديمية",
               ),
               trailing: Icon(Icons.contact_page_rounded),
             ),

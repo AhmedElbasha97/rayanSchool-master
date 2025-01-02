@@ -46,7 +46,7 @@ class _SendRecommendationsScreensState extends State<SendRecommendationsScreens>
   Student? selectedStudent;
   bool isServerLoading = false;
   String recommendationTitle = "";
-  String recommendationValue = "";
+  String recommendationValue = "2";
   String recommendationTypeValue = "";
   String recommendationTypeTitle = "";
 
@@ -158,7 +158,7 @@ class _SendRecommendationsScreensState extends State<SendRecommendationsScreens>
   void initState() {
     super.initState();
     getCatgories();
-    getRecommendationData( "1");
+    getRecommendationData( "2");
   }
 
   @override
@@ -201,8 +201,8 @@ class _SendRecommendationsScreensState extends State<SendRecommendationsScreens>
                     : recommendationList.isEmpty
                     ? Container()
                     :  Container(
-                  width: 300,
                   height: 70,
+                  width: 300,
 
                   child:InputDecorator(
                     decoration:  InputDecoration(border: OutlineInputBorder(
@@ -210,14 +210,14 @@ class _SendRecommendationsScreensState extends State<SendRecommendationsScreens>
                       borderSide: BorderSide(width: 1.0, style: BorderStyle.solid,color: Colors.yellow),
                     )),
                     child: DropdownButtonHideUnderline(
+
                           child: DropdownButton<Map<String?,String?>>(
-
-
+                              isExpanded:true,
                             hint: Text(recommendationTypeTitle==""?Localizations.localeOf(context).languageCode == "en"
-                                ?"Choose the type of Behavioural recommendation":"أختر نوع التوصيه السلوكيه ":recommendationTypeTitle),
+                                ?"Choose the type of Behavioural recommendation":"أختر نوع التوصيه السلوكيه ":recommendationTypeTitle,),
                             items:recommendationList.map((map) {
                           return DropdownMenuItem(
-                            child: Text(map.values.first??""),
+                            child: Text(map.values.first??"",maxLines: 3,),
                             value:map,
                           );
                             }).toList(),

@@ -259,7 +259,7 @@ class _MyAccountParentState extends State<MyAccountParent> {
                 },
                 title: Text(
                     Localizations.localeOf(context).languageCode == "en"
-                        ?"Recommendation academic list":"قائمة التوصيات الأكاديمية",
+                        ?"Recommendation academic list":"قائمة التوصيات أكاديمية",
                 ),
                 trailing: Icon(Icons.contact_page_rounded),
               ),

@@ -17,8 +17,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await PushNotificationService().setupInteractedMessage();
+
   FirebaseMessaging.instance.requestPermission();
+  await PushNotificationService().setupInteractedMessage();
   AppLanguage appLanguage = AppLanguage();
   await appLanguage.fetchLocale();
   runApp(MyApp(appLanguage: appLanguage));

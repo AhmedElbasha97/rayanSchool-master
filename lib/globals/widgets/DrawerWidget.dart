@@ -16,7 +16,7 @@ import 'package:rayanSchool/views/myAccountTeacher.dart';
 import 'package:rayanSchool/views/myAccoutParent.dart';
 import 'package:rayanSchool/views/other/joinRequest.dart';
 import 'package:rayanSchool/views/splashScreen.dart';
-import 'package:share_it/share_it.dart';
+import 'package:share_plus/share_plus.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -331,7 +331,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 link =
                     "https://apps.apple.com/us/app/%D9%85%D8%AF%D8%B1%D8%B3%D8%A9-%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D9%86/id1563613632";
               }
-              ShareIt.link(url: '$link', androidSheetTitle: 'Share App');
+              Share.share( '$link', subject: ' App Called Rayan schools');
             },
           ),
           Divider(

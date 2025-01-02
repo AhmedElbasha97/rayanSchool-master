@@ -19,7 +19,7 @@ class RecommendationsListScreen extends StatefulWidget {
 
 class _RecommendationsListScreenState extends State<RecommendationsListScreen> {
   bool isLoading = true;
-  String recommendationTitle = "توصيات سلوكية";
+  String recommendationTitle = "توصيات الأكاديمية ";
   String recommendationValue = "1";
   var type ;
   List<RecommendationListModel>? recommendationList = [];

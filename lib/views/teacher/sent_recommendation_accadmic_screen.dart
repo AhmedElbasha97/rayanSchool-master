@@ -50,7 +50,7 @@ class _SentRecommendationAccadmicScreenState
   Student? selectedStudent;
   bool isServerLoading = false;
   String recommendationTitle = "";
-  String recommendationValue = "";
+  String recommendationValue = "1";
   String recommendationTypeValue = "";
   String recommendationTypeTitle = "";
 
@@ -162,7 +162,7 @@ class _SentRecommendationAccadmicScreenState
   void initState() {
     super.initState();
     getCatgories();
-    getRecommendationData( "2");
+    getRecommendationData( "1");
   }
 
   @override
@@ -206,7 +206,7 @@ class _SentRecommendationAccadmicScreenState
                     ? Container()
                     :  Container(
                   width: 300,
-                  height: 70,
+                  height: 80,
 
                   child:InputDecorator(
                     decoration:  InputDecoration(border: OutlineInputBorder(
@@ -215,10 +215,10 @@ class _SentRecommendationAccadmicScreenState
                     )),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<Map<String?,String?>>(
-
+                        isExpanded: true,
 
                         hint: Text(recommendationTypeTitle==""?Localizations.localeOf(context).languageCode == "en"
-                            ?"Choose the type of academic recommendation":"أختر نوع التوصيه الأكدميه ":recommendationTypeTitle),
+                            ?"Choose the type of academic recommendation":"أختر نوع التوصيه أكاديمية ":recommendationTypeTitle),
                         items:recommendationList.map((map) {
                           return DropdownMenuItem(
                             child: Text(map.values.first??""),

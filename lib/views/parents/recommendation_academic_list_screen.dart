@@ -97,7 +97,7 @@ class _RecommendationAcademicListScreenState
                   ),
                   SizedBox(height: 20,),
                   Text(Localizations.localeOf(context).languageCode == "en"
-                      ?"no Recommendation academic available":"لا يوجد توصيات الأكدميه متوفره لان",
+                      ?"no Recommendation academic available":"لا يوجد توصيات أكاديمية متوفره لان",
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20
