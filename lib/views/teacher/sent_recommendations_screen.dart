@@ -399,39 +399,48 @@ class _SendRecommendationsScreensState extends State<SendRecommendationsScreens>
                       ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  child: TextFormField(
-                    maxLines: 4,
-                    focusNode: _msgNode,
-                    controller: _msgController,
-                    keyboardType: TextInputType.multiline,
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.message_rounded),
-                      counterText: "",
-                      hintText: AppLocalizations.of(context)?.translate('typeMsg')??"",
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Color(0xFF184e7a), width: 2.0),
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Color(0xFF184e7a), width: 1.0),
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
+              Column(
+                children: [
+
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      child: TextFormField(
+                        maxLines: 4,
+                        focusNode: _msgNode,
+                        controller: _msgController,
+                        keyboardType: TextInputType.multiline,
+
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.message_rounded),
+                          counterText: "",
+
+                          hintText: AppLocalizations.of(context)?.translate('typeMsg')??"",
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color(0xFF184e7a), width: 2.0),
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color(0xFF184e7a), width: 1.0),
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value!.length < 1) {
+                            return AppLocalizations.of(context)
+                                ?.translate('reportError');
+                          }
+                          return null;
+                        },
+
                       ),
                     ),
-                    validator: (value) {
-                      if (value!.length < 1) {
-                        return AppLocalizations.of(context)
-                            ?.translate('reportError');
-                      }
-                      return null;
-                    },
                   ),
-                ),
+                  if (_msgNode.hasFocus) _buildCustomKeyboardToolbar(),
+                ],
               ),
               SizedBox(
                 height: 15,
@@ -442,9 +451,11 @@ class _SendRecommendationsScreensState extends State<SendRecommendationsScreens>
                   onClick: () async {
                     sendMessage();
                   },
-                  label: "أرسال توصيه",
+                  label: Localizations.localeOf(context).languageCode == "en"
+                      ?"sent recommendation":"أرسال توصيه",
                 ),
-              ):Container(
+              ):
+              Container(
                 decoration: BoxDecoration(
                     color: mainColor,
                     shape: BoxShape.circle
@@ -462,6 +473,34 @@ class _SendRecommendationsScreensState extends State<SendRecommendationsScreens>
             ],
           ),
         ),
+      ),
+    );
+  }
+  Widget _buildCustomKeyboardToolbar() {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.8,
+
+      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          ElevatedButton(
+            onPressed: () {
+              _msgController.text += '\n'; // Add a newline
+              _msgController.selection = TextSelection.collapsed(
+                  offset: _msgController.text.length); // Move cursor to the end
+            },
+            child: Text(Localizations.localeOf(context).languageCode == "en"
+                ?"Next Line":"السطر التالي"),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              _msgNode.unfocus(); // Close the keyboard
+            },
+            child: Text(Localizations.localeOf(context).languageCode == "en"
+                ?"Done":"تم"),
+          ),
+        ],
       ),
     );
   }

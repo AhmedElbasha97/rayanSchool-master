@@ -31,6 +31,7 @@ class ParentService {
   Future<List<Report>> getReports({String? id}) async {
     List<Report> list = [];
     Response response;
+    print("$reports?parent_id=$id",);
     response = await Dio().get(
       "$reports?parent_id=$id",
     );
@@ -98,6 +99,7 @@ Future<List<PenaltiesListModel>> getPenaltiesList(
   Future<List<Attendance>> getAttendance({String? id}) async {
     List<Attendance> list = [];
     Response response;
+    print("$attendance?parent_id=$id");
     response = await Dio().get(
       "$attendance?parent_id=$id",
     );

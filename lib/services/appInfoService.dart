@@ -25,6 +25,7 @@ class AppInfoService {
   Future<List<SliderData>> getSliderPhotos() async {
     List<SliderData> list = [];
     Response response;
+    print(sliderLink);
     response = await Dio().get(
       "$sliderLink",
     );

@@ -25,6 +25,7 @@ class _MessageDetailsScreenState extends State<MessageDetailsScreen> {
     String? id = prefs.getString("id");
     msg =
         await TeacherService().getMessageDetails(id: id??"", msgId: widget.id);
+    print(msg);
     isLoading = false;
     setState(() {});
   }

@@ -31,7 +31,8 @@ class TeacherService {
   String addHomeWorkURL = "${baseUrl}teacher_homework_add.php";
   String getHomeWorksURL = "${baseUrl}teacher_homework.php";
   String getSchedulesTeacherURL = "${baseUrl}teacher_table.php";
-
+String getBuildingsURL = "${baseUrl}categories_list.php";
+String getStudentsURL = "${baseUrl}student_list.php";
   Future<List<TeacherReport>> getReports({String? id}) async {
     List<TeacherReport> list = [];
     Response response;
@@ -189,6 +190,7 @@ class TeacherService {
     DateTime date = DateTime.now();
     String dateString = "${date.year}-${date.month}-${date.day}";
     Response response;
+    print("$sendreports?teacher_id=$id&student_id=$studentId&date=$dateString&text=$msg");
     response = await Dio().get(
       "$sendreports?teacher_id=$id&student_id=$studentId&date=$dateString&text=$msg",
     );
@@ -235,9 +237,9 @@ class TeacherService {
       String? type,
       String? toId,
       String? title,
-      String? body,
        String? text}) async {
     Response response;
+    print("$sendMessage?teacher_id=$id&sendto_type=$type&to_id=$toId&title=$title&text=$text");
     response = await Dio().get(
       "$sendMessage?teacher_id=$id&sendto_type=$type&to_id=$toId&title=$title&text=$text",
     );
@@ -280,9 +282,10 @@ class TeacherService {
   Future<List<MessageDetailsTeacherModel>> getMessageDetails(
       {required String id, required String msgId}) async {
     List<MessageDetailsTeacherModel> list = [];
+    print("$sentMessageDetails?teacher_id=$id&msg_id=$msgId");
     Response response;
     response =
-        await Dio().get("$sentMessageDetails??teacher_id=$id&msg_id=$msgId");
+        await Dio().get("$sentMessageDetails?teacher_id=$id&msg_id=$msgId");
     var data = response.data;
     if (response.data != null) {
       data.forEach((element) {
@@ -302,5 +305,47 @@ class TeacherService {
     var resData = response.data;
     data = ActivitiesDetailedModel.fromJson(resData[0]);
     return data;
+  }
+  Future<List<Category>> getBuildings() async {
+    List<Category> listOfBuildings = [];
+    Response response;
+    response =
+        await Dio().get("$getBuildingsURL");
+    var data = response.data;
+    if (response.data != null) {
+      data.forEach((element) {
+        listOfBuildings.add(Category.fromJson(element));
+      });
+    }
+    return listOfBuildings;
+  }
+  Future<List<Category>> getNextCategory(String categoryId) async {
+    List<Category> listOfCategories = [];
+    Response response;
+    response =
+        await Dio().get("$getBuildingsURL?ctg_id=$categoryId");
+    var data = response.data;
+    if (response.data != null) {
+      data.forEach((element) {
+        listOfCategories.add(Category.fromJson(element));
+      });
+    }
+    return listOfCategories;
+  }
+  Future<List<Student>> getStudentIdd(String classId) async {
+    List<Student> listOfStdent = [];
+    print("$getStudentsURL?class_id=$classId");
+    Response response;
+    response =
+        await Dio().get("$getStudentsURL?class_id=$classId");
+    var data = response.data;
+
+    print(data);
+    if (response.data != null) {
+      data.forEach((element) {
+        listOfStdent.add(Student.fromJson(element));
+      });
+    }
+    return listOfStdent;
   }
 }

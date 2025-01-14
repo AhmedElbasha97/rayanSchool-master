@@ -17,8 +17,8 @@ class RecommendationAcademicListScreen extends StatefulWidget {
 class _RecommendationAcademicListScreenState
     extends State<RecommendationAcademicListScreen> {
   bool isLoading = true;
-  String recommendationTitle = "توصيات سلوكية";
-  String recommendationValue = "2";
+  String recommendationTitle = "توصيات أكاديمية";
+  String recommendationValue = "1";
   var type ;
   List<RecommendationListModel>? recommendationList = [];
   String returnDateAndTime(RecommendationListModel? chat){
@@ -66,7 +66,7 @@ class _RecommendationAcademicListScreenState
           backgroundColor: Colors.grey[300],
           title: Text(
             Localizations.localeOf(context).languageCode == "en"
-                ?"Recommendation academic list":"قائمة التوصيات الأكدميه",
+                ?"Recommendation academic list":"قائمة التوصيات أكاديمية",
             style: TextStyle(color: mainColor),
           ),
           centerTitle: true,

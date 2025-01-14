@@ -6,23 +6,45 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:rayanSchool/globals/commonStyles.dart';
 import 'package:rayanSchool/services/notification.dart';
+import 'package:rayanSchool/views/loggedUser/Messages/MessagesScreen.dart';
+import 'package:rayanSchool/views/parents/AttendanceScreen.dart';
+import 'package:rayanSchool/views/parents/ReportsScreen.dart';
+import 'package:rayanSchool/views/parents/recommendation_academic_list_screen.dart';
+import 'package:rayanSchool/views/parents/recommendation_list_screen.dart';
 import 'package:rayanSchool/views/splashScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:rayanSchool/views/teacher/messages/MessagesScreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 import 'I10n/AppLanguage.dart';
 import 'I10n/app_localizations.dart';
-
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+final FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+FirebaseAnalyticsObserver observer = FirebaseAnalyticsObserver(analytics: analytics);
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  FirebaseMessaging.instance.requestPermission();
   await PushNotificationService().setupInteractedMessage();
+  FirebaseMessaging.instance.requestPermission();
+  RemoteMessage? initialMessage =
+  await FirebaseMessaging.instance.getInitialMessage();
+  if (initialMessage != null) {
+    // App received a notification when it was killed
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    var type = initialMessage.data["page"];
+    prefs.setString("route", type);
+
+  }
   AppLanguage appLanguage = AppLanguage();
   await appLanguage.fetchLocale();
   runApp(MyApp(appLanguage: appLanguage));
+
 }
 
 class MyApp extends StatelessWidget {
@@ -40,6 +62,17 @@ class MyApp extends StatelessWidget {
         child: Consumer<AppLanguage>(
           builder: (context, model, child) {
             return MaterialApp(
+              navigatorObservers: [observer],
+              navigatorKey: navigatorKey,
+              routes: {
+                '/messages_student': (context) => MessagesScreen(),
+                '/messages_teacher': (context) => MessagesTeacherScreen(),
+                '/messages_parent': (context) => MessagesScreen(type: 2),
+                '/attendance': (context) => AttendanceScreen(),
+                '/report1': (context) => RecommendationAcademicListScreen(),
+                '/report2': (context) => RecommendationsListScreen(),
+                '/report': (context) => ReportScreen(),
+              },
               debugShowCheckedModeBanner: false,
               localizationsDelegates: [
                 AppLocalizations.delegate,

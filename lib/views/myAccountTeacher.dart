@@ -4,6 +4,7 @@ import 'package:rayanSchool/globals/helpers.dart';
 import 'package:rayanSchool/views/teacher/add_home_work_screen.dart';
 import 'package:rayanSchool/views/teacher/homework_teacher_list_screen.dart';
 import 'package:rayanSchool/views/teacher/messages/MessagesScreen.dart';
+import 'package:rayanSchool/views/teacher/messages/sendMessageTeacher.dart';
 import 'package:rayanSchool/views/teacher/questionBank.dart';
 import 'package:rayanSchool/views/teacher/reportsScreen.dart';
 import 'package:rayanSchool/views/teacher/scheduleScreen.dart';
@@ -58,7 +59,7 @@ class _MyAccountTeacherState extends State<MyAccountTeacher> {
             Divider(),
             ListTile(
               onTap: () {
-                pushPage(context, MessagesScreen());
+                pushPage(context, MessagesTeacherScreen());
               },
               title: Text(
                 AppLocalizations.of(context)?.translate('sentMessages')??"",
@@ -115,6 +116,17 @@ class _MyAccountTeacherState extends State<MyAccountTeacher> {
               title: Text(
                 Localizations.localeOf(context).languageCode == "en"
                     ?"Send a academic recommendation":"أرسال توصية أكاديمية",
+              ),
+              trailing: Icon(Icons.contact_page_rounded),
+            ),
+            Divider(),
+            ListTile(
+              onTap: () {
+                pushPage(context, SendMessageTeacherScreen());
+              },
+              title: Text(
+                Localizations.localeOf(context).languageCode == "en"
+                    ?"Send a message":"أرسال رساله",
               ),
               trailing: Icon(Icons.contact_page_rounded),
             ),

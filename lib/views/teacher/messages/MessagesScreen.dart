@@ -5,12 +5,12 @@ import 'package:rayanSchool/services/teachersService.dart';
 import 'package:rayanSchool/views/teacher/messages/messageDetails.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class MessagesScreen extends StatefulWidget {
+class MessagesTeacherScreen extends StatefulWidget {
   @override
-  _MessagesScreenState createState() => _MessagesScreenState();
+  _MessagesTeacherScreenState createState() => _MessagesTeacherScreenState();
 }
 
-class _MessagesScreenState extends State<MessagesScreen> {
+class _MessagesTeacherScreenState extends State<MessagesTeacherScreen> {
   bool isLoading = true;
   List<SentMessagesTeacher> messages = [];
   @override
@@ -64,6 +64,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: ListTile(
                     onTap: () {
+                      print(messages[index].msgId);
                       pushPage(
                           context,
                           MessageDetailsScreen(

@@ -20,7 +20,7 @@ class RecommendationsListScreen extends StatefulWidget {
 class _RecommendationsListScreenState extends State<RecommendationsListScreen> {
   bool isLoading = true;
   String recommendationTitle = "توصيات الأكاديمية ";
-  String recommendationValue = "1";
+  String recommendationValue = "2";
   var type ;
   List<RecommendationListModel>? recommendationList = [];
   String returnDateAndTime(RecommendationListModel? chat){

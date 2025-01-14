@@ -2,9 +2,13 @@
 import 'package:dio/dio.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../globals/CommonSetting.dart';
+import '../globals/helpers.dart';
+import '../main.dart';
 import '../models/notification_counter_model.dart';
 import '../models/notification_model.dart';
 
@@ -64,13 +68,18 @@ class NotificationServices{
 }
 
 class PushNotificationService {
+
+
   Future<void> setupInteractedMessage() async {
     await Firebase.initializeApp();
     FirebaseMessaging.instance.requestPermission();
 
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      notificationSelectingAction(message);
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
+      var type= message.data["page"];
+      SharedPreferences prefs = await SharedPreferences.getInstance();
 
+      prefs.setString("route", type);
+      notificationSelectingAction(message);
     });
     await enableIOSNotifications();
     await registerNotificationListeners();
@@ -97,10 +106,13 @@ class PushNotificationService {
     }
     );
 
-    FirebaseMessaging.onMessage.listen((RemoteMessage? message) {
+    FirebaseMessaging.onMessage.listen((RemoteMessage? message) async {
       RemoteNotification? notification = message!.notification;
       AndroidNotification? android = message.notification?.android;
+      var type= message.data["page"];
+      SharedPreferences prefs = await SharedPreferences.getInstance();
 
+      prefs.setString("route", type);
       if (notification != null && android != null) {
         flutterLocalNotificationsPlugin.show(
           notification.hashCode,
@@ -127,51 +139,49 @@ class PushNotificationService {
       sound: true,
     );
   }
-  static Future<void> notificationSelectingAction(message) async {
+  static Future<void> notificationSelectingAction( message,) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    var type= message.data["type"];
-    switch(type){
-      case "teacher_msg ":
-        {
+    String? userType = prefs.getString("type");
 
-
+   String? screenType =  prefs.getString("route");
+    switch (screenType) {
+      case "msg":
+        if (userType == "student") {
+          navigatorKey.currentState?.pushNamed('/messages_student');
+        } else if (userType == "teacher") {
+          navigatorKey.currentState?.pushNamed('/messages_teacher');
+        } else if (userType == "parent") {
+          navigatorKey.currentState?.pushNamed('/messages_parent');
         }
         break;
-      case "parent_msg ":{
 
-      }
-      break;
-      case "student_msg":{
+      case "absence":
+        prefs.remove("route");
+        navigatorKey.currentState?.pushNamed('/attendance');
+        break;
 
+      case "report1":
+        prefs.remove("route");
+        navigatorKey.currentState?.pushNamed('/report1');
+        break;
+        case "report":
+        prefs.remove("route");
+        navigatorKey.currentState?.pushNamed('/report');
+        break;
 
-      }
-      break;
-      case "student_homework ":{
+      case "report2":
+        prefs.remove("route");
+        navigatorKey.currentState?.pushNamed('/report2');
+        break;
 
-      }
-      break;
-      case "student_quest ":{
-
-      }
-      break;  case "parent_quest ":{
-
-
-    }
-    break;
-      case "student_report ":{
-
-
-    }
-    break;
       default:
-        {
-
-
-          break;
-        }
+        print("Unrecognized notification type: $screenType");
+        break;
     }
-
   }
+
+
   androidNotificationChannel() => const AndroidNotificationChannel(
     'high_importance_channel', // id
     'High Importance Notifications', // title

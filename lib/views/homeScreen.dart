@@ -11,6 +11,11 @@ import 'package:rayanSchool/models/AppInfo/videos.dart';
 import 'package:rayanSchool/services/albums.dart';
 import 'package:rayanSchool/services/appInfoService.dart';
 import 'package:rayanSchool/views/Notification/notification_list.dart';
+import 'package:rayanSchool/views/parents/AttendanceScreen.dart';
+import 'package:rayanSchool/views/parents/ReportsScreen.dart';
+import 'package:rayanSchool/views/parents/recommendation_academic_list_screen.dart';
+import 'package:rayanSchool/views/parents/recommendation_list_screen.dart';
+import 'package:rayanSchool/views/teacher/messages/MessagesScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../globals/widgets/notification_icon.dart';
@@ -23,6 +28,7 @@ import 'appData/contact_us_screen.dart';
 import 'appData/schoolWord.dart';
 import 'appData/school_policy_screen.dart';
 import 'auth/login.dart';
+import 'loggedUser/Messages/MessagesScreen.dart';
 import 'other/joinRequest.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -40,9 +46,75 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    decideIfThereIsNotificationDetectOrNotAndItIsBehavior();
     getHomeData();
   }
+decideIfThereIsNotificationDetectOrNotAndItIsBehavior() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var type= prefs.getString("route");
+  print(prefs.containsKey("route"));
+  print(type);
+  if(prefs.containsKey("route")) {
+    switch (type) {
+      case "msg":
+        {
+          if (prefs.getString("type") == "student") {
+            pushPage(
+                context,
+                MessagesScreen(
+                ));
+          } else if (prefs.getString("type") == "teacher") {
+            pushPage(
+                context,
+                MessagesTeacherScreen(
+                ));
+          } else if (prefs.getString("type") == "parent") {
+            pushPage(
+                context,
+                MessagesScreen(
+                  type: 2,
+                ));
+          }
+        }
+        break;
+      case "absence":
+        {
+          prefs.remove("route");
+          pushPage(context, AttendanceScreen());
+        }
+        break;
+      case "report1":
+        {
+          prefs.remove("route");
 
+          pushPage(
+              context,
+              RecommendationAcademicListScreen(
+              ));
+        }
+        break;
+      case "report":
+        {
+          prefs.remove("route");
+
+          pushPage(
+              context,
+              ReportScreen(
+              ));
+        }
+        break;
+      case "report2 ":
+        {
+          prefs.remove("route");
+          pushPage(
+              context,
+              RecommendationsListScreen(
+              ));
+        }
+        break;
+    }
+  }
+}
   getHomeData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     userLogged = prefs.getString("id") == null ? false : true;
@@ -134,7 +206,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       margin: EdgeInsets.symmetric(horizontal: 5.0),
                       decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: NetworkImage("${i.img}"),
+                            image: NetworkImage("https://www.alrayyanprivateschools.com/${i.img}"),
                             fit: BoxFit.cover,
                           ),
                           borderRadius:
