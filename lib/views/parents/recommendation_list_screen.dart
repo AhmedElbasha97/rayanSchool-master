@@ -68,7 +68,7 @@ class _RecommendationsListScreenState extends State<RecommendationsListScreen> {
         backgroundColor: Colors.grey[300],
         title: Text(
           Localizations.localeOf(context).languageCode == "en"
-              ?"Recommendation Behavioural list":"قائمة التوصيات السلوكيه",
+              ?"Recommendation Behavioural list":"قائمة التوصيات السلوكية ",
           style: TextStyle(color: mainColor),
         ),
         centerTitle: true,

@@ -245,7 +245,7 @@ class _MyAccountParentState extends State<MyAccountParent> {
                 },
                 title: Text(
                     Localizations.localeOf(context).languageCode == "en"
-                        ?"Recommendation Behavioural list":"قائمة التوصيات السلوكيه",
+                        ?"Recommendation Behavioural list":"قائمة التوصيات السلوكية",
                 ),
                 trailing: Icon(Icons.contact_page_rounded),
               ),
@@ -259,7 +259,7 @@ class _MyAccountParentState extends State<MyAccountParent> {
                 },
                 title: Text(
                     Localizations.localeOf(context).languageCode == "en"
-                        ?"Recommendation academic list":"قائمة التوصيات أكاديمية",
+                        ?"Recommendation academic list":"قائمة التوصيات الأكاديمية",
                 ),
                 trailing: Icon(Icons.contact_page_rounded),
               ),

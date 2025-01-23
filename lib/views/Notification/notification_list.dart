@@ -50,7 +50,7 @@ class _NotificationsListScreenState extends State<NotificationsListScreen> {
         backgroundColor: Colors.grey[300],
         title: Text(
           Localizations.localeOf(context).languageCode == "en"
-              ?"Notification list":"قيمة الاشعرات",
+              ?"Notification list":"قيمة الإشعارات",
           style: TextStyle(color: mainColor),
         ),
         centerTitle: true,

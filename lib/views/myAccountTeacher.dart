@@ -104,7 +104,7 @@ class _MyAccountTeacherState extends State<MyAccountTeacher> {
               },
               title: Text(
                 Localizations.localeOf(context).languageCode == "en"
-                    ?"Send a Behavioural recommendation":"أرسال توصية السلوكيه",
+                    ?"Send a Behavioural recommendation":"أرسال توصية السلوكية",
               ),
               trailing: Icon(Icons.contact_page_rounded),
             ),
@@ -115,7 +115,7 @@ class _MyAccountTeacherState extends State<MyAccountTeacher> {
               },
               title: Text(
                 Localizations.localeOf(context).languageCode == "en"
-                    ?"Send a academic recommendation":"أرسال توصية أكاديمية",
+                    ?"Send a academic recommendation":"أرسال توصية الأكاديمية",
               ),
               trailing: Icon(Icons.contact_page_rounded),
             ),

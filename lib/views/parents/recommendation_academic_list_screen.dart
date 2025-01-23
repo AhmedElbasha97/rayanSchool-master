@@ -66,7 +66,7 @@ class _RecommendationAcademicListScreenState
           backgroundColor: Colors.grey[300],
           title: Text(
             Localizations.localeOf(context).languageCode == "en"
-                ?"Recommendation academic list":"قائمة التوصيات أكاديمية",
+                ?"Recommendation academic list":"قائمة التوصيات الأكاديمية",
             style: TextStyle(color: mainColor),
           ),
           centerTitle: true,

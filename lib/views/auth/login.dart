@@ -21,6 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool usernameError = false;
   bool passwordError = false;
   bool isServerLoading = false;
+  bool isPasswordVisible = false;
   String selectedType = "اختار نوع المستخدم";
   String accountType = "";
 
@@ -68,18 +69,36 @@ class _LoginScreenState extends State<LoginScreen> {
                     )
                   : Container(),
               Padding(padding: EdgeInsets.only(top: 10)),
-              InputFiled(
-                hintText:
-                    "${AppLocalizations.of(context)?.translate('password')}",
-                controller: passwordController,
-                inputType: TextInputType.text,
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.8, // 90% of screen width
+                  decoration: BoxDecoration(
+                    border: Border.all(color: mainColor, width: 1), // Yellow borders
+                    borderRadius: BorderRadius.circular(15), // Rounded corners
+                  ),
+                  child: TextFormField(
+                    controller: passwordController,
+                    obscureText: !isPasswordVisible, // Toggle visibility
+                    decoration: InputDecoration(
+                      hintText: AppLocalizations.of(context)?.translate('password'),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            isPasswordVisible = !isPasswordVisible;
+                          });
+                        },
+                      ),
+                      border: InputBorder.none, // Remove default border
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15), // Inner padding
+                    ),
+                  ),
+                ),
               ),
-              passwordError
-                  ? Text(
-                      "please enter your password",
-                      style: TextStyle(color: Colors.red),
-                    )
-                  : Container(),
+              SizedBox(height: 20),
               Padding(padding: EdgeInsets.only(top: 10)),
               Container(
                 width: 200,
