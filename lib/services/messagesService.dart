@@ -5,6 +5,7 @@ import 'package:rayanSchool/models/MessageSentStudent.dart';
 import 'package:rayanSchool/models/message.dart';
 import 'package:rayanSchool/models/messageDetails.dart';
 import 'package:rayanSchool/models/teachers.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MessagesService {
   String messages = "${baseUrl}student_msg_income.php";
@@ -91,9 +92,11 @@ class MessagesService {
   }
 
   Future<List<Teachers>> getTeacher() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? id = prefs.getString("id");
     List<Teachers> list = [];
     Response response;
-    response = await Dio().post("$teachers");
+    response = await Dio().post("$teachers?exp_id=$id");
     var data = response.data;
     if (response.data != null) {
       data.forEach((element) {
