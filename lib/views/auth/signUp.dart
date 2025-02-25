@@ -45,7 +45,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Padding(
                   padding: EdgeInsets.only(
                       top: MediaQuery.of(context).padding.top + 20)),
-              Image.asset("assets/images/logoname.jpg"),
+              Image.asset("assets/images/logoname.png"),
               Padding(
                   padding: EdgeInsets.only(
                       top: MediaQuery.of(context).padding.top + 20)),

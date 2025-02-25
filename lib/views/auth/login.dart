@@ -30,6 +30,27 @@ class _LoginScreenState extends State<LoginScreen> {
     passwordError = passwordController.text.isEmpty;
     setState(() {});
   }
+  void showAlert(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("تنبيه"),
+          content: Text("يجب إختيار نوع المستخدم"),
+          actions: [
+
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // تنفيذ الإجراء وإغلاق التنبيه
+                // ضع هنا الكود الخاص بتنفيذ الإجراء المطلوب
+              },
+              child: Text("موافق"),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       top: MediaQuery.of(context).padding.top + 20)),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Image.asset("assets/images/logoname.jpg"),
+                child: Image.asset("assets/images/logoname.png"),
               ),
               Padding(
                   padding: EdgeInsets.only(
@@ -131,30 +152,41 @@ class _LoginScreenState extends State<LoginScreen> {
               Padding(padding: EdgeInsets.only(top: 35)),
               !isServerLoading? AppBtn(
                 onClick: () async {
-                  if(!isServerLoading){
-                    setState(() {
-                      isServerLoading = true;
-                    });
-                  validate();
-                  if (!passwordError && !usernameError) {
-                    String msg = await AuthService().login(
-                        password: passwordController.text,
-                        userName: usernameController.text,
-                        type: accountType);
-                    if (msg == "done") {
-                      setState(() {
-                        isServerLoading = false;
-                      });
-                      pushPageReplacement(context, HomeScreen());
-                    } else {
-                      setState(() {
-                        isServerLoading = false;
-                      });
-                      final snackBar = SnackBar(content: Text(msg));
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
-                    }
+                  if(   accountType == ""
+                  ){
+                    showAlert(context);
                   }
+                  else
+                  {
+                    if (!isServerLoading) {
+                      setState(() {
+                        isServerLoading = true;
+                      });
+                      validate();
+                      if (!passwordError && !usernameError) {
+                        String msg = await AuthService().login(
+                            password: passwordController.text,
+                            userName: usernameController.text,
+                            type: accountType);
+                        if (msg == "done") {
+                          setState(() {
+                            isServerLoading = false;
+                          });
+                          Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                              builder: (context) => HomeScreen(),
+                            ),
+                                (Route<dynamic> route) => false, // هذا يزيل جميع الصفحات السابقة من الـ stack
+                          );
+                        } else {
+                          setState(() {
+                            isServerLoading = false;
+                          });
+                          final snackBar = SnackBar(content: Text(msg));
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        }
+                      }
+                    }
                   }
                 },
                 label: "${AppLocalizations.of(context)?.translate('login')}",

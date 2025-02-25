@@ -11,8 +11,8 @@ class ContactUsService {
     response = await Dio().post(
       "$complainsUrl?name=$name&email=$email&subject=$subject&messege=$message&mobile=$mobile",
     );
-    var resData = response.data;
-    print(resData);
+    var data = response.data["status"];
+    return data;
   }
 
   contactUs(String name, String message, String email, String subject,

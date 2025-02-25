@@ -12,7 +12,7 @@ class NewsScreen extends StatefulWidget {
 
 class _NewsScreenState extends State<NewsScreen> {
     bool isLoading = true;
-  List<News> news = [];
+  List<News>? news = [];
   @override
   void initState() {
     super.initState();
@@ -33,8 +33,29 @@ class _NewsScreenState extends State<NewsScreen> {
             ? Center(
                 child: CircularProgressIndicator(),
               )
-            : ListView.separated(
-                itemCount: news.length,
+            : news?.isEmpty??true?
+        Container(
+          height: MediaQuery.of(context).size.height*0.75,
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Image.asset("assets/images/noData.png"),
+              ),
+              SizedBox(height: 20,),
+              Text(Localizations.localeOf(context).languageCode == "en"
+                  ?"no News available":"لا يوجد أخبار متوفرة الآن",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20
+
+                ),),
+            ],
+          ),
+        ):ListView.separated(
+                itemCount: news?.length??0,
                 padding: EdgeInsets.all(10),
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
@@ -44,12 +65,12 @@ class _NewsScreenState extends State<NewsScreen> {
                         pushPage(
                             context,
                             NewsDetailsScreen(
-                              id: news[index].id,
+                              id: news?[index].id??"",
                             ));
                       },
                       child: ListTile(
-                        title: Text("${news[index].title}"),
-                        subtitle: Text("${news[index].brief}"),
+                        title: Text("${news?[index].title??""}"),
+                        subtitle: Text("${news?[index].brief??""}"),
                         trailing: Icon(Icons.arrow_forward_ios),
                       ),
                     ),

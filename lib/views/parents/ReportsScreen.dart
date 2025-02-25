@@ -47,7 +47,7 @@ class _ReportScreenState extends State<ReportScreen> {
             ),
             SizedBox(height: 20,),
             Text(Localizations.localeOf(context).languageCode == "en"
-                ?"no reports available":"لا يوجد تقارير متوفره لان",
+                ?"no reports available":"لا يوجد تقارير متوفرة الآن.",
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20

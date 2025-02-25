@@ -113,9 +113,8 @@ void showTheDialog(BuildContext context, String title, String body,
 }
 
 launchURL(String url) async {
-  if (await canLaunch(url)) {
-    await launch(url);
-  } else {
-    throw 'Could not launch $url';
-  }
+  final Uri launchUri = Uri.parse(url);
+  await launchUrl(launchUri);
+
 }
+

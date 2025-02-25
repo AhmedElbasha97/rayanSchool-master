@@ -13,7 +13,7 @@ class FilesScreen extends StatefulWidget {
 
 class _FilesScreenState extends State<FilesScreen> {
   bool isLoading = true;
-  List<Files> files = [];
+  List<Files>? files = [];
   @override
   void initState() {
     super.initState();
@@ -36,8 +36,29 @@ class _FilesScreenState extends State<FilesScreen> {
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : ListView.builder(
-              itemCount: files.length,
+          :files?.isEmpty??true?
+      Container(
+        height: MediaQuery.of(context).size.height*0.75,
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Image.asset("assets/images/noData.png"),
+            ),
+            SizedBox(height: 20,),
+            Text(Localizations.localeOf(context).languageCode == "en"
+                ?"no files available":"لا يوجد ملفات متوفرة الآن",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20
+
+              ),),
+          ],
+        ),
+      ): ListView.builder(
+              itemCount: files?.length,
               padding: EdgeInsets.all(10),
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
@@ -47,12 +68,12 @@ class _FilesScreenState extends State<FilesScreen> {
                       pushPage(
                           context,
                           FileDetailsScreen(
-                            id: files[index].id??"",
+                            id: files?[index].id??"",
                           ));
                     },
                     child: HomeWorkCard(
-                      title: "${files[index].title}",
-                      date: "${files[index].date}",
+                      title: "${files?[index].title}",
+                      date: "${files?[index].date}",
                     ),
                   ),
                 );

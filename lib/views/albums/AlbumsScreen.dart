@@ -15,14 +15,20 @@ class AlbumsScreen extends StatefulWidget {
 
 class _AlbumsScreenState extends State<AlbumsScreen> {
   bool isLoading = true;
-  List<PhotoAlbum> list = [];
-  List<Videos> listVideos = [];
-
+  List<PhotoAlbum>? list = [];
+  List<Videos>? listVideos = [];
+  bool isEmptyList = false;
   getData() async {
     if (widget.isImg) {
       list = await AlbumsService().getphotoAlbums();
+      if(list?.isEmpty??true){
+        isEmptyList = true;
+      }
     } else {
       listVideos = await AlbumsService().getVideoAlbums();
+      if(listVideos?.isEmpty??true){
+        isEmptyList = true;
+      }
     }
     isLoading = false;
     setState(() {});
@@ -42,8 +48,31 @@ class _AlbumsScreenState extends State<AlbumsScreen> {
             ? Center(
                 child: CircularProgressIndicator(),
               )
-            : ListView.builder(
-                itemCount: widget.isImg ? list.length : listVideos.length,
+            : (isEmptyList)? Container(
+          height: MediaQuery.of(context).size.height*0.35,
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Image.asset("assets/images/noData.png"),
+              ),
+              SizedBox(height: 20,),
+              Text(widget.isImg?Localizations.localeOf(context).languageCode == "en"
+                  ?"no Photos available":"لا يوجد ألبوم الصور متوفرة الآن":Localizations.localeOf(context).languageCode == "en"
+                  ?"no Videos available":"لا يوجد ألبوم الفيديو متوفرة الآن",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20
+
+                ),),
+            ],
+          ),
+        ):
+
+       ListView.builder(
+                itemCount: widget.isImg ? list?.length??0 : listVideos?.length??0,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -53,21 +82,23 @@ class _AlbumsScreenState extends State<AlbumsScreen> {
                             pushPage(
                                 context,
                                 PhotosAlbum(
-                                  id: list[index].id??"",
+                                  id: list?[index].id??"",
                                   isImg: widget.isImg,
-                                  title: list[index].title??"",
+                                  title: list?[index].title??"",
                                 ));
                           } else {
-                            if (widget.isImg == false) {
-                              if (await canLaunch(
-                                  "${listVideos[index].link}")) {
-                                await launch("${listVideos[index].link}");
-                              } else {
-                                throw 'Could not launch ${listVideos[index].link}';
-                              }
+                            pushPage(
+                                context,
+                                PhotosAlbum(
+                                  id: listVideos?[index].id??"",
+                                  isImg: widget.isImg,
+                                  title: listVideos?[index].title??"",
+                                ));
+
                             }
-                          }
-                        },
+                          },
+
+
                         child: Column(
                           children: [
                             Container(
@@ -77,7 +108,7 @@ class _AlbumsScreenState extends State<AlbumsScreen> {
                               decoration: BoxDecoration(
                                   image: DecorationImage(
                                     image: NetworkImage(
-                                        "${widget.isImg ? list[index].img : listVideos[index].img}"),
+                                        "${widget.isImg ? (list?[index].img??"") : (listVideos?[index].img??"")}"),
                                     fit: BoxFit.cover,
                                   ),
                                   borderRadius:
@@ -97,7 +128,7 @@ class _AlbumsScreenState extends State<AlbumsScreen> {
                                 child: Container(
                                   width: 200,
                                   child: Text(
-                                    "${widget.isImg ? list[index].title : listVideos[index].title}",
+                                    "${widget.isImg ? (list?[index].title??"") : (listVideos?[index].title??"")}",
                                     textAlign: TextAlign.center,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(color: Colors.white),
@@ -107,7 +138,11 @@ class _AlbumsScreenState extends State<AlbumsScreen> {
                             ),
                           ],
                         ),
-                      ));
-                }));
+    )
+    );
+                }
+    )
+    );
   }
-}
+  }
+

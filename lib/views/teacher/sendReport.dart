@@ -79,10 +79,46 @@ class _SendReportState extends State<SendReport> {
         setState(() {});
         SharedPreferences prefs = await SharedPreferences.getInstance();
         String? id = prefs.getString("id");
-        TeacherService().sendReport(
+        bool done = await TeacherService().sendReport(
             id: id??"", msg: _msgController.text, studentId: selectedStudent?.id??"");
+        if (done ) {
+          final snackBar = SnackBar(content:
+          Row(children: [
+            const Icon(Icons.check, color: Colors.white,),
+            const SizedBox(width: 10,),
+            Text(Localizations.localeOf(context).languageCode == "en" ?'the report has been sent successfully':"تم إرسال التقرير بنجاح", style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold
+            ),
+            ),
+          ],),
+              backgroundColor: Colors.green
+          );
+
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+          popPage(context);
+
+
+        } else {
+          final snackBar = SnackBar(content:
+          Row(children: [
+            const Icon(Icons.close, color: Colors.white,),
+            const SizedBox(width: 10,),
+            Text( Localizations.localeOf(context).languageCode == "en" ?'Try sending a report again':'حدث خطاء أثناء إرسال  التقرير', style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold
+            ),
+            ),
+          ],),
+              backgroundColor: Colors.red
+          );
+
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
         popPage(context);
       }
+
     }
   }
 

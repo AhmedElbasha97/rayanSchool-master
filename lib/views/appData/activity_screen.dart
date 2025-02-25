@@ -46,7 +46,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
           backgroundColor: Colors.grey[300],
           title: Text(
             Localizations.localeOf(context).languageCode == "en"
-                ?"school activities list":"قائمة الأنشطه المدرسيه",
+                ?"school activities list":"قائمة الأنشطة المدرسية",
             style: TextStyle(color: mainColor),
           ),
           centerTitle: true,

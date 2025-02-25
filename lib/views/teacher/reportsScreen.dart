@@ -12,7 +12,7 @@ class ReportScreen extends StatefulWidget {
 
 class _ReportScreenState extends State<ReportScreen> {
   bool isLoading = true;
-  List<TeacherReport> reports = [];
+  List<TeacherReport>? reports = [];
   @override
   void initState() {
     super.initState();
@@ -35,7 +35,7 @@ class _ReportScreenState extends State<ReportScreen> {
           ? Center(
               child: CircularProgressIndicator(),
             )
-          :reports.isEmpty??true?
+          :reports?.isEmpty??true?
       Container(
         height: MediaQuery.of(context).size.height*0.75,
         width: MediaQuery.of(context).size.width,
@@ -56,7 +56,7 @@ class _ReportScreenState extends State<ReportScreen> {
           ],
         ),
       ): ListView.separated(
-              itemCount: reports.length,
+              itemCount: reports?.length??0,
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -65,11 +65,11 @@ class _ReportScreenState extends State<ReportScreen> {
                       pushPage(
                           context,
                           ReportsDetailScreen(
-                            id: reports[index].reportId,
+                            id: reports?[index].reportId,
                           ));
                     },
-                    title: Text("${reports[index].student}"),
-                    trailing: Text("${reports[index].date}"),
+                    title: Text("${reports?[index].student}"),
+                    trailing: Text("${reports?[index].date}"),
                   ),
                 );
               },

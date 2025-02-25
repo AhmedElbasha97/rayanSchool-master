@@ -9,12 +9,15 @@ class SchoolSocialMediaLinkModel {
   String? twitter;
   String? youtube;
   String? instagram;
+  String? whatsapp;
+
 
   SchoolSocialMediaLinkModel({
     this.facebook,
     this.twitter,
     this.youtube,
     this.instagram,
+    this.whatsapp,
   });
 
   factory SchoolSocialMediaLinkModel.fromJson(Map<String, dynamic> json) => SchoolSocialMediaLinkModel(
@@ -22,6 +25,7 @@ class SchoolSocialMediaLinkModel {
     twitter: json["twitter"],
     youtube: json["youtube"],
     instagram: json["instagram"],
+    whatsapp: json["whatsapp"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -29,5 +33,6 @@ class SchoolSocialMediaLinkModel {
     "twitter": twitter,
     "youtube": youtube,
     "instagram": instagram,
+    "whatsapp": whatsapp,
   };
 }

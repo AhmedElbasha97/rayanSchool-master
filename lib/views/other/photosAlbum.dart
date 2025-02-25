@@ -3,6 +3,8 @@ import 'package:rayanSchool/models/AppInfo/photo.dart';
 import 'package:rayanSchool/models/AppInfo/videos.dart';
 import 'package:rayanSchool/services/albums.dart';
 
+import '../../globals/helpers.dart';
+
 class PhotosAlbum extends StatefulWidget {
   final String? id;
   final String? title;
@@ -20,6 +22,8 @@ class _PhotosAlbumState extends State<PhotosAlbum> {
   getData() async {
     if (widget.isImg) {
       list = await AlbumsService().getphotoAlbum(widget.id??"");
+    }else{
+      listVideos = await AlbumsService().getVideoAlbum(widget.id??"");
     }
 
     isLoading = false;
@@ -43,20 +47,29 @@ class _PhotosAlbumState extends State<PhotosAlbum> {
                 child: CircularProgressIndicator(),
               )
             : ListView.builder(
-                itemCount: list.length,
+                itemCount: widget.isImg ? list.length : listVideos.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.2,
-                      margin: EdgeInsets.symmetric(horizontal: 5.0),
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage("${list[index].img}"),
-                            fit: BoxFit.cover,
-                          ),
-                          borderRadius: BorderRadius.all(Radius.circular(15))),
+                  return InkWell(
+                    onTap: (){
+                      if (widget.isImg){
+                      }else{
+                        print(listVideos[index].link??"");
+                        launchURL(listVideos[index].link??"");
+                      }
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height * 0.2,
+                        margin: EdgeInsets.symmetric(horizontal: 5.0),
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: NetworkImage("${widget.isImg ? list[index].img:listVideos[index].img}"),
+                              fit: BoxFit.cover,
+                            ),
+                            borderRadius: BorderRadius.all(Radius.circular(15))),
+                      ),
                     ),
                   );
                 }));

@@ -103,7 +103,7 @@ class _AddHomeWorkScreenState extends State<AddHomeWorkScreen> {
             );
 
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            pushPageReplacement(context, MyAccountTeacher());
+            popPage(context);
           } else {
             setState(() {
               isServerLoading = false;
@@ -121,6 +121,7 @@ class _AddHomeWorkScreenState extends State<AddHomeWorkScreen> {
                 backgroundColor:Colors.red
             );
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            popPage(context);
 
 
           }

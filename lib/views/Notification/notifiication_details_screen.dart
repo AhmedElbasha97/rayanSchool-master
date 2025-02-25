@@ -28,7 +28,7 @@ class NotifiicationDetailsScreen extends StatelessWidget {
         backgroundColor: Colors.grey[300],
         title: Text(
           Localizations.localeOf(context).languageCode == "en"
-              ?"Notification Details":"تفاصيل الأشعر",
+              ?"Notification Details":"تفاصيل الأشعار",
           style: TextStyle(color: mainColor),
         ),
         centerTitle: true,

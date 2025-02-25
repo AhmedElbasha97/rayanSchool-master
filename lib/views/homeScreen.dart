@@ -15,7 +15,9 @@ import 'package:rayanSchool/views/parents/AttendanceScreen.dart';
 import 'package:rayanSchool/views/parents/ReportsScreen.dart';
 import 'package:rayanSchool/views/parents/recommendation_academic_list_screen.dart';
 import 'package:rayanSchool/views/parents/recommendation_list_screen.dart';
+import 'package:rayanSchool/views/school_policies_screen.dart';
 import 'package:rayanSchool/views/teacher/messages/MessagesScreen.dart';
+import 'package:rayanSchool/views/teacher/messages/receidvedMessageScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../globals/widgets/notification_icon.dart';
@@ -34,12 +36,13 @@ import 'other/joinRequest.dart';
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
+
 }
 
 class _HomeScreenState extends State<HomeScreen> {
   List<SliderData> sliderData = [];
-  List<PhotoAlbum> list = [];
-  List<Videos> list2 = [];
+  List<PhotoAlbum>? list = [];
+  List<Videos>? list2 = [];
   bool userLogged = true;
   SchoolSocialMediaLinkModel? dataLink ;
   bool loading = true;
@@ -57,18 +60,19 @@ decideIfThereIsNotificationDetectOrNotAndItIsBehavior() async {
   if(prefs.containsKey("route")) {
     switch (type) {
       case "msg":
+        prefs.remove("route");
         {
-          if (prefs.getString("type") == "student") {
+          if (prefs.getString("type") == "STUDENT") {
             pushPage(
                 context,
                 MessagesScreen(
                 ));
-          } else if (prefs.getString("type") == "teacher") {
+          } else if (prefs.getString("type") == "TEACHER") {
             pushPage(
                 context,
-                MessagesTeacherScreen(
+                ReceivedMessageScreen(
                 ));
-          } else if (prefs.getString("type") == "parent") {
+          } else if (prefs.getString("type") == "PARENTS") {
             pushPage(
                 context,
                 MessagesScreen(
@@ -264,6 +268,21 @@ decideIfThereIsNotificationDetectOrNotAndItIsBehavior() async {
                     "${AppLocalizations.of(context)?.translate('schoolVision')}",
                     imageLink: "assets/images/vision.png",
                   ),
+                  HomeCard(
+                    width: MediaQuery.of(context).size.width*0.45,
+
+                    onTap: () {
+                      pushPage(
+                          context,
+                          SchoolPoliciesScreen(
+
+                          ));
+                    },
+                    title:
+                    "${Localizations.localeOf(context).languageCode == "en"
+                        ?"School Policies":"السياسات المدرسية"}",
+                    imageLink: "assets/images/School Policies.png",
+                  ),
                 ],
               ),
             ),
@@ -332,9 +351,27 @@ decideIfThereIsNotificationDetectOrNotAndItIsBehavior() async {
             SizedBox(
               height: 5,
             ),
-            CarouselSlider(
+                      list?.isEmpty??true?
+                      Container(
+                        height: MediaQuery.of(context).size.height*0.35,
+                        width: MediaQuery.of(context).size.width,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+
+                            SizedBox(height: 20,),
+                            Text(Localizations.localeOf(context).languageCode == "en"
+                                ?"no Photos available":"لا يوجد ألبوم الصور متوفرة الآن",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20
+
+                              ),),
+                          ],
+                        ),
+                      ):CarouselSlider(
               options: CarouselOptions(height: 150.0, autoPlay: true),
-              items: list.map((i) {
+              items: list?.map((i) {
                 return Builder(
                   builder: (BuildContext context) {
                     return Container(
@@ -369,9 +406,27 @@ decideIfThereIsNotificationDetectOrNotAndItIsBehavior() async {
             SizedBox(
               height: 5,
             ),
-            CarouselSlider(
+                      list2?.isEmpty??true?
+                      Container(
+                        height: MediaQuery.of(context).size.height*0.35,
+                        width: MediaQuery.of(context).size.width,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+
+                            SizedBox(height: 20,),
+                            Text(Localizations.localeOf(context).languageCode == "en"
+                                ?"no Videos available":"لا يوجد ألبوم الفيديو متوفرة الآن",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20
+
+                              ),),
+                          ],
+                        ),
+                      ):CarouselSlider(
               options: CarouselOptions(height: 150.0, autoPlay: true),
-              items: list2.map((i) {
+              items: list2?.map((i) {
                 return Builder(
                   builder: (BuildContext context) {
                     return Container(
@@ -405,7 +460,7 @@ decideIfThereIsNotificationDetectOrNotAndItIsBehavior() async {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Image.asset(
-              "assets/images/logoname.jpg",
+              "assets/images/logoname.png",
               height: MediaQuery.of(context).size.height*0.1 ,
               width: MediaQuery.of(context).size.width*0.7 ,
             ),
@@ -511,7 +566,7 @@ decideIfThereIsNotificationDetectOrNotAndItIsBehavior() async {
                     child: Center(
                       child: Text(
                         Localizations.localeOf(context).languageCode == "en"
-                            ?"School policies":"السياسات المدرسيه",
+                            ?"School policies":"السياسات المدرسية",
                         style: TextStyle(
                             color: Colors.black, fontWeight: FontWeight.bold, fontSize: 14),
                       ),
@@ -520,60 +575,42 @@ decideIfThereIsNotificationDetectOrNotAndItIsBehavior() async {
                 ],
               ),
             ),
-            Container(
-              width: MediaQuery.of(context).size.width ,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  InkWell(
-                    onTap: (){
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => ContactUsScreen(),
-                      ));
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: mainColor,
-                        borderRadius: BorderRadius.circular(50.0),
-                      ),
-                      height: MediaQuery.of(context).size.height*0.045 ,
-                      width: MediaQuery.of(context).size.width*0.3 ,
-                      child: Center(
-                        child: Text(
-                          Localizations.localeOf(context).languageCode == "en"
-                              ?"Suggestions":"الأقتراحات",
-                          style: TextStyle(
-                              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 14),
-                        ),
+            Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  "assets/images/newspaper.png",
+                  height: MediaQuery.of(context).size.height*0.06 ,
+                  width: MediaQuery.of(context).size.width*0.12,
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                InkWell(
+                  onTap: (){
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => NewsScreen(),
+                    ));
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: mainColor,
+                      borderRadius: BorderRadius.circular(50.0),
+                    ),
+                    height: MediaQuery.of(context).size.height*0.06 ,
+                    width: MediaQuery.of(context).size.width*0.6 ,
+                    child: Center(
+                      child: Text(
+                        Localizations.localeOf(context).languageCode == "en"
+                            ?"new news":"جديد الأخبار",
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.bold, fontSize: 14),
                       ),
                     ),
                   ),
-                  InkWell(
-                    onTap: (){
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => NewsScreen(),
-                      ));
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: mainColor,
-                        borderRadius: BorderRadius.circular(50.0),
-                      ),
-                      height: MediaQuery.of(context).size.height*0.045 ,
-                      width: MediaQuery.of(context).size.width*0.3 ,
-                      child: Center(
-                        child: Text(
-                          Localizations.localeOf(context).languageCode == "en"
-                              ?"new news":"جديد الأخبار",
-                          style: TextStyle(
-                              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 14),
-                        ),
-                      ),
-                    ),
-                  ),
+                ),
 
-                ],
-              ),
+              ],
             ),
            loading?SizedBox(): Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -623,7 +660,8 @@ decideIfThereIsNotificationDetectOrNotAndItIsBehavior() async {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Image.asset(
-                        "assets/images/twitter_icon.png",
+                        "assets/images/twitter_icon.jpg",
+
                         height: MediaQuery.of(context).size.height*0.06 ,
                         width: MediaQuery.of(context).size.width*0.12,
                       ),

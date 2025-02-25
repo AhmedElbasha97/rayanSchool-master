@@ -26,7 +26,7 @@ class NotificationServices{
       "type": "$userType",
     };
     response = await Dio().get('$NotificationCounterEndPoint',queryParameters:body);
-    print(NotificationCounterEndPoint);
+    print(NotificationCounterEndPoint+"?user_id: $userId&type: $userType");
     print("hiiiiiiiiiiiiii$userId");
     print("bggkk$userType");
     var data = response.data;
@@ -43,14 +43,14 @@ class NotificationServices{
     Response response;
     List<NotificationModel> result = [];
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String userId =await prefs.getString("id") ?? "";
-    String userType =await prefs.getString("type") ?? "";
+    String? userId = prefs.getString("id");
+    String? userType = prefs.getString("type") ;
     Map<String, dynamic>? body = {
       "user_id": "$userId",
       "type": "$userType",
     };
-    response = await Dio().get('$NotificationEndPoint',queryParameters:body);
-    print(NotificationEndPoint);
+    response = await Dio().get("$NotificationEndPoint?user_id=$userId&type=$userType",);
+    print('$NotificationEndPoint?user_id: $userId&type: $userType');
     print("hiiiiiiiiiiiiii$userId");
     print("bggkk$userType");
     var data = response.data;
@@ -79,7 +79,6 @@ class PushNotificationService {
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
       prefs.setString("route", type);
-      notificationSelectingAction(message);
     });
     await enableIOSNotifications();
     await registerNotificationListeners();
@@ -142,37 +141,57 @@ class PushNotificationService {
   static Future<void> notificationSelectingAction( message,) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    String? userType = prefs.getString("type");
 
+
+    String? userType = prefs.getString("type");
+    print(userType??""+"usertype");
    String? screenType =  prefs.getString("route");
+   print(screenType??""+"screenType");
+   print(screenType??""+"screenType");
     switch (screenType) {
+
       case "msg":
-        if (userType == "student") {
+        prefs.remove("route");
+        if (userType == "STUDENT") {
+          Future.delayed(Duration(seconds: 1), () {
           navigatorKey.currentState?.pushNamed('/messages_student');
-        } else if (userType == "teacher") {
+          });
+        } else if (userType == "TEACHER") {
+          Future.delayed(Duration(seconds: 1), () {
           navigatorKey.currentState?.pushNamed('/messages_teacher');
-        } else if (userType == "parent") {
+          });
+        } else if (userType == "PARENTS") {
+          Future.delayed(Duration(seconds: 1), () {
           navigatorKey.currentState?.pushNamed('/messages_parent');
+          });
         }
         break;
 
       case "absence":
         prefs.remove("route");
+        Future.delayed(Duration(seconds: 1), () {
         navigatorKey.currentState?.pushNamed('/attendance');
+        });
         break;
 
       case "report1":
         prefs.remove("route");
+        Future.delayed(Duration(seconds: 1), () {
         navigatorKey.currentState?.pushNamed('/report1');
+        });
         break;
         case "report":
         prefs.remove("route");
+        Future.delayed(Duration(seconds: 1), () {
         navigatorKey.currentState?.pushNamed('/report');
+        });
         break;
 
       case "report2":
         prefs.remove("route");
+        Future.delayed(Duration(seconds: 1), () {
         navigatorKey.currentState?.pushNamed('/report2');
+        });
         break;
 
       default:

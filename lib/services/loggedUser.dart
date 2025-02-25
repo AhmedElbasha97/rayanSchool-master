@@ -31,7 +31,7 @@ class LoggedUser {
   String getHomeWorkDetailURL = "${baseUrl}student_homework_view.php";
   String getSchadulesURL = "${baseUrl}student_table.php";
 
-  Future<List<Files>> getFiles({String? id}) async {
+  Future<List<Files>?> getFiles({String? id}) async {
     List<Files> list = [];
     Response response;
     response = await Dio().get(
@@ -107,7 +107,7 @@ class LoggedUser {
     return list;
   }
 
-  Future<List<Question>> getQuestions({String? id}) async {
+  Future<List<Question>?> getQuestions({String? id}) async {
     List<Question> list = [];
     Response response;
     response = await Dio().get(
@@ -138,7 +138,7 @@ class LoggedUser {
     return list;
   }
 
-  Future<List<Books>> getBooks({String? id}) async {
+  Future<List<Books>?> getBooks({String? id}) async {
     List<Books> list = [];
     Response response;
     response = await Dio().get(
@@ -153,7 +153,7 @@ class LoggedUser {
     return list;
   }
 
-  Future<List<AskedQuestion>> getAskedQuestions({String? id}) async {
+  Future<List<AskedQuestion>?> getAskedQuestions({String? id}) async {
     List<AskedQuestion> list = [];
     Response response;
     response = await Dio().get(
@@ -210,7 +210,7 @@ class LoggedUser {
     data = ActivitiesDetailedModel.fromJson(resData[0]);
     return data;
   }
-  Future<SchadulesStudentModel> getSchadules() async {
+  Future<SchadulesStudentModel?> getSchadules() async {
     SchadulesStudentModel data;
     Response response;
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -218,8 +218,13 @@ class LoggedUser {
     response = await Dio().get(
       "$getSchadulesURL?student_id=$userId",
     );
+    print("$getSchadulesURL?student_id=$userId");
     var resData = response.data;
-    data = SchadulesStudentModel.fromJson(resData[0]);
-    return data;
+    if(resData != null) {
+      data = SchadulesStudentModel.fromJson(resData[0]);
+      return data;
+    }else{
+      return null;
+    }
   }
 }

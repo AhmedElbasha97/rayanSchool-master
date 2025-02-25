@@ -49,6 +49,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
         height: MediaQuery.of(context).size.height*0.75,
         width: MediaQuery.of(context).size.width,
         child: Column(
+          
           children: [
             Padding(
               padding: const EdgeInsets.all(20.0),
@@ -56,7 +57,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
             ),
             SizedBox(height: 20,),
             Text(Localizations.localeOf(context).languageCode == "en"
-                ?"no messages available":"لا يوجد رسأل متوفره لان",
+                ?"no messages available":"لا يوجد رسائل متوفرة الآن",
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20

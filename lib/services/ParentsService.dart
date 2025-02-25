@@ -202,6 +202,7 @@ Future<List<PenaltiesListModel>> getPenaltiesList(
     response = await Dio().post(
       "$sendMessageLink?parent_id=$id&sendto_type=$type&teacher_id=$teacherId&title=$title&text=$msg",
     );
+    print("$sendMessageLink?parent_id=$id&sendto_type=$type&teacher_id=$teacherId&title=$title&text=$msg",);
     var data = response.data["status"];
     return data;
   }

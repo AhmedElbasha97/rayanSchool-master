@@ -51,7 +51,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       top: MediaQuery.of(context).padding.top + 20)),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Image.asset("assets/images/logoname.jpg"),
+                child: Image.asset("assets/images/logoname.png"),
               ),
               Padding(
                   padding: EdgeInsets.only(

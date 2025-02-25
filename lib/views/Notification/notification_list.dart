@@ -23,12 +23,20 @@ class _NotificationsListScreenState extends State<NotificationsListScreen> {
   bool isLoading = true;
   var type ;
    List<NotificationModel>? userNotificationList = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+     getAllListOfNotification();
+  }
   getAllListOfNotification()async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     type = prefs.getString("type");
     var userList = await NotificationServices().listAllNotification();
     userNotificationList = userList;
-    print(userNotificationList?.length);
+    print(userNotificationList);
 
     print("hi lenth");
     isLoading=false;
@@ -37,20 +45,14 @@ class _NotificationsListScreenState extends State<NotificationsListScreen> {
     });
   }
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
 
-    getAllListOfNotification();
-  }
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:  AppBar(
         backgroundColor: Colors.grey[300],
         title: Text(
           Localizations.localeOf(context).languageCode == "en"
-              ?"Notification list":"قيمة الإشعارات",
+              ?"Notification list":"قائمة الإشعارات",
           style: TextStyle(color: mainColor),
         ),
         centerTitle: true,
@@ -76,7 +78,7 @@ class _NotificationsListScreenState extends State<NotificationsListScreen> {
             ),
             SizedBox(height: 20,),
             Text(Localizations.localeOf(context).languageCode == "en"
-                ?"no Notification available":"لا يوجد اشعرات متوفره لان",
+                ?"no Notification available":"لا يوجد إشعارات متوفرة الآن",
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20

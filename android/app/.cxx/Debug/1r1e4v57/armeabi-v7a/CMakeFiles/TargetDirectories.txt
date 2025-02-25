@@ -1,0 +1,2 @@
+C:/Users/elbasha/Desktop/rayanSchool-master/android/app/.cxx/Debug/1r1e4v57/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/elbasha/Desktop/rayanSchool-master/android/app/.cxx/Debug/1r1e4v57/armeabi-v7a/CMakeFiles/rebuild_cache.dir

@@ -49,7 +49,7 @@ class _MessagesTeacherScreenState extends State<MessagesTeacherScreen> {
             ),
             SizedBox(height: 20,),
             Text(Localizations.localeOf(context).languageCode == "en"
-                ?"no messages available":"لا يوجد رسأل متوفره لان",
+                ?"no messages available":"لا يوجد رسائل متوفرة الآن",
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20

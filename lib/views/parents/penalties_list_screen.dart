@@ -63,7 +63,7 @@ class _PenaltiesListScreenState extends State<PenaltiesListScreen> {
           title: Text(
 
               Localizations.localeOf(context).languageCode == "en"
-                  ?"Conduct and penalties":"السلوك و الجزاءات",
+                  ?"Conduct and penalties":"السلوك والجزاءات",
             
             style: TextStyle(color: mainColor),
           ),
@@ -95,7 +95,7 @@ class _PenaltiesListScreenState extends State<PenaltiesListScreen> {
                   ),
                   SizedBox(height: 20,),
                   Text(Localizations.localeOf(context).languageCode == "en"
-                      ?"no penalties available":"لا يوجد الجزاءات متوفره لان",
+                      ?"no penalties available":"لا يوجد جزاءات متوفرة الآن",
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20

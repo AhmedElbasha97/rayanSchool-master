@@ -100,7 +100,7 @@ class _RecommendationsListScreenState extends State<RecommendationsListScreen> {
                           ),
                           SizedBox(height: 20,),
                           Text(Localizations.localeOf(context).languageCode == "en"
-            ?"no Recommendation Behavioural available":"لا يوجد توصيات السلوكيه متوفره لان",
+            ?"no Recommendation Behavioural available":"لا يوجد توصيات سلوكية متوفرة الآن",
                             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 20

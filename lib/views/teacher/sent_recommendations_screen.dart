@@ -110,7 +110,7 @@ class _SendRecommendationsScreensState extends State<SendRecommendationsScreens>
             );
 
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            pushPageReplacement(context, MyAccountTeacher());
+            popPage(context);
           } else {
             setState(() {
               isServerLoading = false;
@@ -129,6 +129,7 @@ class _SendRecommendationsScreensState extends State<SendRecommendationsScreens>
             );
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
+            popPage(context);
 
           }
         }

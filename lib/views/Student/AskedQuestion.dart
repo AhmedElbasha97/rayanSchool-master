@@ -12,7 +12,7 @@ class AskedQuestions extends StatefulWidget {
 
 class _AskedQuestionsState extends State<AskedQuestions> {
   bool isLoading = true;
-  List<AskedQuestion> question = [];
+  List<AskedQuestion>? question = [];
   @override
   void initState() {
     super.initState();
@@ -35,8 +35,29 @@ class _AskedQuestionsState extends State<AskedQuestions> {
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : ListView.separated(
-              itemCount: question.length,
+          :  question?.isEmpty??true?
+      Container(
+        height: MediaQuery.of(context).size.height*0.75,
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Image.asset("assets/images/noData.png"),
+            ),
+            SizedBox(height: 20,),
+            Text(Localizations.localeOf(context).languageCode == "en"
+                ?"no questions available":"لا يوجد أسألة متوفرة الآن",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20
+
+              ),),
+          ],
+        ),
+      ):ListView.separated(
+              itemCount: question?.length??0,
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -45,9 +66,9 @@ class _AskedQuestionsState extends State<AskedQuestions> {
                       pushPage(
                           context,
                           AskedQuestionsDetailsScreen(
-                              id: question[index].msgId??""));
+                              id: question?[index].msgId??""));
                     },
-                    title: Text("${question[index].title}"),
+                    title: Text("${question?[index].title??""}"),
                   ),
                 );
               },

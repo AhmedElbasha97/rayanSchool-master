@@ -12,6 +12,7 @@ import 'package:rayanSchool/models/teacher/teacherReport.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/activity_detailed_model.dart';
+import '../models/message.dart';
 import '../models/teacher/homework_teacher_list_model.dart';
 
 class TeacherService {
@@ -22,6 +23,7 @@ class TeacherService {
   String studentList = "${baseUrl}student_list.php";
   String homeWork = "${baseUrl}teacher_homework.php";
   String sentMessage = "${baseUrl}teacher_msg_sent.php";
+  String receivedMessage = "${baseUrl}teacher_msg_income.php";
   String sendMessage = "${baseUrl}teacher_msg_send.php";
   String questionBank = "${baseUrl}teacher_quest_bank.php";
   String homeworkDetails = "${baseUrl}teacher_homework_view.php";
@@ -33,7 +35,7 @@ class TeacherService {
   String getSchedulesTeacherURL = "${baseUrl}teacher_table.php";
 String getBuildingsURL = "${baseUrl}categories_list.php";
 String getStudentsURL = "${baseUrl}student_list.php";
-  Future<List<TeacherReport>> getReports({String? id}) async {
+  Future<List<TeacherReport>?> getReports({String? id}) async {
     List<TeacherReport> list = [];
     Response response;
     print("$reports?teacher_id=$id");
@@ -227,6 +229,20 @@ String getStudentsURL = "${baseUrl}student_list.php";
     if (response.data != null) {
       data.forEach((element) {
         list.add(SentMessagesTeacher.fromJson(element));
+      });
+    }
+    return list;
+  }
+  Future<List<Messages>> getReceivedMessages({String? id}) async {
+    List<Messages> list = [];
+    Response response;
+    response = await Dio().get(
+      "$receivedMessage?teacher_id=$id",
+    );
+    var data = response.data;
+    if (response.data != null) {
+      data.forEach((element) {
+        list.add(Messages.fromJson(element));
       });
     }
     return list;

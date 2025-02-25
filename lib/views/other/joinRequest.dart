@@ -6,6 +6,8 @@ import 'package:rayanSchool/globals/widgets/textFiled.dart';
 import 'package:rayanSchool/services/JoinApplicationService.dart';
 import 'package:rayanSchool/views/homeScreen.dart';
 
+import '../../globals/commonStyles.dart';
+
 class JoinRequest extends StatefulWidget {
   @override
   _JoinRequestState createState() => _JoinRequestState();
@@ -40,9 +42,16 @@ class _JoinRequestState extends State<JoinRequest> {
   TextEditingController _emailController = new TextEditingController();
 
   sendRequest() async {
-    isLoading = true;
-    setState(() {});
-    String result = await JoinApplication().sendApplication(
+    if (!isLoading) {
+      if (!mounted) return; // ✅ Ensure widget is still in the tree
+      setState(() {
+        isLoading = true;
+      });
+    }
+
+    try {
+      String result = await JoinApplication().sendApplication(
+        email: _emailController.text,
         name: _nameController.text,
         oldSchool: _oldSchoolController.text,
         mobile: _mobileController.text,
@@ -64,16 +73,56 @@ class _JoinRequestState extends State<JoinRequest> {
         parentName: _parentNameController.text,
         relation: _relationController.text,
         parentJob: _parentJobController.text,
-        notes: _notesController.text);
+        notes: _notesController.text,
+      );
 
-    isLoading = false;
-    setState(() {});
-    if (result == "true") {
-      pushPageReplacement(context, HomeScreen());
-    } else {
-      final snackBar = SnackBar(content: Text("حدث خطأ"));
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      if (!mounted) return; // ✅ Ensure widget is still in the tree before calling setState
+
+      if (result == "true") {
+        showSnackBar("تم إرسال  طلب التحاق", Colors.green, Icons.check);
+
+        setState(() {
+          isLoading = false;
+        });
+
+        // ✅ Safe navigation after ensuring widget is mounted
+        if (mounted) {
+          pushPageReplacement(context, HomeScreen());
+        }
+      } else {
+        showSnackBar("حدث خطأ أثناء إرسال طلب التحاق", Colors.red, Icons.close);
+        setState(() {
+          isLoading = false;
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        showSnackBar("خطأ: ${e.toString()}", Colors.red, Icons.error);
+        setState(() {
+          isLoading = false;
+        });
+      }
     }
+  }
+
+  /// Helper function to show SnackBar safely
+  void showSnackBar(String message, Color color, IconData icon) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            Icon(icon, color: Colors.white),
+            SizedBox(width: 10),
+            Text(
+              message,
+              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+        backgroundColor: color,
+      ),
+    );
   }
 
   @override
@@ -87,11 +136,7 @@ class _JoinRequestState extends State<JoinRequest> {
         ),
         automaticallyImplyLeading: true,
       ),
-      body: isLoading
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : ListView(
+      body:ListView(
               padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
               children: [
                 SizedBox(
@@ -100,6 +145,7 @@ class _JoinRequestState extends State<JoinRequest> {
                 InputFiled(
                   controller: _nameController,
                   hintText: "${AppLocalizations.of(context)?.translate('name')}",
+
                 ),
                 SizedBox(
                   height: 15,
@@ -282,11 +328,42 @@ class _JoinRequestState extends State<JoinRequest> {
                 SizedBox(
                   height: 30,
                 ),
-                AppBtn(
-                    onClick: () {
+                !isLoading?  InkWell(
+                    splashColor: mainColor,
+                    borderRadius: new BorderRadius.circular(10.0),
+                    child: Container(
+                        height: MediaQuery.of(context).size.height * 0.08,
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        decoration: BoxDecoration(
+                            color: mainColor,
+                            borderRadius: BorderRadius.all(Radius.circular(15))),
+                        alignment: Alignment.center,
+                        child: Center(
+                          child: Text(
+                            "${AppLocalizations.of(context)?.translate('send')}",
+                            style: buttonStyleMain,
+                          ),
+                        ),),
+                    onTap: (){
                       sendRequest();
-                    },
-                    label: "${AppLocalizations.of(context)?.translate('send')}")
+                    }):Container(
+                  decoration: BoxDecoration(
+                      color: mainColor,
+                      shape: BoxShape.circle
+                  ),
+
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: CircularProgressIndicator(
+
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).padding.top + 20))
               ],
             ),
     );

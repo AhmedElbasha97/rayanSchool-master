@@ -114,7 +114,7 @@ class _SentRecommendationAccadmicScreenState
             );
 
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            pushPageReplacement(context, MyAccountTeacher());
+            popPage(context);
           } else {
             setState(() {
               isServerLoading = false;

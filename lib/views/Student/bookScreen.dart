@@ -11,7 +11,7 @@ class BooksScreen extends StatefulWidget {
 
 class _BooksScreenState extends State<BooksScreen> {
   bool isLoading = true;
-  List<Books> books = [];
+  List<Books>? books = [];
   @override
   void initState() {
     super.initState();
@@ -34,7 +34,7 @@ class _BooksScreenState extends State<BooksScreen> {
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : books.isEmpty??true?
+          : books?.isEmpty??true?
       Container(
         height: MediaQuery.of(context).size.height*0.75,
         width: MediaQuery.of(context).size.width,
@@ -55,19 +55,19 @@ class _BooksScreenState extends State<BooksScreen> {
           ],
         ),
       ):ListView.separated(
-              itemCount: books.length,
+              itemCount: books?.length??0,
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ListTile(
                     onTap: () async {
-                      if (await canLaunch("${books[index].file}")) {
-                        await launch("${books[index].file}");
+                      if (await canLaunch("${books?[index].file}")) {
+                        await launch("${books?[index].file}");
                       } else {
-                        throw 'Could not launch ${books[index].file}';
+                        throw 'Could not launch ${books?[index].file}';
                       }
                     },
-                    title: Text("${books[index].title}"),
+                    title: Text("${books?[index].title}"),
                   ),
                 );
               },

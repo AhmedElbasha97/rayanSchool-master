@@ -106,7 +106,28 @@ class _SchadulesScreenState extends State<SchadulesScreen> {
 
         ),
       ),
-      body:ListView(
+      body: data?.img?.isEmpty??true?
+      Container(
+        height: MediaQuery.of(context).size.height*0.75,
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Image.asset("assets/images/noData.png"),
+            ),
+            SizedBox(height: 20,),
+            Text(Localizations.localeOf(context).languageCode == "en"
+                ?"no schadule available":"لا يوجد جداول متوفرة الآن",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20
+
+              ),),
+          ],
+        ),
+      ):ListView(
         shrinkWrap: true,
         children: [
 

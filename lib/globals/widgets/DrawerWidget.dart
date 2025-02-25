@@ -20,6 +20,8 @@ import 'package:share_plus/share_plus.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../models/school_social_media_link_model.dart';
+import '../../services/appInfoService.dart';
 import '../../views/auth/change_password_screen.dart';
 
 class AppDrawer extends StatefulWidget {
@@ -31,11 +33,14 @@ class _AppDrawerState extends State<AppDrawer> {
    bool? userLogged;
    bool? isStudent;
    bool? isTeacher;
+   bool isLoading=true;
+   SchoolSocialMediaLinkModel? dataLink ;
 
-  @override
+   @override
   void initState() {
     super.initState();
     checkData();
+    getSocialLinkData();
   }
 
   checkData() async {
@@ -45,7 +50,13 @@ class _AppDrawerState extends State<AppDrawer> {
     isTeacher = prefs.getString("type") == "TEACHER" ? true : false;
     setState(() {});
   }
+getSocialLinkData() async {
+  dataLink = await AppInfoService().getSchoolSocialMediaLink();
+isLoading =false;
+setState(() {
 
+});
+}
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -53,7 +64,7 @@ class _AppDrawerState extends State<AppDrawer> {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Image.asset("assets/images/logoname.jpg"),
+            child: Image.asset("assets/images/logoname.png"),
           ),
           SizedBox(height: 50),
           ListTile(
@@ -153,26 +164,32 @@ class _AppDrawerState extends State<AppDrawer> {
           //   endIndent: 30,
           //   indent: 30,
           // ),
-          ListTile(
-            title: Text(
-              "${AppLocalizations.of(context)?.translate('complains')}",
-              style: TextStyle(
-                  color: mainColor, fontWeight: FontWeight.bold, fontSize: 14),
-            ),
-            leading: Icon(Icons.photo),
-            onTap: () async {
-              popPage(context);
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => ContactUsScreen(),
-              ));
-            },
-          ),
-          Divider(
-            height: 1,
-            thickness: 2,
-            endIndent: 30,
-            indent: 30,
-          ),
+          userLogged??false
+              ? Column(
+                children: [
+                  ListTile(
+                              title: Text(
+                  "${AppLocalizations.of(context)?.translate('complains')}",
+                  style: TextStyle(
+                      color: mainColor, fontWeight: FontWeight.bold, fontSize: 14),
+                              ),
+                              leading: Icon(Icons.photo),
+                              onTap: () async {
+                  popPage(context);
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => ContactUsScreen(),
+                  ));
+                              },
+                            ),
+                  Divider(
+                    height: 1,
+                    thickness: 2,
+                    endIndent: 30,
+                    indent: 30,
+                  ),
+                ],
+              ):SizedBox(),
+
           ListTile(
             title: Text(
               "${AppLocalizations.of(context)?.translate('PhotosAlbum')}",
@@ -255,26 +272,8 @@ class _AppDrawerState extends State<AppDrawer> {
             endIndent: 30,
             indent: 30,
           ),
-          userLogged??false?ListTile(
-            title: Text(
-              "${AppLocalizations.of(context)?.translate('changePass')}",
-              style: TextStyle(
-                  color: mainColor, fontWeight: FontWeight.bold, fontSize: 14),
-            ),
-            leading: Icon(Icons.password_rounded),
-            onTap: () async {
-              popPage(context);
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => ChangePasswordScreen(),
-              ));
-            },
-          ):Container(),
-          userLogged??false?Divider(
-            height: 1,
-            thickness: 2,
-            endIndent: 30,
-            indent: 30,
-          ):Container(),
+
+
           ListTile(
               title: Text(
                 "${AppLocalizations.of(context)?.translate('aboutTheApp')}",
@@ -362,19 +361,19 @@ class _AppDrawerState extends State<AppDrawer> {
                 )
               : Container(),
 
-          Row(
+          isLoading?SizedBox():Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Padding(padding: EdgeInsets.symmetric(horizontal: 1)),
               InkWell(
-                // onTap: () => launchURL("$facebookUrl"),
+                 onTap: () => launchURL("${dataLink?.facebook??""}"),
                 child: Image.asset(
                   "assets/images/facebook.png",
                   scale: 1.5,
                 ),
               ),
               InkWell(
-                // onTap: () => launchURL("$instagramUrl"),
+                 onTap: () => launchURL("${dataLink?.instagram??""}"),
                 child: Image.asset(
                   "assets/images/instagram.png",
                   scale: 1.5,
@@ -388,17 +387,17 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),
               InkWell(
-                // onTap: () => launchURL("https://wa.me/$whatsappUrl"),
+                 onTap: () => launchURL("https://wa.me/${dataLink?.whatsapp??""}"),
                 child: Image.asset(
                   "assets/images/whatsapp.png",
                   scale: 1.5,
                 ),
               ),
               InkWell(
-                // onTap: () => launchURL("$youtubeUrl"),
+                 onTap: () => launchURL("${dataLink?.youtube??""}"),
                 child: Image.asset(
-                  "assets/images/snapchat.png",
-                  scale: 1.5,
+                  "assets/images/youtube.png",
+                  scale: 10,
                 ),
               ),
               Padding(padding: EdgeInsets.symmetric(horizontal: 1)),

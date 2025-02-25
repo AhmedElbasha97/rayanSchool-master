@@ -11,7 +11,7 @@ class SubjectsScreen extends StatefulWidget {
 
 class _SubjectsScreenState extends State<SubjectsScreen> {
   bool isLoading = true;
-  List<Subjects> subjects = [];
+  List<Subjects>? subjects = [];
   @override
   void initState() {
     super.initState();
@@ -32,8 +32,29 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
             ? Center(
                 child: CircularProgressIndicator(),
               )
-            : ListView.separated(
-                itemCount: subjects.length,
+            : subjects?.isEmpty??true?
+        Container(
+          height: MediaQuery.of(context).size.height*0.75,
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Image.asset("assets/images/noData.png"),
+              ),
+              SizedBox(height: 20,),
+              Text(Localizations.localeOf(context).languageCode == "en"
+                  ?"no weekly messages available":"لا يوجد رسائل أسبوعية متوفرة الآن",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20
+
+                ),),
+            ],
+          ),
+        ):ListView.separated(
+                itemCount: subjects?.length??0,
                 padding: EdgeInsets.all(10),
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
@@ -43,11 +64,11 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
                         pushPage(
                             context,
                             SubjectDetailsScreen(
-                              id: subjects[index].id,
+                              id: subjects?[index].id,
                             ));
                       },
                       child: ListTile(
-                        title: Text("${subjects[index].miName}"),
+                        title: Text("${subjects?[index].miName}"),
                         trailing: Icon(Icons.arrow_forward_ios),
                       ),
                     ),

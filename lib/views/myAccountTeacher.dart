@@ -4,6 +4,7 @@ import 'package:rayanSchool/globals/helpers.dart';
 import 'package:rayanSchool/views/teacher/add_home_work_screen.dart';
 import 'package:rayanSchool/views/teacher/homework_teacher_list_screen.dart';
 import 'package:rayanSchool/views/teacher/messages/MessagesScreen.dart';
+import 'package:rayanSchool/views/teacher/messages/receidvedMessageScreen.dart';
 import 'package:rayanSchool/views/teacher/messages/sendMessageTeacher.dart';
 import 'package:rayanSchool/views/teacher/questionBank.dart';
 import 'package:rayanSchool/views/teacher/reportsScreen.dart';
@@ -59,6 +60,19 @@ class _MyAccountTeacherState extends State<MyAccountTeacher> {
             Divider(),
             ListTile(
               onTap: () {
+                pushPage(
+                    context,
+                    ReceivedMessageScreen(
+                    ));
+              },
+              title: Text(
+                AppLocalizations.of(context)?.translate('messages')??"",
+              ),
+              trailing: Icon(Icons.message),
+            ),
+            Divider(),
+            ListTile(
+              onTap: () {
                 pushPage(context, MessagesTeacherScreen());
               },
               title: Text(
@@ -83,7 +97,7 @@ class _MyAccountTeacherState extends State<MyAccountTeacher> {
               },
               title: Text(
                 Localizations.localeOf(context).languageCode == "en"
-                    ?"add new homework":"أضافه واجب مدرسى جديد",
+                    ?"add new homework":"إضافة واجب مدرسي جديد",
               ),
               trailing: Icon(Icons.contact_page_rounded),
             ),
@@ -104,7 +118,7 @@ class _MyAccountTeacherState extends State<MyAccountTeacher> {
               },
               title: Text(
                 Localizations.localeOf(context).languageCode == "en"
-                    ?"Send a Behavioural recommendation":"أرسال توصية السلوكية",
+                    ?"Send a Behavioural recommendation":"إرسال توصية السلوكية",
               ),
               trailing: Icon(Icons.contact_page_rounded),
             ),
@@ -115,7 +129,7 @@ class _MyAccountTeacherState extends State<MyAccountTeacher> {
               },
               title: Text(
                 Localizations.localeOf(context).languageCode == "en"
-                    ?"Send a academic recommendation":"أرسال توصية الأكاديمية",
+                    ?"Send a academic recommendation":"إرسال توصية الأكاديمية",
               ),
               trailing: Icon(Icons.contact_page_rounded),
             ),
@@ -126,7 +140,7 @@ class _MyAccountTeacherState extends State<MyAccountTeacher> {
               },
               title: Text(
                 Localizations.localeOf(context).languageCode == "en"
-                    ?"Send a message":"أرسال رساله",
+                    ?"Send a message":"إرسال رسالة",
               ),
               trailing: Icon(Icons.contact_page_rounded),
             ),

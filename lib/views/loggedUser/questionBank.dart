@@ -13,7 +13,7 @@ class QuestionBankScreen extends StatefulWidget {
 
 class _QuestionBankScreenState extends State<QuestionBankScreen> {
   bool isLoading = true;
-  List<Question> questions = [];
+  List<Question>? questions = [];
   @override
   void initState() {
     super.initState();
@@ -36,8 +36,29 @@ class _QuestionBankScreenState extends State<QuestionBankScreen> {
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : ListView.builder(
-       itemCount: questions.length,
+          : questions?.isEmpty??true?
+      Container(
+        height: MediaQuery.of(context).size.height*0.75,
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Image.asset("assets/images/noData.png"),
+            ),
+            SizedBox(height: 20,),
+            Text(Localizations.localeOf(context).languageCode == "en"
+                ?"no questions available":"لا يوجد أسألة متوفرة الآن",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20
+
+              ),),
+          ],
+        ),
+      ):ListView.builder(
+       itemCount: questions?.length??0,
               padding: EdgeInsets.all(10),
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
@@ -47,12 +68,12 @@ class _QuestionBankScreenState extends State<QuestionBankScreen> {
                       pushPage(
                           context,
                           QuestionDetailsScreen(
-                            id: questions[index].id??"",
+                            id: questions?[index].id??"",
                           ));
                     },
                     child: HomeWorkCard(
-                      title: "${questions[index].title}",
-                      date: "${questions[index].date}",
+                      title: "${questions?[index].title}",
+                      date: "${questions?[index].date}",
                     ),
                   ),
                 );

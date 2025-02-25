@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:rayanSchool/globals/CommonSetting.dart';
 
 class JoinApplication {
@@ -6,6 +7,7 @@ class JoinApplication {
 
   Future<String> sendApplication(
       {String? name,
+        String? email,
       String? oldSchool,
       String? mobile,
       String? joinSchoolDate,
@@ -49,14 +51,24 @@ class JoinApplication {
       "exp_pname": "$parentName",
       "exp_relation": "$relation",
       "exp_pjob": "$parentJob",
-      "exp_notes": "$notes"
+      "exp_notes": "$notes",
+      "exp_email": "$email",
     };
 
     // param.removeWhere(
     //     (key, value) => (value == "" || value.isEmpty || value == null));
+    Dio dio = Dio();
 
     Response response;
-    response = await Dio().post("$joinApplication", queryParameters: param);
+    dio.interceptors.add(PrettyDioLogger(
+      requestHeader: true,
+      requestBody: true,
+      responseBody: true,
+      responseHeader: true,
+      compact: true,
+    ));
+    response = await dio.post("$joinApplication",queryParameters: param);
+   print("$joinApplication?exp_fname:$name&exp_preschool:$oldSchool&exp_mob:$mobile &exp_date:$joinSchoolDate &exp_idstudent:$idNumber&exp_birthdate:$birthdate &exp_type: $gender &exp_religion: $religion &exp_birthplace: $birthPlace &exp_nationalty:$nationalty&exp_provincebrth:$province&exp_registnum:$regNumber&exp_address: $address&exp_city: $city&exp_zipcode: $zipCode&exp_tels: $phone&exp_year: $year&exp_registstatus:$regStatus&exp_pname:$parentName&exp_relation:$relation&exp_pjob:$parentJob&exp_notes:$notes&exp_email:$email");
     var data = response.data["status"];
     return data;
   }

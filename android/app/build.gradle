@@ -2,7 +2,7 @@ plugins {
        id "com.android.application"
        id "kotlin-android"
        id "dev.flutter.flutter-gradle-plugin"
-
+       id("com.google.gms.google-services")
     }
 
 def localProperties = new Properties()
@@ -39,7 +39,7 @@ if (keystorePropertiesFile.exists()) {
 android {
     namespace "com.syncQatar.rayanSchool"
     compileSdkVersion 34
-    ndkVersion = "25.1.8937393"
+    ndkVersion = flutter.ndkVersion
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -86,6 +86,9 @@ flutter {
 
 dependencies {
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.3'
-
+    implementation 'com.google.firebase:firebase-messaging-ktx'
+    implementation(platform("com.google.firebase:firebase-bom:33.9.0"))
+    implementation("com.google.firebase:firebase-analytics")
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.20"
 }
+apply plugin: 'com.google.gms.google-services'

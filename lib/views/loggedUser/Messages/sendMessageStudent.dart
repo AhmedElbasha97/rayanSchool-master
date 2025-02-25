@@ -70,9 +70,37 @@ class _SendMessageStudentScreenState extends State<SendMessageStudentScreen> {
       isLoading = false;
       setState(() {});
       if (done == "true") {
-        pushPageReplacement(context, HomeScreen());
+        final snackBar = SnackBar(content:
+        Row(children: [
+          const Icon(Icons.check, color: Colors.white,),
+          const SizedBox(width: 10,),
+          Text(Localizations.localeOf(context).languageCode == "en" ?'the message has been sent successfully':"تم إرسال  الرساله", style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold
+          ),
+          ),
+        ],),
+            backgroundColor: Colors.green
+        );
+
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+        popPage(context);
+
       } else {
-        final snackBar = SnackBar(content: Text(done));
+        final snackBar = SnackBar(content:
+        Row(children: [
+          const Icon(Icons.close, color: Colors.white,),
+          const SizedBox(width: 10,),
+          Text( Localizations.localeOf(context).languageCode == "en" ?'Try sending a message again':'حدث خطاء أثناء إرسال  الرساله', style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold
+          ),
+          ),
+        ],),
+            backgroundColor: Colors.red
+        );
+
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       }
       popPage(context);

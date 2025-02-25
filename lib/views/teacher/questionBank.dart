@@ -11,7 +11,7 @@ class QuestionBankScreen extends StatefulWidget {
 
 class _QuestionBankScreenState extends State<QuestionBankScreen> {
   bool isLoading = true;
-  List<QuestionBankTeacher> questions = [];
+  List<QuestionBankTeacher>? questions = [];
   @override
   void initState() {
     super.initState();
@@ -34,7 +34,7 @@ class _QuestionBankScreenState extends State<QuestionBankScreen> {
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : questions.isEmpty??true?
+          : questions?.isEmpty??true?
       Container(
         height: MediaQuery.of(context).size.height*0.75,
         width: MediaQuery.of(context).size.width,
@@ -55,7 +55,7 @@ class _QuestionBankScreenState extends State<QuestionBankScreen> {
           ],
         ),
       ):ListView.builder(
-              itemCount: questions.length,
+              itemCount: questions?.length??0,
               padding: EdgeInsets.all(10),
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
@@ -63,8 +63,8 @@ class _QuestionBankScreenState extends State<QuestionBankScreen> {
                   child: InkWell(
                     onTap: () {},
                     child: HomeWorkCard(
-                      title: "${questions[index].title}",
-                      date: "${questions[index].date}",
+                      title: "${questions?[index].title}",
+                      date: "${questions?[index].date}",
                     ),
                   ),
                 );

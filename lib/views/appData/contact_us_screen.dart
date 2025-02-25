@@ -34,18 +34,50 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
     if (_formKey.currentState!.validate()) {
       isLoading = true;
       setState(() {});
-      await ContactUsService().sendComplain(
+      String done = await ContactUsService().sendComplain(
           _nameController.text,
           _msgController.text,
           _emailController.text,
           "",
           _phoneController.text);
-      isLoading = false;
-      setState(() {});
-      popPage(context);
+      if (done == "true") {
+        final snackBar = SnackBar(content:
+        Row(children: [
+          const Icon(Icons.check, color: Colors.white,),
+          const SizedBox(width: 10,),
+          Text(Localizations.localeOf(context).languageCode == "en" ?'the complain has been sent successfully':"تم إرسال  الشكوي بنجاح", style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold
+          ),
+          ),
+        ],),
+            backgroundColor: Colors.green
+        );
+
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+        isLoading = false;
+        setState(() {});
+        popPage(context);
+      } else {
+        final snackBar = SnackBar(content:
+        Row(children: [
+          const Icon(Icons.close, color: Colors.white,),
+          const SizedBox(width: 10,),
+          Text(Localizations.localeOf(context).languageCode == "en" ?'Try sending a complain again':'حدث خطاء أثناء إرسال  الشكوي', style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold
+          ),
+          ),
+        ],),
+            backgroundColor: Colors.red
+        );
+        isLoading = false;
+        setState(() {});
+        popPage(context);
+      }
     }
   }
-
   void unFocus() {
     _emailNode.unfocus();
     _nameNode.unfocus();

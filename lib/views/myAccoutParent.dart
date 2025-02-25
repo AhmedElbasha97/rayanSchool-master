@@ -273,7 +273,7 @@ class _MyAccountParentState extends State<MyAccountParent> {
                 },
                 title: Text(
                     Localizations.localeOf(context).languageCode == "en"
-                        ?"Conduct and penalties":"السلوك و الجزاءات",
+                        ?"Conduct and penalties":"السلوك والجزاءات",
                 ),
                 trailing: Icon(Icons.close),
               ),
