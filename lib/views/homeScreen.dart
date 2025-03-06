@@ -18,6 +18,7 @@ import 'package:rayanSchool/views/parents/recommendation_list_screen.dart';
 import 'package:rayanSchool/views/school_policies_screen.dart';
 import 'package:rayanSchool/views/teacher/messages/MessagesScreen.dart';
 import 'package:rayanSchool/views/teacher/messages/receidvedMessageScreen.dart';
+import 'package:rayanSchool/views/web_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../globals/widgets/notification_icon.dart';
@@ -492,6 +493,43 @@ decideIfThereIsNotificationDetectOrNotAndItIsBehavior() async {
                       child: Text(
                         Localizations.localeOf(context).languageCode == "en"
                             ?"Login":"تسجيل دخول",
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.bold, fontSize: 14),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            InkWell(
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => WebViewContainer("https://alrayyanprivateschools.com/supervisor"),
+                ));
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    "assets/images/signInicons.png",
+                    height: MediaQuery.of(context).size.height*0.06 ,
+                    width: MediaQuery.of(context).size.width*0.12,
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: mainColor,
+                      borderRadius: BorderRadius.circular(50.0),
+                    ),
+                    height: MediaQuery.of(context).size.height*0.06 ,
+                    width: MediaQuery.of(context).size.width*0.6 ,
+                    child: Center(
+                      child: Text(
+                        Localizations.localeOf(context).languageCode == "en"
+                            ?"admin login":"تسجيل دخول مشرف",
                         style: TextStyle(
                             color: Colors.black, fontWeight: FontWeight.bold, fontSize: 14),
                       ),
