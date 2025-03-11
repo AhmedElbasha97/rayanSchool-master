@@ -57,6 +57,18 @@ setState(() {
 
 });
 }
+   void shareUrl(String text, BuildContext context){
+     try{
+       Size size = MediaQuery.of(context).size;
+       double screenWidth = size.width;
+       double screenHeight = size.height;
+       Share.share(text,
+           sharePositionOrigin: Rect.fromLTWH(0, 0, screenWidth,
+               screenHeight));
+     } catch (e) {
+     print(e);
+     }
+   }
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -330,7 +342,7 @@ setState(() {
                 link =
                     "https://apps.apple.com/us/app/%D9%85%D8%AF%D8%B1%D8%B3%D8%A9-%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D9%86/id1563613632";
               }
-              Share.share( '$link', subject: ' App Called Rayan schools');
+              shareUrl(link,context);
             },
           ),
           Divider(
