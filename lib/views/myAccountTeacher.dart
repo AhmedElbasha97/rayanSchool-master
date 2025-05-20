@@ -12,6 +12,9 @@ import 'package:rayanSchool/views/teacher/scheduleScreen.dart';
 import 'package:rayanSchool/views/teacher/sendReport.dart';
 import 'package:rayanSchool/views/teacher/sent_recommendation_accadmic_screen.dart';
 import 'package:rayanSchool/views/teacher/sent_recommendations_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../web_view/web_view_screen.dart';
 
 class MyAccountTeacher extends StatefulWidget {
   @override
@@ -50,8 +53,11 @@ class _MyAccountTeacherState extends State<MyAccountTeacher> {
             ),
             Divider(),
             ListTile(
-                onTap: () {
-                  pushPage(context, TeacherSchedule());
+                onTap: () async {
+                  SharedPreferences prefs = await SharedPreferences.getInstance();
+                  String? id = prefs.getString("id");
+                  pushPage(context,                 WebViewContainer("https://alrayyanprivateschools.com/teacher_table_design.php?teacher_id=${id}"),
+                  );
                 },
                 title: Text(
                   AppLocalizations.of(context)?.translate('schedule')??"",

@@ -13,18 +13,20 @@ import 'package:rayanSchool/services/appInfoService.dart';
 import 'package:rayanSchool/views/Notification/notification_list.dart';
 import 'package:rayanSchool/views/parents/AttendanceScreen.dart';
 import 'package:rayanSchool/views/parents/ReportsScreen.dart';
+import 'package:rayanSchool/views/parents/penalties_list_screen.dart';
 import 'package:rayanSchool/views/parents/recommendation_academic_list_screen.dart';
 import 'package:rayanSchool/views/parents/recommendation_list_screen.dart';
 import 'package:rayanSchool/views/school_policies_screen.dart';
+import 'package:rayanSchool/views/teacher/homework_teacher_list_screen.dart';
 import 'package:rayanSchool/views/teacher/messages/MessagesScreen.dart';
 import 'package:rayanSchool/views/teacher/messages/receidvedMessageScreen.dart';
-import 'package:rayanSchool/views/web_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../globals/widgets/notification_icon.dart';
 import '../models/school_social_media_link_model.dart';
 import '../models/school_social_media_link_model.dart';
 import '../models/school_social_media_link_model.dart';
+import '../web_view/web_view_screen.dart' show WebViewContainer;
 import 'appData/NewsScreen.dart';
 import 'appData/activity_screen.dart';
 import 'appData/contact_us_screen.dart';
@@ -32,6 +34,7 @@ import 'appData/schoolWord.dart';
 import 'appData/school_policy_screen.dart';
 import 'auth/login.dart';
 import 'loggedUser/Messages/MessagesScreen.dart';
+import 'loggedUser/homeWork.dart';
 import 'other/joinRequest.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -117,6 +120,30 @@ decideIfThereIsNotificationDetectOrNotAndItIsBehavior() async {
               ));
         }
         break;
+      case "penalty":
+        {
+          pushPage(
+              context,
+              PenaltiesListScreen(
+              ));
+        }
+        break;
+      case "homework":
+        {
+
+          if (prefs.getString("type") == "STUDENT") {
+            pushPage(
+                context,
+                HomeWorkScreen(
+                ));
+          } else if (prefs.getString("type") == "TEACHER") {
+            pushPage(
+                context,
+                HomeworkTeacherListScreen(
+                ));
+          }
+        }
+        break;
     }
   }
 }
@@ -153,9 +180,13 @@ decideIfThereIsNotificationDetectOrNotAndItIsBehavior() async {
       appBar: AppBar(
         actions: [
           userLogged?InkWell(
-            onTap: ()=>
-             pushPage(context,NotificationsListScreen(),
-              ),
+            onTap: (){
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => NotificationsListScreen()),
+              );
+    },
+
             child: Ink(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -541,7 +572,7 @@ decideIfThereIsNotificationDetectOrNotAndItIsBehavior() async {
             InkWell(
               onTap: (){
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => JoinRequest(),
+                  builder: (context) =>WebViewContainer("https://alrayyanprivateschools.com/application.php"),
                 ));
               },
               child: Row(

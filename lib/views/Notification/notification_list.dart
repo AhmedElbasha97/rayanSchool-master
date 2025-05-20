@@ -61,37 +61,59 @@ class _NotificationsListScreenState extends State<NotificationsListScreen> {
             Icons.arrow_back_ios,
             color: mainColor,
           ),
-          onPressed: () { Navigator.of(context).pop();
+          onPressed: () { Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => HomeScreen()),
+          );
 
             },
         ),
       ),
       body: isLoading?Loader(): userNotificationList?.isEmpty??true?
-      Container(
-        height: MediaQuery.of(context).size.height ,
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Image.asset("assets/images/notification_holder.png"),
-            ),
-            SizedBox(height: 20,),
-            Text(Localizations.localeOf(context).languageCode == "en"
-                ?"no Notification available":"لا يوجد إشعارات متوفرة الآن",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20
+      PopScope(
+        canPop: false, // تمنع الخروج تمامًا
+        onPopInvokedWithResult: (bool didPop, Object? result) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => HomeScreen()),
+          );
+        },
+        child: Container(
+          height: MediaQuery.of(context).size.height ,
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Image.asset("assets/images/notification_holder.png"),
+              ),
+              SizedBox(height: 20,),
+              Text(Localizations.localeOf(context).languageCode == "en"
+                  ?"no Notification available":"لا يوجد إشعارات متوفرة الآن",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20
 
-              ),),
-          ],
+                ),),
+            ],
+          ),
         ),
-      ):ListView.builder(
-          physics: const BouncingScrollPhysics(),
-          itemCount: userNotificationList?.length,
-          itemBuilder: (context, int index) {
-            return NotificationCell(press: () {   pushPage(context, NotifiicationDetailsScreen(notification:userNotificationList?[index] ,)); },notification: userNotificationList?[index],);
-          }),
+      ):PopScope(
+        canPop: false, // تمنع الخروج تمامًا
+        onPopInvokedWithResult: (bool didPop, Object? result) {
+
+          (
+            context,
+            MaterialPageRoute(builder: (context) => HomeScreen()),
+          );
+        },
+        child: ListView.builder(
+            physics: const BouncingScrollPhysics(),
+            itemCount: userNotificationList?.length,
+            itemBuilder: (context, int index) {
+              return NotificationCell(press: () {   pushPage(context, NotifiicationDetailsScreen(notification:userNotificationList?[index] ,)); },notification: userNotificationList?[index],);
+            }),
+      ),
     );
   }
 }

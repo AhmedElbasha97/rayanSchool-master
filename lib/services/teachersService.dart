@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:dio/dio.dart'as call;
+import 'package:file_picker/file_picker.dart';
 import 'package:rayanSchool/globals/CommonSetting.dart';
 import 'package:rayanSchool/models/teacher/HomeWorkDetails.dart';
 import 'package:rayanSchool/models/teacher/category.dart';
@@ -12,6 +16,7 @@ import 'package:rayanSchool/models/teacher/teacherReport.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/activity_detailed_model.dart';
+import '../models/homeWorkDetails.dart';
 import '../models/message.dart';
 import '../models/teacher/homework_teacher_list_model.dart';
 
@@ -35,6 +40,7 @@ class TeacherService {
   String getSchedulesTeacherURL = "${baseUrl}teacher_table.php";
 String getBuildingsURL = "${baseUrl}categories_list.php";
 String getStudentsURL = "${baseUrl}student_list.php";
+  String homeWorkDetails = "${baseUrl}teacher_homework_view.php";
   Future<List<TeacherReport>?> getReports({String? id}) async {
     List<TeacherReport> list = [];
     Response response;
@@ -100,7 +106,7 @@ String getStudentsURL = "${baseUrl}student_list.php";
     }
     return message;
   }
-  Future<String> addHomeWork({String? classId, String? title,String? details}) async {
+  Future<String> addHomeWork({String? classId, String? title,String? details,File? selectedFile}) async {
     String message = "";
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var userId = await prefs.getString("id");
@@ -108,8 +114,18 @@ String getStudentsURL = "${baseUrl}student_list.php";
     var dio =Dio();
     dio.options.connectTimeout = const Duration(milliseconds: 800000) ;
     dio.options.receiveTimeout =  const Duration(milliseconds: 800000) ;
-    Response? response = await dio.get(
-      "$addHomeWorkURL?teacher_id$userId&class_id$classId&title=$title&detail=$details",
+    final formData = call.FormData.fromMap({
+      "teacher_id":userId,
+      "class_id":classId,
+      "title":title,
+      "p_img":selectedFile?.path.isEmpty??true?null:
+
+      await call.MultipartFile.fromFile(selectedFile?.path??"", filename: selectedFile?.path.split('/').last??""),
+      "detail": details,
+
+    });
+    Response? response = await dio.post(
+      "$addHomeWorkURL",data: formData
     );
     print(response.statusCode.toString());
     if(response.data != null) {
@@ -140,6 +156,22 @@ String getStudentsURL = "${baseUrl}student_list.php";
     data.forEach((element) {
       list.add(HomeworkTeacherListModel.fromJson(element));
     });
+    return list;
+  }
+  Future<List<HomeWorkDetails>> gethomeWorkTeacherDetails(
+      {String? id, String? homeWorkId}) async {
+    List<HomeWorkDetails> list = [];
+    Response response;
+    print("$homeWorkDetails?teacher_id=$id&homework_id=$homeWorkId");
+    response = await Dio().get(
+      "$homeWorkDetails?teacher_id=$id&homework_id=$homeWorkId",
+    );
+    var data = response.data;
+    if (response.data != null) {
+      data.forEach((element) {
+        list.add(HomeWorkDetails.fromJson(element));
+      });
+    }
     return list;
   }
   Future<List<Category>> getCategories() async {
@@ -284,6 +316,7 @@ String getStudentsURL = "${baseUrl}student_list.php";
       {required String id, String? homeworkId}) async {
     List<HomeWorkDetailsTeacherModel> list = [];
     Response response;
+    print("$homeworkDetails?teacher_id=$id&homework_id=$homeworkId");
     response = await Dio()
         .get("$homeworkDetails??teacher_id=$id&homework_id=$homeworkId");
     var data = response.data;

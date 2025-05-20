@@ -7,7 +7,6 @@ import 'package:rayanSchool/globals/helpers.dart';
 import 'package:rayanSchool/views/albums/AlbumsScreen.dart';
 import 'package:rayanSchool/views/appData/NewsScreen.dart';
 import 'package:rayanSchool/views/appData/aboutApp.dart';
-import 'package:rayanSchool/views/appData/contact_us_screen.dart';
 import 'package:rayanSchool/views/appData/privacyPolicyScreen.dart';
 import 'package:rayanSchool/views/appData/subjectsScreen.dart';
 import 'package:rayanSchool/views/auth/login.dart';
@@ -23,6 +22,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/school_social_media_link_model.dart';
 import '../../services/appInfoService.dart';
 import '../../views/auth/change_password_screen.dart';
+import '../../web_view/web_view_screen.dart';
 
 class AppDrawer extends StatefulWidget {
   @override
@@ -106,7 +106,7 @@ setState(() {
             onTap: () {
               popPage(context);
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => JoinRequest(),
+                builder: (context) =>WebViewContainer("https://alrayyanprivateschools.com/application.php"),
               ));
             },
           ),
@@ -189,7 +189,7 @@ setState(() {
                               onTap: () async {
                   popPage(context);
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => ContactUsScreen(),
+                    builder: (context) =>WebViewContainer("https://alrayyanprivateschools.com/complaints.php"),
                   ));
                               },
                             ),

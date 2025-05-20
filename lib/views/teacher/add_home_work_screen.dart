@@ -1,8 +1,12 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 import '../../I10n/app_localizations.dart';
 import '../../globals/commonStyles.dart';
 import '../../globals/helpers.dart';
+import '../../globals/widgets/file_icons_widget.dart';
 import '../../globals/widgets/mainButton.dart';
 import '../../models/teacher/category.dart';
 import '../../services/teachersService.dart';
@@ -42,7 +46,8 @@ class _AddHomeWorkScreenState extends State<AddHomeWorkScreen> {
   List<Map<String?,String?>> recommendationList =[];
   Category? selectedCatogory;
   Category? selectedLevel;
-
+  FilePickerResult? selectedFile;
+  String selectedFileName = "";
   Category? selectedLevel2;
   bool isServerLoading = false;
   String recommendationTitle = "";
@@ -56,7 +61,25 @@ class _AddHomeWorkScreenState extends State<AddHomeWorkScreen> {
     categoryloading = false;
     setState(() {});
   }
+  Future<void> pickAnyFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.any, // can also use FileType.custom and set allowedExtensions
+    );
 
+    if (result != null && result.files.single.path != null) {
+      String? filePath = result.files.single.path;
+      String fileName = result.files.single.name;
+
+      print('File picked: $fileName');
+      print('Path: $filePath');
+      selectedFile = result;
+      selectedFileName = fileName;
+      setState(() {});
+      // You can now upload, open, or process the file
+    } else {
+      print('User canceled file picking');
+    }
+  }
   getLevels() async {
     levels = await TeacherService().getLevels(id: selectedCatogory?.id??"");
     levels.add(selectLevel);
@@ -75,7 +98,18 @@ class _AddHomeWorkScreenState extends State<AddHomeWorkScreen> {
     _msgNode.unfocus();
     setState(() {});
   }
-
+  getFileName(String filePath){
+    return filePath.split('/').last;
+  }
+  String formatFileSize(int bytes) {
+    if (bytes < 1024) return Localizations.localeOf(context).languageCode == "en"? '$bytes B':'B $bytes';
+    double kb = bytes / 1024;
+    if (kb < 1024) return Localizations.localeOf(context).languageCode == "en"? '${kb.toStringAsFixed(2)} KB':'KB ${kb.toStringAsFixed(2)}';
+    double mb = kb / 1024;
+    if (mb < 1024) return  Localizations.localeOf(context).languageCode == "en"?'${mb.toStringAsFixed(2)} MB':'MB ${mb.toStringAsFixed(2)}';
+    double gb = mb / 1024;
+    return Localizations.localeOf(context).languageCode == "en"?'${gb.toStringAsFixed(2)} GB':'GB ${gb.toStringAsFixed(2)}';
+  }
   sendMessage() async {
     if (_formKey.currentState!.validate()) {
       if (selectedLevel2 != null) {
@@ -84,7 +118,7 @@ class _AddHomeWorkScreenState extends State<AddHomeWorkScreen> {
             isServerLoading = true;
           });
 
-          String msg =   await TeacherService().addHomeWork(classId: selectedLevel2?.id??"",details: _msgController.text,title: _titleController.text);
+          String msg =   await TeacherService().addHomeWork(classId: selectedLevel2?.id??"",details: _msgController.text,title: _titleController.text,selectedFile: selectedFile?.files[0].path==""?null:File(selectedFile?.files[0].path??""));
           if (msg == "done") {
             setState(() {
               isServerLoading = false;
@@ -376,6 +410,101 @@ class _AddHomeWorkScreenState extends State<AddHomeWorkScreen> {
                       }
                       return null;
                     },
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              InkWell(
+                onTap: (){
+                  pickAnyFile();
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width*0.6,
+                    height: MediaQuery.of(context).size.height*0.13,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20)
+
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: selectedFileName == ""?  Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                  Localizations.localeOf(context).languageCode == "en"?"Choose file to upload":"أختر الملف الذى تريد إرفاقه",
+                                  style:  TextStyle(
+
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 18,
+                                    color: mainColor,
+                                  )
+                              ),
+                              const SizedBox(height: 10,),
+
+                            ],
+                          ),
+                          const SizedBox(width: 10,),
+                          Icon(Icons.file_copy_outlined,color: mainColor,size: 50,)
+
+
+                        ],
+                      ):Column(
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    width: MediaQuery.of(context).size.width*0.6,
+                                    child: Text(
+                                        selectedFileName,
+                                        maxLines: 3,
+                                        textAlign: Localizations.localeOf(context).languageCode == "en"?TextAlign.right:TextAlign.left,
+                                        style:  TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 12,
+                                          color: mainColor,
+                                        )
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10,),
+                                  Container(
+                                    width: MediaQuery.of(context).size.width*0.6,
+                                    child: Text(
+                                        formatFileSize(selectedFile?.files.single.size??0) ,
+                                        maxLines: 3,
+                                        textAlign: Localizations.localeOf(context).languageCode == "en"?TextAlign.right:TextAlign.left,
+                                        style:  TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 12,
+                                          color: mainColor,
+                                        )
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(width: 10,),
+                              FileIconWidget(fileName: selectedFileName,)
+
+
+                            ],
+                          ),
+
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ),

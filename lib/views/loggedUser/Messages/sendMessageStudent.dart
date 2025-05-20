@@ -144,6 +144,7 @@ class _SendMessageStudentScreenState extends State<SendMessageStudentScreen> {
                       width: MediaQuery.of(context).size.width * 0.8,
                       child: TextFormField(
                         focusNode: _titleNode,
+                        controller: _titleController,
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.message),

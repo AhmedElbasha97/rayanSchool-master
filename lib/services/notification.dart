@@ -68,50 +68,74 @@ class NotificationServices{
 }
 
 class PushNotificationService {
-
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  FlutterLocalNotificationsPlugin();
 
   Future<void> setupInteractedMessage() async {
+    // 1. تهيئة Firebase
     await Firebase.initializeApp();
-    FirebaseMessaging.instance.requestPermission();
 
+    // 2. طلب الإذن للإشعارات
+    final settings = await FirebaseMessaging.instance.requestPermission();
+    print('User granted permission: ${settings.authorizationStatus}');
+
+    // 3. تعامل مع الحالة اللي التطبيق كان مغلق فيها وفتح من إشعار
+    RemoteMessage? initialMessage =
+    await FirebaseMessaging.instance.getInitialMessage();
+    if (initialMessage != null) {
+      await _handleMessage(initialMessage);
+
+    }
+
+    // 4. عندما يُفتح التطبيق من الخلفية بسبب إشعار
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
-      var type= message.data["page"];
-      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await _handleMessage(message);
 
-      prefs.setString("route", type);
     });
+
+    // 5. إعداد الإشعارات في iOS
     await enableIOSNotifications();
+
+    // 6. تفعيل مستمعي الإشعارات
     await registerNotificationListeners();
   }
 
-  registerNotificationListeners() async {
+  Future<void> registerNotificationListeners() async {
+    // إنشاء القناة (Android)
     AndroidNotificationChannel channel = androidNotificationChannel();
-    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
         AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
-    var androidSettings = const AndroidInitializationSettings('@mipmap/ic_launcher');
-    var iOSSettings =  const DarwinInitializationSettings(
+
+    // إعدادات التهيئة
+    const androidSettings =
+    AndroidInitializationSettings('@mipmap/ic_launcher');
+    const iOSSettings = DarwinInitializationSettings(
       requestSoundPermission: true,
       requestBadgePermission: true,
       requestAlertPermission: true,
     );
-    var initSetttings =
+    final initSettings =
     InitializationSettings(android: androidSettings, iOS: iOSSettings);
-    flutterLocalNotificationsPlugin.initialize(initSetttings,onDidReceiveNotificationResponse:  (message) async {
-      notificationSelectingAction(message);
-    }
+
+    // تهيئة الإشعارات المحلية
+    flutterLocalNotificationsPlugin.initialize(
+      initSettings,
+      onDidReceiveNotificationResponse: (message) async {
+        await notificationSelectingAction();
+      },
     );
 
+    // استقبال الإشعارات في الـ foreground
     FirebaseMessaging.onMessage.listen((RemoteMessage? message) async {
-      RemoteNotification? notification = message!.notification;
-      AndroidNotification? android = message.notification?.android;
-      var type= message.data["page"];
-      SharedPreferences prefs = await SharedPreferences.getInstance();
+      if (message == null) return;
 
-      prefs.setString("route", type);
+      await _handleMessage(message);
+
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = notification?.android;
+
       if (notification != null && android != null) {
         flutterLocalNotificationsPlugin.show(
           notification.hashCode,
@@ -121,90 +145,102 @@ class PushNotificationService {
             android: AndroidNotificationDetails(
               channel.id,
               channel.name,
-
               icon: android.smallIcon,
               playSound: true,
+              importance: Importance.max,
+              priority: Priority.high,
             ),
           ),
         );
       }
     });
   }
-  enableIOSNotifications() async {
-    await FirebaseMessaging.instance
-        .setForegroundNotificationPresentationOptions(
-      alert: true, // Required to display a heads up notification
+
+  Future<void> enableIOSNotifications() async {
+    await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+      alert: true,
       badge: true,
       sound: true,
     );
   }
-  static Future<void> notificationSelectingAction( message,) async {
+
+  Future<void> _handleMessage(RemoteMessage message) async {
+    final type = message.data["page"];
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("route", type);
+  }
 
-
-
+  static Future<void> notificationSelectingAction() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userType = prefs.getString("type");
-    print(userType??""+"usertype");
-   String? screenType =  prefs.getString("route");
-   print(screenType??""+"screenType");
-   print(screenType??""+"screenType");
-    switch (screenType) {
+    String? screenType = prefs.getString("route");
 
+    print('userType: ${userType ?? ""}');
+    print('screenType: ${screenType ?? ""}');
+
+    if (screenType == null) return;
+
+    final Map<String, String> messageRoutes = {
+      "STUDENT": "/messages_student",
+      "TEACHER": "/messages_teacher",
+      "PARENTS": "/messages_parent",
+    };
+    final Map<String, String> homeworkRoutes = {
+      "STUDENT": "/homework_student",
+      "TEACHER": "/homework_teacher",
+    };
+
+    switch (screenType) {
       case "msg":
-        prefs.remove("route");
-        if (userType == "STUDENT") {
-          Future.delayed(Duration(seconds: 1), () {
-          navigatorKey.currentState?.pushNamed('/messages_student');
-          });
-        } else if (userType == "TEACHER") {
-          Future.delayed(Duration(seconds: 1), () {
-          navigatorKey.currentState?.pushNamed('/messages_teacher');
-          });
-        } else if (userType == "PARENTS") {
-          Future.delayed(Duration(seconds: 1), () {
-          navigatorKey.currentState?.pushNamed('/messages_parent');
-          });
+        final route = messageRoutes[userType];
+        if (route != null) {
+          _navigateTo(route);
         }
         break;
 
       case "absence":
-        prefs.remove("route");
-        Future.delayed(Duration(seconds: 1), () {
-        navigatorKey.currentState?.pushNamed('/attendance');
-        });
+        _navigateTo('/attendance');
         break;
 
       case "report1":
-        prefs.remove("route");
-        Future.delayed(Duration(seconds: 1), () {
-        navigatorKey.currentState?.pushNamed('/report1');
-        });
+        _navigateTo('/report1');
         break;
-        case "report":
-        prefs.remove("route");
-        Future.delayed(Duration(seconds: 1), () {
-        navigatorKey.currentState?.pushNamed('/report');
-        });
+
+      case "report":
+        _navigateTo('/report');
         break;
 
       case "report2":
-        prefs.remove("route");
-        Future.delayed(Duration(seconds: 1), () {
-        navigatorKey.currentState?.pushNamed('/report2');
-        });
+        _navigateTo('/report2');
         break;
+        case "penalty":
+        _navigateTo('/penalties');
+        break;
+        case "homework":
+          final route = homeworkRoutes[userType];
+          if (route != null) {
+            _navigateTo(route);
+          }
+          break;
 
       default:
         print("Unrecognized notification type: $screenType");
         break;
     }
+
+    prefs.remove("route");
   }
 
+  static void _navigateTo(String route) {
+    Future.delayed(const Duration(seconds: 1), () {
+      navigatorKey.currentState?.pushNamed(route);
+    });
+  }
 
-  androidNotificationChannel() => const AndroidNotificationChannel(
-    'high_importance_channel', // id
-    'High Importance Notifications', // title
-
-    importance: Importance.max,
-  );
+  AndroidNotificationChannel androidNotificationChannel() =>
+      const AndroidNotificationChannel(
+        'high_importance_channel', // id
+        'High Importance Notifications', // name
+        importance: Importance.max,
+      );
 }

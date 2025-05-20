@@ -199,7 +199,7 @@ Future<List<PenaltiesListModel>> getPenaltiesList(
       String? title,
       String? type}) async {
     Response response;
-    response = await Dio().post(
+    response = await Dio().get(
       "$sendMessageLink?parent_id=$id&sendto_type=$type&teacher_id=$teacherId&title=$title&text=$msg",
     );
     print("$sendMessageLink?parent_id=$id&sendto_type=$type&teacher_id=$teacherId&title=$title&text=$msg",);

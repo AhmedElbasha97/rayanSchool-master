@@ -8,12 +8,15 @@ import 'package:rayanSchool/globals/commonStyles.dart';
 import 'package:rayanSchool/services/notification.dart';
 import 'package:rayanSchool/views/homeScreen.dart';
 import 'package:rayanSchool/views/loggedUser/Messages/MessagesScreen.dart';
+import 'package:rayanSchool/views/loggedUser/homeWork.dart';
 import 'package:rayanSchool/views/parents/AttendanceScreen.dart';
 import 'package:rayanSchool/views/parents/ReportsScreen.dart';
+import 'package:rayanSchool/views/parents/penalties_list_screen.dart';
 import 'package:rayanSchool/views/parents/recommendation_academic_list_screen.dart';
 import 'package:rayanSchool/views/parents/recommendation_list_screen.dart';
 import 'package:rayanSchool/views/splashScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:rayanSchool/views/teacher/homework_teacher_list_screen.dart';
 import 'package:rayanSchool/views/teacher/messages/MessagesScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
@@ -96,6 +99,9 @@ class _MyAppState extends State<MyApp> {
                 '/report1': (context) => RecommendationAcademicListScreen(),
                 '/report2': (context) => RecommendationsListScreen(),
                 '/report': (context) => ReportScreen(),
+                '/penalties': (context) => PenaltiesListScreen(),
+                '/homework_student': (context) => HomeWorkScreen(),
+                '/homework_teacher': (context) => HomeworkTeacherListScreen(),
               },
               debugShowCheckedModeBanner: false,
               localizationsDelegates: [

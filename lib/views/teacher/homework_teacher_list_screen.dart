@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../globals/commonStyles.dart';
+import '../../globals/helpers.dart';
 import '../../globals/widgets/loader.dart';
 import '../../models/teacher/homework_teacher_list_model.dart';
 import '../../services/teachersService.dart';
+import '../loggedUser/HomeWorkDetailsScreen.dart';
 
 class HomeworkTeacherListScreen extends StatefulWidget {
   const HomeworkTeacherListScreen({Key? key}) : super(key: key);
@@ -108,11 +110,18 @@ class _HomeworkTeacherListScreenState extends State<HomeworkTeacherListScreen> {
                     physics: const BouncingScrollPhysics(),
                     itemCount: homeworkList?.length,
                     itemBuilder: (context, int index) {
-                      return Container(
-                        width: double.infinity,
-                        child:  Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Expanded(
+                      return InkWell(
+                        onTap: (){
+                          pushPage(
+                              context,
+                              HomeWorkDetailsScreen(
+                                id:homeworkList?[index].id??"",
+                              ));
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          child:  Padding(
+                            padding: const EdgeInsets.all(10.0),
                             child: Padding(
                               padding:
                               const EdgeInsets.symmetric(horizontal: 10),
@@ -186,13 +195,13 @@ class _HomeworkTeacherListScreenState extends State<HomeworkTeacherListScreen> {
                               ),
                             ),
                           ),
-                        ),
-                        decoration: BoxDecoration(
-                            border: Border(
-                                bottom: BorderSide(color: Colors.grey.shade500,width: 1)
-                            )
-                        ),
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(color: Colors.grey.shade500,width: 1)
+                              )
+                          ),
 
+                        ),
                       );
                     }),
               )),
