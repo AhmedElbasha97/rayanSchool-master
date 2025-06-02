@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../I10n/app_localizations.dart';
 import '../../globals/commonStyles.dart';
@@ -46,7 +47,7 @@ class _AddHomeWorkScreenState extends State<AddHomeWorkScreen> {
   List<Map<String?,String?>> recommendationList =[];
   Category? selectedCatogory;
   Category? selectedLevel;
-  FilePickerResult? selectedFile;
+  File? selectedFile;
   String selectedFileName = "";
   Category? selectedLevel2;
   bool isServerLoading = false;
@@ -72,13 +73,95 @@ class _AddHomeWorkScreenState extends State<AddHomeWorkScreen> {
 
       print('File picked: $fileName');
       print('Path: $filePath');
-      selectedFile = result;
+      selectedFile = File(result.files.single.path!);
       selectedFileName = fileName;
       setState(() {});
       // You can now upload, open, or process the file
     } else {
       print('User canceled file picking');
     }
+  }
+  void showPickOptions(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => SafeArea(
+        child: Wrap(
+          children: [
+            ListTile(
+              leading: Icon(Icons.insert_drive_file),
+              title: Text(Localizations.localeOf(context).languageCode == "en"?'Pick File':'اختيار الملف'),
+              onTap: () async {
+                Navigator.pop(context);
+                FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+
+                  if (result != null && result.files.single.path != null) {
+                    String? filePath = result.files.single.path;
+                    String fileName = result.files.single.name;
+
+                    print('File picked: $fileName');
+                    print('Path: $filePath');
+                    selectedFile = File(result.files.single.path!);
+                    selectedFileName = fileName;
+                    setState(() {});
+                    // You can now upload, open, or process the file
+                  } else {
+                    print('User canceled file picking');
+                  }
+                  // Do something with the file
+
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.photo_library),
+              title: Text(Localizations.localeOf(context).languageCode == "en"?'Pick from Gallery':'اختر من المعرض'),
+              onTap: () async {
+                Navigator.pop(context);
+                final picker = ImagePicker();
+                final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+                if (pickedFile != null && pickedFile.path != null) {
+                  String? filePath = pickedFile.path;
+                  String fileName = pickedFile.name;
+
+                  print('File picked: $fileName');
+                  print('Path: $filePath');
+                  selectedFile =File(pickedFile.path);
+                  selectedFileName = fileName;
+                  setState(() {});
+                  // You can now upload, open, or process the file
+                } else {
+                  print('User canceled file picking');
+                }
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.camera_alt),
+              title: Text(Localizations.localeOf(context).languageCode == "en"?'Take Photo':'التقط صورة'),
+              onTap: () async {
+                Navigator.pop(context);
+                final picker = ImagePicker();
+                final pickedFile = await picker.pickImage(source: ImageSource.camera);
+
+                if (pickedFile != null && pickedFile.path != null) {
+                  String? filePath = pickedFile.path;
+                  String fileName = pickedFile.name;
+
+                  print('File picked: $fileName');
+                  print('Path: $filePath');
+                  selectedFile =File(pickedFile.path);
+                  selectedFileName = fileName;
+                  setState(() {});
+                  // You can now upload, open, or process the file
+                } else {
+                  print('User canceled file picking');
+                }
+              },
+            ),
+          ],
+        ),
+      ),
+    );
   }
   getLevels() async {
     levels = await TeacherService().getLevels(id: selectedCatogory?.id??"");
@@ -101,7 +184,8 @@ class _AddHomeWorkScreenState extends State<AddHomeWorkScreen> {
   getFileName(String filePath){
     return filePath.split('/').last;
   }
-  String formatFileSize(int bytes) {
+  String formatFileSize(File? selectedFile) {
+    int bytes = selectedFile?.lengthSync()??0;
     if (bytes < 1024) return Localizations.localeOf(context).languageCode == "en"? '$bytes B':'B $bytes';
     double kb = bytes / 1024;
     if (kb < 1024) return Localizations.localeOf(context).languageCode == "en"? '${kb.toStringAsFixed(2)} KB':'KB ${kb.toStringAsFixed(2)}';
@@ -118,7 +202,7 @@ class _AddHomeWorkScreenState extends State<AddHomeWorkScreen> {
             isServerLoading = true;
           });
 
-          String msg =   await TeacherService().addHomeWork(classId: selectedLevel2?.id??"",details: _msgController.text,title: _titleController.text,selectedFile: selectedFile?.files[0].path==""?null:File(selectedFile?.files[0].path??""));
+          String msg =   await TeacherService().addHomeWork(classId: selectedLevel2?.id??"",details: _msgController.text,title: _titleController.text,selectedFile: selectedFile?.path==""?null:File(selectedFile?.path??""));
           if (msg == "done") {
             setState(() {
               isServerLoading = false;
@@ -418,7 +502,7 @@ class _AddHomeWorkScreenState extends State<AddHomeWorkScreen> {
               ),
               InkWell(
                 onTap: (){
-                  pickAnyFile();
+                  showPickOptions(context);
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -483,7 +567,7 @@ class _AddHomeWorkScreenState extends State<AddHomeWorkScreen> {
                                   Container(
                                     width: MediaQuery.of(context).size.width*0.6,
                                     child: Text(
-                                        formatFileSize(selectedFile?.files.single.size??0) ,
+                                        formatFileSize( selectedFile) ,
                                         maxLines: 3,
                                         textAlign: Localizations.localeOf(context).languageCode == "en"?TextAlign.right:TextAlign.left,
                                         style:  TextStyle(
