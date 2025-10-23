@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rayanSchool/I10n/app_localizations.dart';
-import 'package:rayanSchool/globals/widgets/mainButton.dart';
-import 'package:rayanSchool/globals/widgets/textFiled.dart';
+import 'package:rayanSchool/Widgets/mainButton.dart';
+import 'package:rayanSchool/Widgets/textFiled.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override

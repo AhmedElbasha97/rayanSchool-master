@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:rayanSchool/I10n/AppLanguage.dart';
 import 'package:rayanSchool/I10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:get/get.dart';
 
 Widget changeLangPopUp(BuildContext context) {
   var appLanguage = Provider.of<AppLanguage>(context);
@@ -41,7 +42,7 @@ Widget changeLangPopUp(BuildContext context) {
 /// Page Navigation pages
 ////////////////////////////////////////////////
 void popPage(BuildContext context) {
-  Navigator.of(context).pop();
+  Get.back();
 }
 
 void pushPage(BuildContext context, Widget widget) {

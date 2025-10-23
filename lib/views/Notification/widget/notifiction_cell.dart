@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:rayanSchool/globals/commonStyles.dart';
 import 'package:rayanSchool/globals/helpers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../Utils/memory.dart';
 import '../../../models/notification_model.dart';
 import 'package:intl/intl.dart';
 
-import '../../loggedUser/Messages/MessagesScreen.dart';
-import '../../loggedUser/homeWork.dart';
-import '../../parents/AttendanceScreen.dart';
-import '../../parents/ReportsScreen.dart';
-import '../../parents/penalties_list_screen.dart';
-import '../../parents/recommendation_academic_list_screen.dart';
-import '../../parents/recommendation_list_screen.dart';
-import '../../teacher/homework_teacher_list_screen.dart';
-import '../../teacher/messages/receidvedMessageScreen.dart';
+import '../../loggedUser/Messages/messages/messages_screen.dart';
+import '../../loggedUser/homework/homeworks/homeworks_screen.dart';
+import '../../parents/attendance/AttendanceScreen.dart';
+import '../../parents/report/reports/ReportsScreen.dart';
+import '../../parents/panalties/penalties_list_screen.dart';
+import '../../parents/recommendation_academic/recommendation_academic_list_screen.dart';
+import '../../parents/recommendation_list/recommendation_list_screen.dart';
+import '../../teacher/homework/homeworks_list/homework_teacher_list_screen.dart';
+import '../../teacher/messages/received_messages/received_message_screen.dart';
 
 class NotificationCell extends StatefulWidget {
   const NotificationCell({Key? key,  required this.notification, required this.press, }) : super(key: key);
@@ -45,85 +47,66 @@ class _NotificationCellState extends State<NotificationCell> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 print(type);
 
+    if(Get.find<StorageService>().checkThereIsNotificationOrNot) {
       switch (type) {
         case "msg":
-
+          Get.find<StorageService>().removeNotification();
           {
-            if (prefs.getString("type") == "STUDENT") {
-              pushPage(
-                  context,
-                  MessagesScreen(
-                  ));
-            } else if (prefs.getString("type") == "TEACHER") {
-              pushPage(
-                  context,
-                  ReceivedMessageScreen(
-                  ));
-            } else if (prefs.getString("type") == "PARENTS") {
-              pushPage(
-                  context,
-                  MessagesScreen(
-                    type: 2,
-                  ));
+            if ( Get.find<StorageService>().getUserType == "STUDENT") {
+              Get.to(()=>MessagesScreen(),transition: Transition.rightToLeft,preventDuplicates: true);
+
+            } else if ( Get.find<StorageService>().getUserType == "TEACHER") {
+              Get.to(()=>ReceivedMessageScreen(),transition: Transition.rightToLeft,preventDuplicates: true);
+
+            } else if ( Get.find<StorageService>().getUserType == "PARENTS") {
+              Get.to(()=>MessagesScreen(type: 2,),transition: Transition.rightToLeft,preventDuplicates: true);
             }
           }
           break;
         case "absence":
           {
-            pushPage(context, AttendanceScreen());
+            Get.find<StorageService>().removeNotification();
+            Get.to(()=>AttendanceScreen(),transition: Transition.rightToLeft,preventDuplicates: true);
+
           }
           break;
         case "report1":
           {
+            Get.find<StorageService>().removeNotification();
+            Get.to(()=>RecommendationAcademicListScreen(),transition: Transition.rightToLeft,preventDuplicates: true);
 
-            pushPage(
-                context,
-                RecommendationAcademicListScreen(
-                ));
           }
           break;
         case "report":
           {
-
-            pushPage(
-                context,
-                ReportScreen(
-                ));
+            Get.find<StorageService>().removeNotification();
+            Get.to(()=> ReportScreen(),transition: Transition.rightToLeft,preventDuplicates: true);
           }
           break;
-        case "report2":
+        case "report2 ":
           {
-            pushPage(
-                context,
-                RecommendationsListScreen(
-                ));
+            Get.find<StorageService>().removeNotification();
+            Get.to(()=> RecommendationsListScreen(),transition: Transition.rightToLeft,preventDuplicates: true);
           }
           break;
         case "penalty":
           {
-            pushPage(
-                context,
-                PenaltiesListScreen(
-                ));
+            Get.find<StorageService>().removeNotification();
+            Get.to(()=> PenaltiesListScreen(),transition: Transition.rightToLeft,preventDuplicates: true);
           }
           break;
         case "homework":
           {
-
-            if (prefs.getString("type") == "STUDENT") {
-              pushPage(
-                  context,
-                  HomeWorkScreen(
-                  ));
-            } else if (prefs.getString("type") == "TEACHER") {
-              pushPage(
-                  context,
-                  HomeworkTeacherListScreen(
-                  ));
+            Get.find<StorageService>().removeNotification();
+            if ( Get.find<StorageService>().getUserType == "STUDENT") {
+              Get.to(()=>HomeWorkScreen(),transition: Transition.rightToLeft,preventDuplicates: true);
+            } else if ( Get.find<StorageService>().getUserType == "TEACHER") {
+              Get.to(()=>HomeworkTeacherListScreen(),transition: Transition.rightToLeft,preventDuplicates: true);
             }
           }
           break;
       }
+    }
 
   }
   @override

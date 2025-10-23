@@ -1,69 +1,74 @@
 
-import 'package:dio/dio.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../globals/CommonSetting.dart';
-import '../globals/helpers.dart';
-import '../main.dart';
+import '../Utils/api_service.dart';
+import '../Utils/memory.dart';
+import '../Utils/services.dart';
 import '../models/notification_counter_model.dart';
 import '../models/notification_model.dart';
+import '../views/loggedUser/Messages/messages/messages_screen.dart';
+import '../views/loggedUser/homework/homeworks/homeworks_screen.dart';
+import '../views/parents/attendance/AttendanceScreen.dart';
+import '../views/parents/panalties/penalties_list_screen.dart';
+import '../views/parents/recommendation_academic/recommendation_academic_list_screen.dart';
+import '../views/parents/recommendation_list/recommendation_list_screen.dart';
+import '../views/parents/report/reports/ReportsScreen.dart';
+import '../views/teacher/homework/homeworks_list/homework_teacher_list_screen.dart';
+import '../views/teacher/messages/received_messages/received_message_screen.dart';
 
 class NotificationServices{
-  String NotificationEndPoint = "${baseUrl}notification2.php";
-  String NotificationCounterEndPoint = "${baseUrl}notification_count.php";
+  final ApiService api = ApiService();
+
   Future<NotificationCounterModel?> counterNotification() async {
-    Response response;
-    NotificationCounterModel? result ;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String userId =await prefs.getString("id") ?? "";
-    String userType =await prefs.getString("type") ?? "";
-    Map<String, dynamic>? body = {
-      "user_id": "$userId",
-      "type": "$userType",
-    };
-    response = await Dio().get('$NotificationCounterEndPoint',queryParameters:body);
-    print(NotificationCounterEndPoint+"?user_id: $userId&type: $userType");
-    print("hiiiiiiiiiiiiii$userId");
-    print("bggkk$userType");
-    var data = response.data;
-    print(response.data);
-    if(response.data != null) {
-      result = NotificationCounterModel.fromJson(response.data);
-      return result;
-    }else{
+    try {
+      Map<String, dynamic>? body = {
+        "user_id": Get
+            .find<StorageService>()
+            .getId,
+        "type": Get
+            .find<StorageService>()
+            .getUserType,
+      };
+      final data = await api.request(Services.NotificationCounterEndPoint,"GET",queryParameters: body,);
+
+      if ( data.isNotEmpty) {
+        return NotificationCounterModel.fromJson(data);
+      } else {
+        print("⚠ Unexpected data format: $data");
+        return null;
+      }
+    } catch (e) {
+      print("❌ counterNotification error: $e");
       return null;
     }
-
   }
   Future<List<NotificationModel>?> listAllNotification() async {
-    Response response;
-    List<NotificationModel> result = [];
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? userId = prefs.getString("id");
-    String? userType = prefs.getString("type") ;
-    Map<String, dynamic>? body = {
-      "user_id": "$userId",
-      "type": "$userType",
-    };
-    response = await Dio().get("$NotificationEndPoint?user_id=$userId&type=$userType",);
-    print('$NotificationEndPoint?user_id: $userId&type: $userType');
-    print("hiiiiiiiiiiiiii$userId");
-    print("bggkk$userType");
-    var data = response.data;
-    print(response.data);
-    if(response.data != null) {
-      for (var notification in response.data) {
-        result.add(NotificationModel.fromJson(notification));
-      }
-      return result;
-    }else{
-      return null;
-    }
+    try {
+      Map<String, dynamic>? body = {
+        "user_id": Get
+            .find<StorageService>()
+            .getId,
+        "type": Get
+            .find<StorageService>()
+            .getUserType,
+      };
+      final data = await api.request(Services.NotificationEndPoint,"GET",queryParameters: body,);
 
+      if (data is List) {
+        return data
+            .map((e) => NotificationModel.fromJson(e))
+            .toList();
+      } else {
+        print("⚠ Unexpected data format: $data");
+        return [];
+      }
+    } catch (e) {
+      print("❌ listAllNotification error: $e");
+      return [];
+    }
   }
 }
 
@@ -171,71 +176,77 @@ class PushNotificationService {
   }
 
   static Future<void> notificationSelectingAction() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? userType = prefs.getString("type");
-    String? screenType = prefs.getString("route");
+    String? userType =  Get.find<StorageService>().getUserType;
+    String? screenType =  Get.find<StorageService>().getNotificationRoute;
 
-    print('userType: ${userType ?? ""}');
-    print('screenType: ${screenType ?? ""}');
+    print('userType: ${userType}');
+    print('screenType: ${screenType}');
 
     if (screenType == null) return;
 
-    final Map<String, String> messageRoutes = {
-      "STUDENT": "/messages_student",
-      "TEACHER": "/messages_teacher",
-      "PARENTS": "/messages_parent",
-    };
-    final Map<String, String> homeworkRoutes = {
-      "STUDENT": "/homework_student",
-      "TEACHER": "/homework_teacher",
-    };
+
 
     switch (screenType) {
       case "msg":
-        final route = messageRoutes[userType];
-        if (route != null) {
-          _navigateTo(route);
+        Get.find<StorageService>().removeNotification();
+        {
+          if ( Get.find<StorageService>().getUserType == "STUDENT") {
+            Get.to(()=>MessagesScreen(),transition: Transition.rightToLeft,preventDuplicates: true,duration: const Duration(seconds: 1));
+
+          } else if ( Get.find<StorageService>().getUserType == "TEACHER") {
+            Get.to(()=>ReceivedMessageScreen(),transition: Transition.rightToLeft,preventDuplicates: true,duration: const Duration(seconds: 1));
+
+          } else if ( Get.find<StorageService>().getUserType == "PARENTS") {
+            Get.to(()=>MessagesScreen(type: 2,),transition: Transition.rightToLeft,preventDuplicates: true,duration: const Duration(seconds: 1));
+          }
         }
         break;
-
       case "absence":
-        _navigateTo('/attendance');
-        break;
+        {
+          Get.find<StorageService>().removeNotification();
+          Get.to(()=>AttendanceScreen(),transition: Transition.rightToLeft,preventDuplicates: true,duration: const Duration(seconds: 1));
 
+        }
+        break;
       case "report1":
-        _navigateTo('/report1');
-        break;
+        {
+          Get.find<StorageService>().removeNotification();
+          Get.to(()=>RecommendationAcademicListScreen(),transition: Transition.rightToLeft,preventDuplicates: true,duration: const Duration(seconds: 1));
 
+        }
+        break;
       case "report":
-        _navigateTo('/report');
+        {
+          Get.find<StorageService>().removeNotification();
+          Get.to(()=> ReportScreen(),transition: Transition.rightToLeft,preventDuplicates: true,duration: const Duration(seconds: 1));
+        }
         break;
-
-      case "report2":
-        _navigateTo('/report2');
+      case "report2 ":
+        {
+          Get.find<StorageService>().removeNotification();
+          Get.to(()=> RecommendationsListScreen(),transition: Transition.rightToLeft,preventDuplicates: true,duration: const Duration(seconds: 1));
+        }
         break;
-        case "penalty":
-        _navigateTo('/penalties');
+      case "penalty":
+        {
+          Get.find<StorageService>().removeNotification();
+          Get.to(()=> PenaltiesListScreen(),transition: Transition.rightToLeft,preventDuplicates: true,duration: const Duration(seconds: 1));
+        }
         break;
-        case "homework":
-          final route = homeworkRoutes[userType];
-          if (route != null) {
-            _navigateTo(route);
+      case "homework":
+        {
+          Get.find<StorageService>().removeNotification();
+          if ( Get.find<StorageService>().getUserType == "STUDENT") {
+            Get.to(()=>HomeWorkScreen(),transition: Transition.rightToLeft,preventDuplicates: true,duration: const Duration(seconds: 1));
+          } else if ( Get.find<StorageService>().getUserType == "TEACHER") {
+            Get.to(()=>HomeworkTeacherListScreen(),transition: Transition.rightToLeft,preventDuplicates: true,duration: const Duration(seconds: 1));
           }
-          break;
-
-      default:
-        print("Unrecognized notification type: $screenType");
+        }
         break;
     }
-
-    prefs.remove("route");
   }
 
-  static void _navigateTo(String route) {
-    Future.delayed(const Duration(seconds: 1), () {
-      navigatorKey.currentState?.pushNamed(route);
-    });
-  }
+
 
   AndroidNotificationChannel androidNotificationChannel() =>
       const AndroidNotificationChannel(

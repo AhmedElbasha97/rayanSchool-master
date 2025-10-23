@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:rayanSchool/I10n/app_localizations.dart';
 import 'package:rayanSchool/globals/commonStyles.dart';
 import 'package:rayanSchool/globals/helpers.dart';
-import 'package:rayanSchool/globals/widgets/mainButton.dart';
-import 'package:rayanSchool/globals/widgets/textFiled.dart';
-import 'package:rayanSchool/services/authService.dart';
-import 'package:rayanSchool/views/homeScreen.dart';
 
+import 'package:rayanSchool/services/authService.dart';
+
+import '../../Widgets/mainButton.dart';
+import '../../Widgets/textFiled.dart';
 import '../../services/teachersService.dart';
+import '../home/home_for_user/home_for_user_screen.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   @override
@@ -97,7 +98,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         setState(() {
                           isServerLoading = false;
                         });
-                        pushPageReplacement(context, HomeScreen());
+                        pushPageReplacement(context, HomeLoggedInScreen());
                       } else {
                         setState(() {
                           isServerLoading = false;

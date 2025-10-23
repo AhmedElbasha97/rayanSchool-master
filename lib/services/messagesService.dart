@@ -1,80 +1,93 @@
-import 'package:dio/dio.dart';
-import 'package:rayanSchool/globals/CommonSetting.dart';
+import 'package:get/get.dart';
 import 'package:rayanSchool/models/MessageDetailsStudent.dart';
 import 'package:rayanSchool/models/MessageSentStudent.dart';
 import 'package:rayanSchool/models/message.dart';
 import 'package:rayanSchool/models/messageDetails.dart';
 import 'package:rayanSchool/models/teachers.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import '../Utils/api_service.dart';
+import '../Utils/memory.dart';
+import '../Utils/services.dart';
+import '../models/message_title_list_model.dart';
 
 class MessagesService {
-  String messages = "${baseUrl}student_msg_income.php";
-  String messageDetails = "${baseUrl}student_msg_income_view.php";
-  String sendMessageLink = "${baseUrl}student_msg_send.php";
-  String sentMessages = "${baseUrl}student_msg_sent.php";
-  String sentMessagesDetails = "${baseUrl}student_msg_sent_view.php";
-  String teachers = "${baseUrl}teachers_list.php";
+  final ApiService api = ApiService();
+
 
   Future<List<Messages>> getMessages({String? id}) async {
-    List<Messages> list = [];
-    Response response;
-    response = await Dio().get(
-      "$messages?student_id=$id",
-    );
-    var data = response.data;
-    if (response.data != null) {
-      data.forEach((element) {
-        list.add(Messages.fromJson(element));
-      });
+    try {
+      final data = await api.request(Services.messages,"GET",queryParameters: {"student_id":id});
+
+      if (data is List) {
+        return data
+            .map((e) => Messages.fromJson(e))
+            .toList();
+      } else {
+        print("⚠ Unexpected data format: $data");
+        return [];
+      }
+    } catch (e) {
+      print("❌ getMessages error: $e");
+      return [];
     }
-    return list;
   }
 
   Future<List<MessageSentStudent>> getSentMessages({String? id}) async {
-    List<MessageSentStudent> list = [];
-    Response response;
-    response = await Dio().get(
-      "$sentMessages?student_id=$id",
-    );
-    var data = response.data;
-    if (response.data != null) {
-      data.forEach((element) {
-        list.add(MessageSentStudent.fromJson(element));
-      });
+    try {
+      final data = await api.request(Services.sentMessages,"GET",queryParameters: {"student_id":id});
+
+      if (data is List) {
+        return data
+            .map((e) => MessageSentStudent.fromJson(e))
+            .toList();
+      } else {
+        print("⚠ Unexpected data format: $data");
+        return [];
+      }
+    } catch (e) {
+      print("❌ getSentMessages error: $e");
+      return [];
     }
-    return list;
+
   }
 
   Future<List<MessageDetails>> getMessageDetails(
       {String? id, String? msgId}) async {
-    List<MessageDetails> list = [];
-    Response response;
-    response = await Dio().get(
-      "$messageDetails?student_id=$id&msg_id=$msgId",
-    );
-    var data = response.data;
-    if (response.data != null) {
-      data.forEach((element) {
-        list.add(MessageDetails.fromJson(element));
-      });
+    try {
+      final data = await api.request(Services.messageDetails,"GET",queryParameters: {"student_id":id,"msg_id":msgId});
+
+      if (data is List) {
+        return data
+            .map((e) => MessageDetails.fromJson(e))
+            .toList();
+      } else {
+        print("⚠ Unexpected data format: $data");
+        return [];
+      }
+    } catch (e) {
+      print("❌ getMessageDetails error: $e");
+      return [];
     }
-    return list;
   }
 
   Future<List<MessageDetailsStudent>> getSentMessageDetails(
       {String? id, String? msgId}) async {
-    List<MessageDetailsStudent> list = [];
-    Response response;
-    response = await Dio().get(
-      "$sentMessagesDetails?student_id=$id&msg_id=$msgId",
-    );
-    var data = response.data;
-    if (response.data != null) {
-      data.forEach((element) {
-        list.add(MessageDetailsStudent.fromJson(element));
-      });
+    try {
+      final data = await api.request(Services.sentMessagesDetails,"GET",queryParameters: {"student_id":id,"msg_id":msgId});
+
+      if (data is List) {
+        return data
+            .map((e) => MessageDetailsStudent.fromJson(e))
+            .toList();
+      } else {
+        print("⚠ Unexpected data format: $data");
+        return [];
+      }
+    } catch (e) {
+      print("❌ getSentMessageDetails error: $e");
+      return [];
     }
-    return list;
+
   }
 
   Future<String> sendMessage(
@@ -83,26 +96,63 @@ class MessagesService {
       String? msg,
       String? title,
       String? type}) async {
-    Response response;
-    response = await Dio().post(
-      "$sendMessageLink?student_id=$id&sendto_type=$type&teacher_id=$teacherId&title=$title&text=$msg",
-    );
-    var data = response.data["status"];
-    return data;
+    try {
+      final data = await api.request(
+          Services.sendMessageLink, "POST", queryParameters: {
+        "student_id":id,"sendto_type":type,"teacher_id":teacherId,"title":title,"text":msg
+      });
+
+      if (data["status"] == "true") {
+        return data["status"];
+      } else {
+        print("⚠ Unexpected data format: $data");
+        return data["msg"];
+      }
+    } catch (e) {
+      print("❌ sendMessage error: $e");
+      return "";
+    }
+
   }
 
   Future<List<Teachers>> getTeacher() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? id = prefs.getString("id");
-    List<Teachers> list = [];
-    Response response;
-    response = await Dio().post("$teachers?exp_id=$id");
-    var data = response.data;
-    if (response.data != null) {
-      data.forEach((element) {
-        list.add(Teachers.fromJson(element));
-      });
+    try {
+      final data = await api.request(Services.teachers,"GET",queryParameters: {"exp_id": Get
+          .find<StorageService>()
+          .getId});
+
+      if (data is List) {
+        return data
+            .map((e) => Teachers.fromJson(e))
+            .toList();
+      } else {
+        print("⚠ Unexpected data format: $data");
+        return [];
+      }
+    } catch (e) {
+      print("❌ getTeacher error: $e");
+      return [];
     }
-    return list;
+
+
+  }
+  Future<List<MessageTitleModel>> getMessageTitles() async {
+    try {
+      final data = await api.request(Services.messageTitleList,"GET");
+
+      if (data is List) {
+        return data
+            .map((e) => MessageTitleModel.fromJson(e))
+            .toList();
+      } else {
+        print("⚠ Unexpected data format: $data");
+        return [];
+      }
+    } catch (e) {
+      print("❌ getTeacher error: $e");
+      return [];
+    }
+
+
   }
 }

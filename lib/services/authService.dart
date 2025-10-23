@@ -1,55 +1,70 @@
-import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:rayanSchool/globals/CommonSetting.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:get/get.dart';
+
+import '../Utils/api_service.dart';
+import '../Utils/memory.dart';
+import '../Utils/services.dart';
 
 class AuthService {
-  String loginLink = "${baseUrl}login.php";
-  String changePassLink = "${baseUrl}change_password.php?";
+  final ApiService api = ApiService();
 
   Future<String> login({String? userName, String? type, String? password}) async {
-    String message = "";
-    Response? response;
-    await FirebaseMessaging.instance.getToken().then((token) async {
-      print("$loginLink?type=$type&username=$userName&password=$password&token=$token");
-      response = await Dio().get(
-        "$loginLink?type=$type&username=$userName&password=$password&token=$token",
-      );
-    });
 
-    if (response?.data["status"] == "true") {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString("id", response?.data["info"]["id"]);
-      prefs.setString("name", response?.data["info"]["name"]);
-      prefs.setString("type", "$type");
-      if(response?.data["info"]["class"] != null){
-        prefs.setString("class", response?.data["info"]["class"]);
+
+    try {
+      dynamic response;
+      await FirebaseMessaging.instance.getToken().then((token) async {
+         response = await api.request(Services.loginLink,"GET",queryParameters:{
+           "type":type,
+         "username":userName,
+         "password":password,
+           "token":token
+      });
+
+      });
+print(response["status"]);
+      if (response.isNotEmpty&&response["status"] == "true") {
+
+        Get.find<StorageService>().saveAccountId(response?["info"]["id"]);
+        Get.find<StorageService>().saveAccountType("$type");
+        Get.find<StorageService>().saveAccountName(response?["info"]["name"]);
+        if(response?["info"]["class"] != null){
+        Get.find<StorageService>().saveAccountClass(response?["info"]["class"]);
+        }
+       return "done";
+      } else {
+        print("⚠ Unexpected data format: $response");
+        return response?["msg"];
       }
-
-      message = "done";
-    } else {
-      message = response?.data["msg"];
+    } catch (e) {
+      print("❌ login error: $e");
+      return "";
     }
-    return message;
+
   }
   Future<String> changePassword({String? oldPass, String? newPass,}) async {
-    String message = "";
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var userId = await prefs.getString("id");
-    var userType = await prefs.getString("type");
-    Response? response;
-      print("$changePassLink?type=$userType&user_id=$userId&password_old=$oldPass&password=$newPass");
-      response = await Dio().get(
-        "$changePassLink?type=$userType&user_id=$userId&password_old=$oldPass&password=$newPass",
-      );
+    try {
+      final data = await api.request(
+          Services.changePassLink, "GET", queryParameters: {
+        "type": Get
+            .find<StorageService>()
+            .getUserType,
+        "user_id": Get
+            .find<StorageService>()
+            .getId,
+        "password_old": oldPass,
+        "password": newPass
+      });
 
-
-    if (response.data["status"] == "true") {
-
-      message = "done";
-    } else {
-      message = response.data["msg"];
+      if (data["status"] == "true") {
+        return "done";
+      } else {
+        print("⚠ Unexpected data format: $data");
+        return data["msg"];
+      }
+    } catch (e) {
+      print("❌ changePassword error: $e");
+      return "";
     }
-    return message;
   }
 }

@@ -9,7 +9,8 @@ Color accent = Colors.cyan;
 Color textColor = Color(0xFF303030);
 Color smallTextColor = Color(0xFF929292);
 Color splash = Colors.blue;
-
+const Color kSuccessColor = Color(0xFF2AA952);
+const Color kErrorColor = Color(0xFFF01F0E);
 ///////////////////////////////////////////////////////////
 /// theme
 ///////////////////////////////////////////////////////////

@@ -1,27 +1,51 @@
-import 'package:dio/dio.dart';
-import 'package:rayanSchool/globals/CommonSetting.dart';
+
+import '../Utils/api_service.dart';
+import '../Utils/services.dart';
 
 class ContactUsService {
-  String complainsUrl = "${baseUrl}claim.php";
-  String sendUs = "${baseUrl}contact.php";
+
+  final ApiService api = ApiService();
 
   sendComplain(String name, String message, String email, String subject,
       String mobile) async {
-    Response response;
-    response = await Dio().post(
-      "$complainsUrl?name=$name&email=$email&subject=$subject&messege=$message&mobile=$mobile",
-    );
-    var data = response.data["status"];
-    return data;
+    try {
+    final data = await api.request(
+        Services.complainsUrl, "POST", queryParameters: {
+      "name":name,"email":email,"subject":subject,"messege":message,"mobile":mobile
+    });
+
+    if (data["status"] == "true") {
+      return data["status"];
+    } else {
+      print("⚠ Unexpected data format: $data");
+      return data["status"];
+    }
+  } catch (e) {
+    print("❌ sendComplain error: $e");
+    return "";
   }
+  }
+
+
 
   contactUs(String name, String message, String email, String subject,
       String mobile) async {
-    Response response;
-    response = await Dio().post(
-      "$sendUs?name=$name&email=$email&subject=$subject&messege=$message&mobile=$mobile",
-    );
-    var resData = response.data;
-    print(resData);
+    try {
+      final data = await api.request(
+          Services.sendUs, "POST", queryParameters: {
+        "name":name,"email":email,"subject":subject,"messege":message,"mobile":mobile
+      });
+
+      if (data.data.isBlank) {
+        return data.data;
+      } else {
+        print("⚠ Unexpected data format: $data");
+        return data.data;
+      }
+    } catch (e) {
+      print("❌ sendComplain error: $e");
+      return "";
+    }
+
   }
 }

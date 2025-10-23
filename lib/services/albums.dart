@@ -1,77 +1,92 @@
-import 'package:dio/dio.dart';
-import 'package:rayanSchool/globals/CommonSetting.dart';
+
 import 'package:rayanSchool/models/AppInfo/photo.dart';
 import 'package:rayanSchool/models/AppInfo/photoAlbum.dart';
 import 'package:rayanSchool/models/AppInfo/videos.dart';
 
+import '../Utils/api_service.dart';
+import '../Utils/services.dart';
+
 class AlbumsService {
-  String photoAlbums = "${baseUrl}gallery.php";
-  String videoAlbums = "${baseUrl}videos_gallery.php";
+
+  // Use the enhanced centralized ApiService
+  final ApiService api = ApiService();
 
   Future<List<PhotoAlbum>?> getphotoAlbums() async {
-    List<PhotoAlbum> list = [];
-    Response response;
-    response = await Dio().get(
-      "$photoAlbums",
-    );
-    print("$photoAlbums");
-    var data = response.data;
-    if(data !=null) {
-      data.forEach((element) {
-        print(element.toString());
-        list.add(PhotoAlbum.fromJson(element));
-      });
-    }
-      return list;
+    try {
+      final data = await api.request(Services.photoAlbums,"GET");
 
+      if (data is List) {
+        return data
+            .map((e) => PhotoAlbum.fromJson(e))
+            .toList();
+      } else {
+        print("⚠ Unexpected data format: $data");
+        return [];
+      }
+    } catch (e) {
+      print("❌ getVideoAlbums error: $e");
+      return [];
+    }
   }
 
   Future<List<Videos>?> getVideoAlbums() async {
-    List<Videos> list = [];
-    Response response;
-    response = await Dio().get(
-      "$videoAlbums",
-    );
-    print("$videoAlbums");
-    var data = response.data == null ? [] : response.data;
-    if(data !=null) {
-      data.forEach((element) {
-        print(element.toString());
+    try {
+      final data = await api.request(Services.videoAlbums,"GET");
 
-        list.add(Videos.fromJson(element));
-      });
+      if (data is List) {
+        return data
+            .map((e) => Videos.fromJson(e))
+            .toList();
+      } else {
+        print("⚠ Unexpected data format: $data");
+        return [];
+      }
+    } catch (e) {
+      print("❌ getVideoAlbums error: $e");
+      return [];
     }
 
-
-    return list;
   }
 
-  Future<List<Photo>> getphotoAlbum(String id) async {
-    List<Photo> list = [];
-    Response response;
-    response = await Dio().get(
-      "$photoAlbums?gid=$id",
-    );
-    print("$photoAlbums?gid=$id");
-    var data = response.data;
-    data.forEach((element) {
-      list.add(Photo.fromJson(element));
+  Future<List<Photo>> getphotoAlbum(String id) async {  try {
+    final data = await api.request(Services.photoAlbums,"GET",queryParameters: {
+      "gid":id
     });
-    return list;
+
+    if (data is List) {
+      return data
+          .map((e) => Photo.fromJson(e))
+          .toList();
+    } else {
+      print("⚠ Unexpected data format: $data");
+      return [];
+    }
+  } catch (e) {
+    print("❌ getphotoAlbum error: $e");
+    return [];
+  }
+
   }
 
   Future<List<Videos>> getVideoAlbum(String id) async {
-    List<Videos> list = [];
-    Response response;
-    response = await Dio().get(
-      "https://www.alrayyanprivateschools.com/api/videos.php?gid=$id",
-    );
-    print("https://www.alrayyanprivateschools.com/api/videos.php?gid=$id");
-    var data = response.data;
-    data.forEach((element) {
-      print(element.toString());
-      list.add(Videos.fromJson(element));
-    });
-    return list;
+
+    try {
+      final data = await api.request(Services.videoAlbums2,"GET",queryParameters: {
+        "gid":id
+      });
+
+      if (data is List) {
+        return data
+            .map((e) => Videos.fromJson(e))
+            .toList();
+      } else {
+        print("⚠ Unexpected data format: $data");
+        return [];
+      }
+    } catch (e) {
+      print("❌ getVideoAlbum error: $e");
+      return [];
+    }
+
   }
 }

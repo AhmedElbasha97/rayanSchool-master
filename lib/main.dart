@@ -1,37 +1,29 @@
+
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 import 'package:rayanSchool/globals/commonStyles.dart';
 import 'package:rayanSchool/services/notification.dart';
-import 'package:rayanSchool/views/homeScreen.dart';
-import 'package:rayanSchool/views/loggedUser/Messages/MessagesScreen.dart';
-import 'package:rayanSchool/views/loggedUser/homeWork.dart';
-import 'package:rayanSchool/views/parents/AttendanceScreen.dart';
-import 'package:rayanSchool/views/parents/ReportsScreen.dart';
-import 'package:rayanSchool/views/parents/penalties_list_screen.dart';
-import 'package:rayanSchool/views/parents/recommendation_academic_list_screen.dart';
-import 'package:rayanSchool/views/parents/recommendation_list_screen.dart';
-import 'package:rayanSchool/views/splashScreen.dart';
+
+import 'package:rayanSchool/views/splash/splashScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:rayanSchool/views/teacher/homework_teacher_list_screen.dart';
-import 'package:rayanSchool/views/teacher/messages/MessagesScreen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import 'Utils/api_service.dart';
+import 'Utils/localization_services.dart';
+import 'Utils/memory.dart';
+import 'Utils/transelation/app_transelation.dart';
 import 'firebase_options.dart';
 import 'I10n/AppLanguage.dart';
-import 'I10n/app_localizations.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 FirebaseAnalyticsObserver observer = FirebaseAnalyticsObserver(analytics: analytics);
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  SharedPreferences prefs = await SharedPreferences.getInstance();
   var type = message.data["page"];
-  prefs.setString("route", type);
+  Get.find<StorageService>().saveNotificationRoute(type);
 
 }
 void main() async {
@@ -39,7 +31,19 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await Get.putAsync(() => StorageService.init(), permanent: true);
+  Get.put(LocalizationService.init(), permanent: true);
 
+// ✅ إعداد ألوان الـ StatusBar و NavigationBar
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    // statusBarColor: kDarkGreenColor,
+    statusBarIconBrightness: Brightness.light,
+    statusBarBrightness: Brightness.light,
+    // systemNavigationBarColor: kDarkGreenColor,
+    systemNavigationBarIconBrightness: Brightness.light,
+  ));
+  final api = ApiService();
+  await api.init(); // Important for caching
   await PushNotificationService().setupInteractedMessage();
   FirebaseMessaging.instance.requestPermission();
   RemoteMessage? initialMessage =
@@ -48,6 +52,7 @@ void main() async {
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
   }
+
   AppLanguage appLanguage = AppLanguage();
   await appLanguage.fetchLocale();
   runApp(MyApp(appLanguage: appLanguage));
@@ -66,15 +71,14 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
       var type = message.data["page"];
-      prefs.setString("route", type);
+      Get.find<StorageService>().saveNotificationRoute(type);
+
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
       var type = message.data["page"];
-      prefs.setString("route", type);
+      Get.find<StorageService>().saveNotificationRoute(type);
     });
   }
 
@@ -84,49 +88,39 @@ class _MyAppState extends State<MyApp> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    return ChangeNotifierProvider(
-        create: (_) => widget.appLanguage,
-        child: Consumer<AppLanguage>(
-          builder: (context, model, child) {
-            return MaterialApp(
-              navigatorObservers: [observer],
-              navigatorKey: navigatorKey,
-              routes: {
-                '/messages_student': (context) => MessagesScreen(),
-                '/messages_teacher': (context) => MessagesTeacherScreen(),
-                '/messages_parent': (context) => MessagesScreen(type: 2),
-                '/attendance': (context) => AttendanceScreen(),
-                '/report1': (context) => RecommendationAcademicListScreen(),
-                '/report2': (context) => RecommendationsListScreen(),
-                '/report': (context) => ReportScreen(),
-                '/penalties': (context) => PenaltiesListScreen(),
-                '/homework_student': (context) => HomeWorkScreen(),
-                '/homework_teacher': (context) => HomeworkTeacherListScreen(),
-              },
-              debugShowCheckedModeBanner: false,
-              localizationsDelegates: [
-                AppLocalizations.delegate,
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-                DefaultCupertinoLocalizations.delegate
-              ],
-              supportedLocales: [
-                Locale("en", "US"),
-                Locale("ar", ""),
-              ],
-              locale: model.appLocal,
-              title: 'مدارس الريان',
-              theme: ThemeData(
-                scaffoldBackgroundColor: const Color(0xFFdcdbdb),
-                primaryColor: mainColor,
-                textTheme: Theme.of(context).textTheme.apply(
-                      fontFamily: 'DroidKufi',
-                    ),
-              ),
-              home: SplashScreen(),
-            );
-          },
-        ));
+
+    return GetMaterialApp(
+      navigatorObservers: [observer],
+      debugShowCheckedModeBanner: false,
+      translations: AppTranslations(),
+      locale: Get.find<LocalizationService>().activeLocale,
+      supportedLocales: SupportedLocales.all,
+      fallbackLocale: SupportedLocales.english,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
+        primarySwatch: Colors.green,
+        fontFamily: 'DroidKufi',
+        appBarTheme: AppBarTheme(
+          backgroundColor: mainColor,
+          iconTheme: const IconThemeData(color: Colors.white),
+          systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarColor: mainColor,
+            systemNavigationBarColor: mainColor,
+            systemNavigationBarDividerColor: mainColor,
+            systemNavigationBarIconBrightness: Brightness.light,
+            systemNavigationBarContrastEnforced: true,
+            systemStatusBarContrastEnforced: true,
+            statusBarIconBrightness: Brightness.light,
+            statusBarBrightness: Brightness.light,
+          ),
+        ),
+      ),
+      home:  SplashScreen(),
+    );
   }
 }

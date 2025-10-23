@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:rayanSchool/I10n/app_localizations.dart';
-import 'package:rayanSchool/globals/helpers.dart';
-import 'package:rayanSchool/globals/widgets/mainButton.dart';
-import 'package:rayanSchool/globals/widgets/textFiled.dart';
-import 'package:rayanSchool/services/JoinApplicationService.dart';
-import 'package:rayanSchool/views/homeScreen.dart';
 
+import 'package:rayanSchool/Widgets/textFiled.dart';
+import 'package:rayanSchool/services/JoinApplicationService.dart';
+import 'package:rayanSchool/views/home/home_for_guests/home_for_guest_screen.dart';
+import '../../Utils/memory.dart';
 import '../../globals/commonStyles.dart';
+import '../home/home_for_user/home_for_user_screen.dart';
 
 class JoinRequest extends StatefulWidget {
   @override
@@ -87,7 +88,14 @@ class _JoinRequestState extends State<JoinRequest> {
 
         // ✅ Safe navigation after ensuring widget is mounted
         if (mounted) {
-          pushPageReplacement(context, HomeScreen());
+          bool? userLogged;
+          userLogged = Get.find<StorageService>().checkUserIsSignedIn ;
+          if(userLogged??false) {
+            Get.off(() =>   HomeLoggedInScreen() );
+          }else{
+            Get.off(() =>   HomeForGuestScreen() );
+
+          }
         }
       } else {
         showSnackBar("حدث خطأ أثناء إرسال طلب التحاق", Colors.red, Icons.close);

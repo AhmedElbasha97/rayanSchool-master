@@ -1,23 +1,29 @@
-import 'package:dio/dio.dart';
-import 'package:rayanSchool/globals/CommonSetting.dart';
 import 'package:rayanSchool/models/schedule.dart';
 
+import '../Utils/api_service.dart';
+import '../Utils/services.dart';
+
 class TeacherScheduleService {
-  String schedule = "${baseUrl}teacher_table.php";
+  final ApiService api = ApiService();
 
   Future<List<Schedule>> getSchedule({String? id}) async {
-    List<Schedule> list = [];
-    Response response;
-    print("$schedule?teacher_id=$id");
-    response = await Dio().get(
-      "$schedule?teacher_id=$id",
-    );
-    var data = response.data;
-    if (response.data != null) {
-      data.forEach((element) {
-        list.add(Schedule.fromJson(element));
+    try {
+      final data = await api.request(Services.schedule,"GET",queryParameters: {
+        "teacher_id":id
       });
+
+      if (data is List) {
+        return data
+            .map((e) => Schedule.fromJson(e))
+            .toList();
+      } else {
+        print("⚠ Unexpected data format: $data");
+        return [];
+      }
+    } catch (e) {
+      print("❌ getSchedule error: $e");
+      return [];
     }
-    return list;
+
   }
 }

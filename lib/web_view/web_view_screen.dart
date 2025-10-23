@@ -13,10 +13,11 @@ import 'package:image_picker/image_picker.dart' as image_picker;
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
 
+import '../Widgets/DrawerWidget.dart';
+import '../Widgets/notification_icon.dart';
 import '../globals/commonStyles.dart';
-import '../globals/widgets/DrawerWidget.dart';
-import '../globals/widgets/notification_icon.dart';
-import '../views/Notification/notification_list.dart';
+
+import '../views/Notification/notification_list/notification_list_screen.dart';
 
 class WebViewContainer extends StatefulWidget {
   final String url;

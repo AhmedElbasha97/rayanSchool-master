@@ -1,5 +1,4 @@
-import 'package:dio/dio.dart';
-import 'package:rayanSchool/globals/CommonSetting.dart';
+
 import 'package:rayanSchool/models/AppInfo/News.dart';
 import 'package:rayanSchool/models/AppInfo/aboutSchool.dart';
 import 'package:rayanSchool/models/AppInfo/newsDetails.dart';
@@ -7,188 +6,252 @@ import 'package:rayanSchool/models/AppInfo/sliderPhotos.dart';
 import 'package:rayanSchool/models/AppInfo/subject.dart';
 import 'package:rayanSchool/models/AppInfo/subjectDetails.dart';
 
+import '../Utils/api_service.dart';
+import '../Utils/services.dart';
 import '../models/school_policies_details_model.dart';
 import '../models/school_policies_model.dart';
 import '../models/school_social_media_link_model.dart';
 
 class AppInfoService {
-  String sliderLink = "${baseUrl}slide.php";
-  String aboutSchool = "${baseUrl}about.php";
-  String schoolPolicyUrl = "${baseUrl}privacy2.php";
-  String schoolWord = "${baseUrl}school_desc.php";
-  String aboutApp = "${baseUrl}about_app.php";
-  String privacyPolicy = "${baseUrl}privacy.php";
-  String schoolSocialMediaLink = "${baseUrl}social_links.php";
-  String subjects = "${baseUrl}subjects.php";
-  String subjectsDetails = "${baseUrl}art.php";
-  String schoolPoliciesDetails = "${baseUrl}articles_view.php";
-  String news = "${baseUrl}news.php";
-  String newsDetails = "${baseUrl}news_view.php";
+
+  final ApiService api = ApiService();
 
   Future<List<SliderData>> getSliderPhotos() async {
-    List<SliderData> list = [];
-    Response response;
-    print(sliderLink);
-    response = await Dio().get(
-      "$sliderLink",
-    );
-    var data = response.data;
-    data.forEach((element) {
-      list.add(SliderData.fromJson(element));
-    });
-    return list;
+    try {
+      final data = await api.request(Services.sliderLink,"GET");
+
+      if (data is List) {
+        return data
+            .map((e) => SliderData.fromJson(e))
+            .toList();
+      } else {
+        print("⚠ Unexpected data format: $data");
+        return [];
+      }
+    } catch (e) {
+      print("❌ SliderData error: $e");
+      return [];
+    }
+
   }
 
-  Future<AboutSchool> getAboutSchool() async {
-    AboutSchool data;
-    Response response;
-    response = await Dio().get(
-      "$aboutSchool",
-    );
-    var resData = response.data;
-    data = AboutSchool.fromJson(resData[0]);
-    return data;
+  Future<AboutSchool?> getAboutSchool() async {
+    try {
+      final data = await api.request(Services.aboutSchool,"GET",);
+
+      if ( data.isNotEmpty) {
+        return AboutSchool.fromJson(data[0]);
+      } else {
+        print("⚠ Unexpected data format: $data");
+        return null;
+      }
+    } catch (e) {
+      print("❌ getAboutSchool error: $e");
+      return null;
+    }
+
   }
-  Future<AboutSchool> getSchoolPolicy() async {
-    AboutSchool data;
-    Response response;
-    response = await Dio().get(
-      "$schoolPolicyUrl",
-    );
-    var resData = response.data;
-    data = AboutSchool.fromJson(resData[0]);
-    return data;
+  Future<AboutSchool?> getSchoolPolicy() async {
+    try {
+      final data = await api.request(Services.schoolPolicyUrl,"GET",);
+
+      if ( data.isNotEmpty) {
+        return AboutSchool.fromJson(data[0]);
+      } else {
+        print("⚠ Unexpected data format: $data");
+        return null;
+      }
+    } catch (e) {
+      print("❌ getActivitiesDetails error: $e");
+      return null;
+    }
+
   }
 
-  Future<AboutSchool> getSchoolWord() async {
-    AboutSchool data;
-    Response response;
-    response = await Dio().get(
-      "$schoolWord",
-    );
-    var resData = response.data;
-    data = AboutSchool.fromJson(resData[0]);
-    return data;
+  Future<AboutSchool?> getSchoolWord() async {
+    try {
+      final data = await api.request(Services.schoolWord,"GET",);
+
+      if ( data.isNotEmpty) {
+        return AboutSchool.fromJson(data[0]);
+      } else {
+        print("⚠ Unexpected data format: $data");
+        return null;
+      }
+    } catch (e) {
+      print("❌ getSchoolWord error: $e");
+      return null;
+    }
+
   }
 
-  Future<AboutSchool> getaboutApp() async {
-    AboutSchool data;
-    Response response;
-    response = await Dio().get(
-      "$aboutApp",
-    );
-    var resData = response.data;
-    data = AboutSchool.fromJson(resData[0]);
-    return data;
+  Future<AboutSchool?> getaboutApp() async {
+    try {
+      final data = await api.request(Services.aboutApp,"GET",);
+
+      if ( data.isNotEmpty) {
+        return AboutSchool.fromJson(data[0]);
+      } else {
+        print("⚠ Unexpected data format: $data");
+        return null;
+      }
+    } catch (e) {
+      print("❌ getaboutApp error: $e");
+      return null;
+    }
+
   }
 
-  Future<AboutSchool> getPrivacyPolicy() async {
-    AboutSchool data;
-    Response response;
-    response = await Dio().get(
-      "$privacyPolicy",
-    );
-    var resData = response.data;
-    data = AboutSchool.fromJson(resData[0]);
-    return data;
+  Future<AboutSchool?> getPrivacyPolicy() async {
+    try {
+      final data = await api.request(Services.privacyPolicy,"GET",);
+
+      if ( data.isNotEmpty) {
+        return AboutSchool.fromJson(data[0]);
+      } else {
+        print("⚠ Unexpected data format: $data");
+        return null;
+      }
+    } catch (e) {
+      print("❌ getPrivacyPolicy error: $e");
+      return null;
+    }
   }
-  Future<SchoolSocialMediaLinkModel> getSchoolSocialMediaLink() async {
-    SchoolSocialMediaLinkModel data;
-    Response response;
-    print("$schoolSocialMediaLink",);
-    response = await Dio().get(
-      "$schoolSocialMediaLink",
-    );
-    var resData = response.data;
-    data = SchoolSocialMediaLinkModel.fromJson(resData);
-    return data;
+  Future<SchoolSocialMediaLinkModel?> getSchoolSocialMediaLink() async {
+    try {
+      final data = await api.request(Services.schoolSocialMediaLink,"GET",);
+
+      if ( data.isNotEmpty) {
+        return SchoolSocialMediaLinkModel.fromJson(data);
+      } else {
+        print("⚠ Unexpected data format: $data");
+        return null;
+      }
+    } catch (e) {
+      print("❌ getSchoolSocialMediaLink error: $e");
+      return null;
+    }
+
   }
 
   Future<List<Subjects>?> getSubjects() async {
-    List<Subjects> list = [];
-    Response response;
-    response = await Dio().get(
-      "$subjects",
-    );
-    print("$subjects");
-    var data = response.data;
-    if(data !=null) {
+    try {
+      final data = await api.request(Services.subjects,"GET");
 
-    data.forEach((element) {
-      list.add(Subjects.fromJson(element));
-    });
-  }
-    return list;
+      if (data is List) {
+        return data
+            .map((e) => Subjects.fromJson(e))
+            .toList();
+      } else {
+        print("⚠ Unexpected data format: $data");
+        return [];
+      }
+    } catch (e) {
+      print("❌ getSubjects error: $e");
+      return [];
+    }
+
   }
   Future<List<SchoolPoliciesModel>?> getSchoolPolicies() async {
-    List<SchoolPoliciesModel> list = [];
-    Response response;
-    response = await Dio().get(
-      "https://alrayyanprivateschools.com/api/articles.php?id=762",
-    );
-    print("https://alrayyanprivateschools.com/api/articles.php?id=762",);
-    var data = response.data;
-    if(data !=null) {
+    try {
+      final data = await api.request(Services.schoolPolices,"GET",queryParameters:{
+        "id":"762"
+      });
 
-    data.forEach((element) {
-      list.add(SchoolPoliciesModel.fromJson(element));
-    });
-  }
-    return list;
+      if (data is List) {
+        return data
+            .map((e) => SchoolPoliciesModel.fromJson(e))
+            .toList();
+      } else {
+        print("⚠ Unexpected data format: $data");
+        return [];
+      }
+    } catch (e) {
+      print("❌ getSchoolPolicies error: $e");
+      return [];
+    }
+
   }
 
   Future<List<SubjectDetails>> getSubjectDetails({String? id}) async {
-    List<SubjectDetails> list = [];
-    Response response;
-    response = await Dio().get(
-      "$subjectsDetails?dep_id=$id",
-    );
-    var data = response.data;
-    data.forEach((element) {
-      list.add(SubjectDetails.fromJson(element));
-    });
-    return list;
+    try {
+      final data = await api.request(Services.subjectsDetails,"GET",queryParameters:{
+        "dep_id":id
+      });
+
+      if (data is List) {
+        return data
+            .map((e) => SubjectDetails.fromJson(e))
+            .toList();
+      } else {
+        print("⚠ Unexpected data format: $data");
+        return [];
+      }
+    } catch (e) {
+      print("❌ getSubjectDetails error: $e");
+      return [];
+    }
+
   }
   Future<List<SchoolPoliciesDetailsModel>> getSchoolPoliciesDetails({String? id}) async {
-    List<SchoolPoliciesDetailsModel> list = [];
-    Response response;
-    response = await Dio().get(
-      "$schoolPoliciesDetails?arts_id=$id",
-    );
-    var data = response.data;
-    data.forEach((element) {
-      list.add(SchoolPoliciesDetailsModel.fromJson(element));
-    });
-    return list;
+    try {
+      final data = await api.request(Services.schoolPoliciesDetails,"GET",queryParameters:{
+        "arts_id":id
+      });
+
+      if (data is List) {
+        return data
+            .map((e) => SchoolPoliciesDetailsModel.fromJson(e))
+            .toList();
+      } else {
+        print("⚠ Unexpected data format: $data");
+        return [];
+      }
+    } catch (e) {
+      print("❌ getSchoolPoliciesDetails error: $e");
+      return [];
+    }
+
   }
 
   Future<List<News>?> getNews() async {
-    List<News> list = [];
-    Response response;
-    response = await Dio().get(
-      "$news",
-    );
-    print("$news");
 
-    var data = response.data;
-    if(data !=null) {
-      data.forEach((element) {
-        list.add(News.fromJson(element));
-      });
-      return list;
+    try {
+      final data = await api.request(Services.news,"GET");
+
+      if (data is List) {
+        return data
+            .map((e) => News.fromJson(e))
+            .toList();
+      } else {
+        print("⚠ Unexpected data format: $data");
+        return [];
+      }
+    } catch (e) {
+      print("❌ getNews error: $e");
+      return [];
     }
+
   }
 
   Future<List<NewsDetails>> getNewsDetails({String? id}) async {
-    List<NewsDetails> list = [];
-    Response response;
-    response = await Dio().get(
-      "$newsDetails?news_id=$id",
-    );
-    var data = response.data;
-    data.forEach((element) {
-      list.add(NewsDetails.fromJson(element));
-    });
-    return list;
+    try {
+      final data = await api.request(
+          Services.newsDetails, "GET", queryParameters: {
+        "news_id": id
+      });
+
+      if (data is List) {
+        return data
+            .map((e) => NewsDetails.fromJson(e))
+            .toList();
+      } else {
+        print("⚠ Unexpected data format: $data");
+        return [];
+      }
+    } catch (e) {
+      print("❌ getNewsDetails error: $e");
+      return [];
+    }
   }
 }

@@ -332,7 +332,7 @@ CMAKE_GENERATOR_TOOLSET:INTERNAL=
 //Source directory with the top level CMakeLists.txt file for this
 // project
 CMAKE_HOME_DIRECTORY:INTERNAL=C:/flutter/packages/flutter_tools/gradle/src/main/groovy
-//Install .so files without execute permission.
+//Install .so file without execute permission.
 CMAKE_INSTALL_SO_NO_EXE:INTERNAL=0
 //ADVANCED property for variable: CMAKE_LINKER
 CMAKE_LINKER-ADVANCED:INTERNAL=1
@@ -389,10 +389,10 @@ CMAKE_STATIC_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_STRIP
 CMAKE_STRIP-ADVANCED:INTERNAL=1
 //Suppress errors that are meant for the author of the CMakeLists.txt
-// files.
+// file.
 CMAKE_SUPPRESS_DEVELOPER_ERRORS:INTERNAL=TRUE
 //Suppress Warnings that are meant for the author of the CMakeLists.txt
-// files.
+// file.
 CMAKE_SUPPRESS_DEVELOPER_WARNINGS:INTERNAL=TRUE
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
