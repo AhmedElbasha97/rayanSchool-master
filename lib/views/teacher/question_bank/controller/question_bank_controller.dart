@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:rayanSchool/models/teacher/questionBank.dart';
 import 'package:rayanSchool/services/teachersService.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../Utils/memory.dart';
 

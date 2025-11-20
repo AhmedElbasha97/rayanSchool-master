@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
-import 'package:rayanSchool/I10n/app_localizations.dart';
 import 'package:rayanSchool/Widgets/loader.dart';
 import 'package:rayanSchool/widgets/mainButton.dart';
 import '../../../../Utils/localization_services.dart';

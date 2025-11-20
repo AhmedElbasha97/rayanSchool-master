@@ -209,7 +209,7 @@ class HomeLoggedInScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(photosAlbum.tr ?? "",
+        Text(photosAlbum.tr,
             style: appText.copyWith(
                 color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16)),
         const SizedBox(height: 5),

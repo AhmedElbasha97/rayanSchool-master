@@ -1,9 +1,9 @@
 plugins {
-       id "com.android.application"
-       id "kotlin-android"
-       id "dev.flutter.flutter-gradle-plugin"
-       id("com.google.gms.google-services")
-    }
+    id "com.android.application"
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin"
+    id "com.google.gms.google-services"
+}
 
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
@@ -13,21 +13,8 @@ if (localPropertiesFile.exists()) {
     }
 }
 
-
-
-def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
-if (flutterVersionCode == null) {
-    flutterVersionCode = '1'
-}
-
-def flutterVersionName = localProperties.getProperty('flutter.versionName')
-if (flutterVersionName == null) {
-    flutterVersionName = '1.0'
-}
-
-
-
-
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode') ?: '1'
+def flutterVersionName = localProperties.getProperty('flutter.versionName') ?: '1.0'
 
 def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file('key.properties')
@@ -35,29 +22,29 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
-
 android {
     namespace "com.syncQatar.rayanSchool"
-    compileSdkVersion 35
+    compileSdk  36
     ndkVersion = flutter.ndkVersion
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-        coreLibraryDesugaringEnabled true
 
+    compileOptions {
+        coreLibraryDesugaringEnabled true
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
-    lintOptions {
-        disable 'InvalidPackage'
+
+    kotlinOptions {
+        jvmTarget = "17"
     }
 
     defaultConfig {
         applicationId "com.syncQatar.rayanSchool"
-        minSdkVersion 26
-        targetSdkVersion 35
+        minSdk 26
+        targetSdk 35
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true
@@ -73,9 +60,9 @@ android {
             keyPassword keystoreProperties['keyPassword']
             storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
             storePassword keystoreProperties['storePassword']
-
         }
     }
+
     buildTypes {
         release {
             signingConfig signingConfigs.release
@@ -83,8 +70,9 @@ android {
             minifyEnabled true
         }
     }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
+
+    lint {
+        disable 'InvalidPackage'
     }
 }
 
@@ -93,10 +81,13 @@ flutter {
 }
 
 dependencies {
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.3'
-    implementation 'com.google.firebase:firebase-messaging-ktx'
-    implementation(platform("com.google.firebase:firebase-bom:33.9.0"))
-    implementation("com.google.firebase:firebase-analytics")
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.20"
+    // ✅ تحديث النسخة المطلوبة من desugar_jdk_libs
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.4'
+
+    // ✅ استخدم Firebase BOM لتوحيد الإصدارات
+    implementation 'com.google.firebase:firebase-messaging-ktx:23.4.1'
+    implementation 'com.google.firebase:firebase-analytics-ktx:22.1.2'
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.2.21"
 }
-apply plugin: 'com.google.gms.google-services'
+

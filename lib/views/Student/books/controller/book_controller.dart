@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:rayanSchool/models/Student/book.dart';
 import 'package:rayanSchool/services/loggedUser.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../Utils/memory.dart';

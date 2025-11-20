@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use, unused_local_variable
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rayanSchool/Widgets/file_icons_widget.dart';

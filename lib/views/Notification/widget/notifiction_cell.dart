@@ -1,22 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rayanSchool/globals/commonStyles.dart';
-import 'package:rayanSchool/globals/helpers.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Utils/memory.dart';
 import '../../../models/notification_model.dart';
 import 'package:intl/intl.dart';
 
-import '../../loggedUser/Messages/messages/messages_screen.dart';
+import '../../../web_view/web_view_screen.dart';
 import '../../loggedUser/homework/homeworks/homeworks_screen.dart';
 import '../../parents/attendance/AttendanceScreen.dart';
-import '../../parents/report/reports/ReportsScreen.dart';
-import '../../parents/panalties/penalties_list_screen.dart';
-import '../../parents/recommendation_academic/recommendation_academic_list_screen.dart';
-import '../../parents/recommendation_list/recommendation_list_screen.dart';
+
+import '../../parents/messages/sented_mesages/sented_messages_screen.dart';
 import '../../teacher/homework/homeworks_list/homework_teacher_list_screen.dart';
-import '../../teacher/messages/received_messages/received_message_screen.dart';
+
 
 class NotificationCell extends StatefulWidget {
   const NotificationCell({Key? key,  required this.notification, required this.press, }) : super(key: key);
@@ -44,7 +40,6 @@ class _NotificationCellState extends State<NotificationCell> {
     return dateOrTime;
   }
   decideIfThereIsNotificationDetectOrNotAndItIsBehavior(String? type) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
 print(type);
 
     if(Get.find<StorageService>().checkThereIsNotificationOrNot) {
@@ -52,15 +47,8 @@ print(type);
         case "msg":
           Get.find<StorageService>().removeNotification();
           {
-            if ( Get.find<StorageService>().getUserType == "STUDENT") {
-              Get.to(()=>MessagesScreen(),transition: Transition.rightToLeft,preventDuplicates: true);
-
-            } else if ( Get.find<StorageService>().getUserType == "TEACHER") {
-              Get.to(()=>ReceivedMessageScreen(),transition: Transition.rightToLeft,preventDuplicates: true);
-
-            } else if ( Get.find<StorageService>().getUserType == "PARENTS") {
-              Get.to(()=>MessagesScreen(type: 2,),transition: Transition.rightToLeft,preventDuplicates: true);
-            }
+       if ( Get.find<StorageService>().getUserType == "PARENTS") {
+              Get.to(SentedMessagesScreen(),transition: Transition.rightToLeft,preventDuplicates: true);            }
           }
           break;
         case "absence":
@@ -73,26 +61,34 @@ print(type);
         case "report1":
           {
             Get.find<StorageService>().removeNotification();
-            Get.to(()=>RecommendationAcademicListScreen(),transition: Transition.rightToLeft,preventDuplicates: true);
+            Get.to(()=>WebViewContainer("https://alrayyanprivateschools.com/parent/login.php?parent_id=${Get
+                .find<StorageService>()
+                .getId}"),transition: Transition.rightToLeft,preventDuplicates: true);
 
           }
           break;
         case "report":
           {
             Get.find<StorageService>().removeNotification();
-            Get.to(()=> ReportScreen(),transition: Transition.rightToLeft,preventDuplicates: true);
+            Get.to(()=>WebViewContainer("https://alrayyanprivateschools.com/parent/login.php?parent_id=${Get
+                .find<StorageService>()
+                .getId}"),transition: Transition.rightToLeft,preventDuplicates: true);
           }
           break;
         case "report2 ":
           {
             Get.find<StorageService>().removeNotification();
-            Get.to(()=> RecommendationsListScreen(),transition: Transition.rightToLeft,preventDuplicates: true);
+            Get.to(()=>WebViewContainer("https://alrayyanprivateschools.com/parent/login.php?parent_id=${Get
+                .find<StorageService>()
+                .getId}"),transition: Transition.rightToLeft,preventDuplicates: true);
           }
           break;
         case "penalty":
           {
             Get.find<StorageService>().removeNotification();
-            Get.to(()=> PenaltiesListScreen(),transition: Transition.rightToLeft,preventDuplicates: true);
+            Get.to(()=>WebViewContainer("https://alrayyanprivateschools.com/parent/login.php?parent_id=${Get
+                .find<StorageService>()
+                .getId}"),transition: Transition.rightToLeft,preventDuplicates: true);
           }
           break;
         case "homework":

@@ -9,21 +9,26 @@ class ConnectionService extends GetxService {
 
   final _connectivity = Connectivity();
   final RxBool hasConnection = false.obs;
-  late StreamSubscription<ConnectivityResult> _subscription;
+  late StreamSubscription<List<ConnectivityResult>> _subscription;
 
   static Future<ConnectionService> init() async {
     final ConnectionService service = ConnectionService();
 
-    //subscribe to connection change
+    // Subscribe to connection changes
     service._subscription = service._connectivity.onConnectivityChanged
         .listen(service._onConnectionChange);
+
+    // Optional: initial check
+    await service._checkConnection();
 
     return service;
   }
 
-  void _onConnectionChange(ConnectivityResult resul) {
-
-    _checkConnection();
+  void _onConnectionChange(List<ConnectivityResult> results) {
+    // Usually take the first result
+    if (results.isNotEmpty) {
+      _checkConnection();
+    }
   }
 
   Future<void> _checkConnection() async {
@@ -32,7 +37,7 @@ class ConnectionService extends GetxService {
 
     try {
       final List<InternetAddress> result =
-          await InternetAddress.lookup('google.com');
+      await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         newConnectionStatus = true;
       } else {
@@ -50,7 +55,6 @@ class ConnectionService extends GetxService {
   @override
   void onClose() {
     _subscription.cancel();
-
     super.onClose();
   }
 }

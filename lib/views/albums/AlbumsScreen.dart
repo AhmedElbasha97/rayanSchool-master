@@ -1,12 +1,13 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
-import 'package:rayanSchool/globals/helpers.dart';
+
 import 'package:rayanSchool/views/other/photo_album/photos_album_screen.dart';
 import '../../Utils/localization_services.dart';
 import '../../Utils/memory.dart';
-import '../../Utils/translation_key.dart';
 import '../../Widgets/loader.dart';
 import '../../globals/commonStyles.dart';
 import 'controller/albums_controller.dart';

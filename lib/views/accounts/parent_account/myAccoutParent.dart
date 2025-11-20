@@ -1,20 +1,17 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rayanSchool/views/parents/attendance/AttendanceScreen.dart';
-import 'package:rayanSchool/views/parents/report/reports/ReportsScreen.dart';
-import 'package:rayanSchool/views/parents/panalties/penalties_list_screen.dart';
-import 'package:rayanSchool/views/parents/recommendation_academic/recommendation_academic_list_screen.dart';
-import 'package:rayanSchool/views/parents/recommendation_list/recommendation_list_screen.dart';
-import '../../../Utils/localization_services.dart';
+
 import '../../../Utils/memory.dart';
 import '../../../Utils/translation_key.dart';
 import '../../../Widgets/loader.dart';
 import '../../../globals/commonStyles.dart';
 import '../../../models/parents/child_model.dart';
-import '../../loggedUser/Messages/messages/messages_screen.dart';
-import '../../loggedUser/Messages/send_message_student/send_message_student_screen.dart';
-import '../../loggedUser/Messages/sent_messages/sent_message_screen.dart';
+import '../../../web_view/web_view_screen.dart';
 import '../../parents/messages/sent_message_parent/sent_mesage_screen.dart';
+import '../../parents/messages/sented_mesages/sented_messages_screen.dart';
 import 'controller/my_account_parent_controller.dart';
 
 class MyAccountParent extends StatelessWidget {
@@ -141,8 +138,9 @@ class MyAccountParent extends StatelessWidget {
               ),
               ListTile(
                 onTap: () {
-                  Get.to(ReportScreen(),transition: Transition.rightToLeft,preventDuplicates: true);
-
+                  Get.to(()=>WebViewContainer("https://alrayyanprivateschools.com/parent/login.php?parent_id=${Get
+                      .find<StorageService>()
+                      .getId}"),transition: Transition.rightToLeft,preventDuplicates: true);
 
                 },
                 title: Text(
@@ -162,20 +160,11 @@ class MyAccountParent extends StatelessWidget {
                 ),
                 trailing: Icon(Icons.person),
               ),
+
               Divider(),
               ListTile(
                 onTap: () {
-                  Get.to(SentMessagesScreen(type: 2),transition: Transition.rightToLeft,preventDuplicates: true);
-                },
-                title: Text(
-                  sentMessages.tr,
-                ),
-                trailing: Icon(Icons.message),
-              ),
-              Divider(),
-              ListTile(
-                onTap: () {
-                  Get.to(MessagesScreen(type: 2),transition: Transition.rightToLeft,preventDuplicates: true);
+                  Get.to(SentedMessagesScreen(),transition: Transition.rightToLeft,preventDuplicates: true);
                 },
                 title: Text(
                   messages.tr,
@@ -194,46 +183,7 @@ class MyAccountParent extends StatelessWidget {
                 trailing: Icon(Icons.message_rounded),
               ),
               Divider(),
-              ListTile(
-                onTap: () {
-                  Get.to(RecommendationsListScreen(),transition: Transition.rightToLeft,preventDuplicates: true);
 
-                },
-                title: Text(
-                  Get.find<StorageService>().activeLocale ==
-                      SupportedLocales.english
-                      ? "Recommendation Behavioural list"
-                      : "قائمة التوصيات السلوكية",
-                ),
-                trailing: Icon(Icons.contact_page_rounded),
-              ),
-              Divider(),
-              ListTile(
-                onTap: () {
-                  Get.to(RecommendationAcademicListScreen(),transition: Transition.rightToLeft,preventDuplicates: true);
-                },
-                title: Text(
-                  Get.find<StorageService>().activeLocale ==
-                      SupportedLocales.english
-                      ? "Recommendation academic list"
-                      : "قائمة التوصيات الأكاديمية",
-                ),
-                trailing: Icon(Icons.contact_page_rounded),
-              ),
-              Divider(),
-              ListTile(
-                onTap: () {
-                  Get.to(PenaltiesListScreen(),transition: Transition.rightToLeft,preventDuplicates: true);
-
-                },
-                title: Text(
-                  Get.find<StorageService>().activeLocale ==
-                      SupportedLocales.english
-                      ? "Conduct and penalties"
-                      : "السلوك والجزاءات",
-                ),
-                trailing: Icon(Icons.close),
-              ),
             ],
           ),
         );

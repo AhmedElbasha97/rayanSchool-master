@@ -52,41 +52,46 @@ class HomeWorkDetailsController extends GetxController {
   }
 
   Future<bool> saveFile(context) async {
-    print("hiiii");
     if (homeworks.isEmpty) return false;
     final fileUrl = homeworks.first.homeworkFile;
     if (fileUrl == null || fileUrl.isEmpty) return false;
-    hasAcceptedPermissions();
+
+    await hasAcceptedPermissions();
     isDownloading.value = true;
+
     try {
       final fileName = fileUrl.split('/').last;
-      final res = await Dio().get<List<int>>(fileUrl,
-          options: Options(responseType: ResponseType.bytes));
+      final res = await Dio().get<List<int>>(
+        fileUrl,
+        options: Options(responseType: ResponseType.bytes),
+      );
+
       final saved = await FileSaver.instance.saveFile(
-        name: fileName.split('.').first,
+        name: fileName, // ✅ include extension directly
         bytes: Uint8List.fromList(res.data!),
-        ext: fileName.split('.').last,
         mimeType: MimeType.other,
       );
+
       isDownloading.value = false;
-      if (saved != null) {
-        lastSavedFilePath = saved;
-        await checkIfFileExists();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            backgroundColor: Colors.green,
-            content: Text(
-              Localizations.localeOf(context).languageCode == "en"
-                  ? "✅ File saved successfully"
-                  : "✅ تم حفظ الملف بنجاح",
-            ),
+
+      lastSavedFilePath = saved;
+      await checkIfFileExists();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.green,
+          content: Text(
+            Localizations.localeOf(context).languageCode == "en"
+                ? "✅ File saved successfully"
+                : "✅ تم حفظ الملف بنجاح",
           ),
-        );
-        return true;
-      }
-    } catch (_) {
+        ),
+      );
+      return true;
+        } catch (e) {
+      print("Download error: $e");
       isDownloading.value = false;
     }
+
     return false;
   }
 

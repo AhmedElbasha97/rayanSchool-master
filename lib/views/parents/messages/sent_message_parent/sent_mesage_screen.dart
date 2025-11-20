@@ -1,9 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../Utils/translation_key.dart';
-import '../../../../Widgets/loader.dart';
 import '../../../../Widgets/mainButton.dart';
 import '../../../../globals/commonStyles.dart';
 import '../../../../models/message_title_list_model.dart';

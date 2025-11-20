@@ -13,6 +13,7 @@ import '../Utils/services.dart';
 import '../models/parents/child_model.dart';
 import '../models/penalties_list_model.dart';
 import '../models/recommendation_list_model.dart';
+import '../models/sent_message_detials_model.dart';
 
 class ParentService {
   final ApiService api = ApiService();
@@ -175,6 +176,27 @@ Future<List<PenaltiesListModel>> getPenaltiesList(
       print("❌ getSentMessages error: $e");
       return [];
     }
+  } Future<List<SentMessageDetailsModel>> getSentMessageDetail({String? id}) async {
+    try {
+      final data = await api.request(Services.parentSentMessageDetails,"GET",queryParameters: {
+        "parent_id":Get.find<StorageService>().getId,
+        "msg_id":id,
+
+
+      });
+
+      if (data is List) {
+        return data
+            .map((e) => SentMessageDetailsModel.fromJson(e))
+            .toList();
+      } else {
+        print("⚠ Unexpected data format: $data");
+        return [];
+      }
+    } catch (e) {
+      print("❌ getSentMessages error: $e");
+      return [];
+    }
   }
 
   Future<List<MessageDetails>> getMessageDetails(
@@ -253,7 +275,33 @@ Future<List<PenaltiesListModel>> getPenaltiesList(
     try {
       final data = await api.request(
           Services.parentSendMessageLink, "POST", queryParameters: {
-       "sendto_type":type, "parent_id":id,"title":title,"text":msg
+       "sendto_type":type, "parent_id":Get
+            .find<StorageService>()
+            .getId,"title":title,"text":msg
+      });
+
+      if (data["status"] == "true") {
+        return data["status"];
+      } else {
+        print("⚠ Unexpected data format: $data");
+        return data["msg"];
+      }
+    } catch (e) {
+      print("❌ sendMessage error: $e");
+      return "";
+    }
+
+  }
+  Future<String> sendReplyForMessage(
+      {String? id,
+      String? msg,
+     }) async {
+    try {
+      final data = await api.request(
+          Services.parentSendReplyMessageLink, "POST", queryParameters: {
+       "msg_id":id, "parent_id":Get
+            .find<StorageService>()
+            .getId,"text":msg
       });
 
       if (data["status"] == "true") {

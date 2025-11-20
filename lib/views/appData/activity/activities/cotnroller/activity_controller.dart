@@ -17,7 +17,7 @@ class ActivityController extends GetxController {
     try {
       isLoading.value = true;
       final list = await ActivityService().getActivitiesList();
-      activityList.assignAll(list ?? []);
+      activityList.assignAll(list);
     } catch (e) {
       print("Error fetching activities: $e");
       activityList.clear();

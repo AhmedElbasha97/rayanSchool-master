@@ -34,7 +34,7 @@ class SchoolPoliciesScreen extends StatelessWidget {
           );
         }
 
-        if (controller.subjects?.isEmpty??true) {
+        if (controller.subjects.isEmpty) {
           return Container(
             height: Get.height * 0.75,
             width: Get.width,
@@ -61,23 +61,23 @@ class SchoolPoliciesScreen extends StatelessWidget {
         }
 
         return ListView.separated(
-          itemCount: controller.subjects?.length??0,
+          itemCount: controller.subjects.length,
           padding: const EdgeInsets.all(10),
           itemBuilder: (BuildContext context, int index) {
-            final policy = controller.subjects?[index];
+            final policy = controller.subjects[index];
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: InkWell(
                 onTap: () {
                   Get.to(()=>
                     SchoolPoliciesDetailsScreen(
-                      id: policy?.id,
+                      id: policy.id,
                     ),
                     transition: Transition.rightToLeft,
                   );
                 },
                 child: ListTile(
-                  title: Text("${policy?.title}"),
+                  title: Text("${policy.title}"),
                   trailing:  Icon(Icons.arrow_forward_ios,color: mainColor,),
                 ),
               ),

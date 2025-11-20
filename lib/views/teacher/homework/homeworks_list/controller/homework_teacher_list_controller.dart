@@ -17,7 +17,7 @@ class HomeworkTeacherListController extends GetxController {
   Future<void> fetchHomeworks() async {
     isLoading.value = true;
     final list = await TeacherService().getTeacherHomeWorksList();
-    homeworkList.assignAll(list ?? []);
+    homeworkList.assignAll(list);
     isLoading.value = false;
   }
 }

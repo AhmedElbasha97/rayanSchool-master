@@ -11,7 +11,7 @@ class HomeWorkController extends GetxController {
   Future<void> fetchHomeworks() async {
     isLoading.value = true;
 
-    homeworks.value = await LoggedUser().getHomeWorks(id:  Get.find<StorageService>().getId ?? "");
+    homeworks.value = await LoggedUser().getHomeWorks(id:  Get.find<StorageService>().getId);
     isLoading.value = false;
   }
 

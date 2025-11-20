@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rayanSchool/views/Student/books/bookScreen.dart';
-import 'package:rayanSchool/views/loggedUser/Messages/messages/messages_screen.dart';
-import 'package:rayanSchool/views/loggedUser/homework/homeworks/homeworks_screen.dart';
 import '../../../Utils/memory.dart';
 import '../../../Utils/translation_key.dart';
 import '../../../globals/commonStyles.dart';
 import '../../../web_view/web_view_screen.dart';
-import '../../loggedUser/Messages/send_message_student/send_message_student_screen.dart';
-import '../../loggedUser/Messages/sent_messages/sent_message_screen.dart';
+import '../../loggedUser/homework/homeworks/homeworks_screen.dart';
+
 
 class MyAccount extends StatelessWidget {
   @override
@@ -39,39 +37,8 @@ class MyAccount extends StatelessWidget {
             ),
             Divider(),
 
-            ListTile(
-              onTap: () {
-                Get.to(SendMessageStudentScreen(),transition: Transition.rightToLeft,preventDuplicates: true);
-                },
-              title: Text(
-                sendMessage.tr,
-              ),
-              trailing: Icon(Icons.message_rounded),
-            ),
 
 
-            Divider(),
-
-            ListTile(
-              onTap: () {
-                Get.to(MessagesScreen(),transition: Transition.rightToLeft,preventDuplicates: true);
-                },
-              title: Text(
-                messages.tr,
-              ),
-              trailing: Icon(Icons.message),
-            ),
-            Divider(),
-            ListTile(
-              onTap: () {
-                Get.to(SentMessagesScreen(),transition: Transition.rightToLeft,preventDuplicates: true);
-                },
-              title: Text(
-                sentMessages.tr,
-              ),
-              trailing: Icon(Icons.message),
-            ),
-            Divider(),
             ListTile(
               onTap: () {
                 Get.to(BooksScreen(),transition: Transition.rightToLeft,preventDuplicates: true);

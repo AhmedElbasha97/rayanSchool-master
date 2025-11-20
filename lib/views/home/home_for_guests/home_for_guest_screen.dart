@@ -6,10 +6,10 @@ import '../../../Utils/localization_services.dart';
 import '../../../Utils/memory.dart';
 import '../../../Widgets/DrawerWidget.dart';
 import '../../../Widgets/loader.dart';
-import '../../../Widgets/notification_icon.dart';
+
 import '../../../globals/helpers.dart';
 import '../../../web_view/web_view_screen.dart';
-import '../../Notification/notification_list/notification_list_screen.dart';
+
 import '../../appData/new/news/NewsScreen.dart';
 import '../../appData/school_policies/school_policy_screen.dart';
 import '../../auth/login/login_screen.dart';

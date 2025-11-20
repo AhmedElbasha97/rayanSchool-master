@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 
 import '../../../../../Utils/localization_services.dart';
 import '../../../../../Utils/memory.dart';
-import '../../../../../Utils/validator.dart';
 import '../../../../../models/message_title_list_model.dart';
 import '../../../../../services/ParentsService.dart';
 import '../../../../../services/messagesService.dart';

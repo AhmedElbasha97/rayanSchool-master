@@ -14,7 +14,7 @@ class SubjectDetailsController extends GetxController {
     try {
       isLoading.value = true;
       final data = await AppInfoService().getSubjectDetails(id: id);
-      details.assignAll(data ?? []);
+      details.assignAll(data);
     } finally {
       isLoading.value = false;
     }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rayanSchool/services/authService.dart';
-import 'package:rayanSchool/views/home/home_for_user/controller/home_for_user_controller.dart';
 
 import '../../../../Utils/validator.dart';
 import '../../../home/home_for_user/home_for_user_screen.dart';

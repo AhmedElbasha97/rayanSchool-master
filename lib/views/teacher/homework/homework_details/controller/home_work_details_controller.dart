@@ -25,7 +25,7 @@ class HomeworkDetailsController extends GetxController {
   /// Fetch homework details depending on user type
   Future<void> fetchDetails() async {
 
-    final userId = Get.find<StorageService>().getId ?? "";
+    final userId = Get.find<StorageService>().getId;
     final isTeacher = Get.find<StorageService>().getUserType == "TEACHER";
 
 
@@ -33,7 +33,7 @@ class HomeworkDetailsController extends GetxController {
       id: isTeacher ? userId : hwId??"",
       homeworkId: isTeacher ? hwId : userId,
     );
-    homework.assignAll(list ?? []);
+    homework.assignAll(list);
     isLoading.value = false;
   }
 

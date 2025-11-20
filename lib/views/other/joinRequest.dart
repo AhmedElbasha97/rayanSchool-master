@@ -90,7 +90,7 @@ class _JoinRequestState extends State<JoinRequest> {
         if (mounted) {
           bool? userLogged;
           userLogged = Get.find<StorageService>().checkUserIsSignedIn ;
-          if(userLogged??false) {
+          if(userLogged) {
             Get.off(() =>   HomeLoggedInScreen() );
           }else{
             Get.off(() =>   HomeForGuestScreen() );

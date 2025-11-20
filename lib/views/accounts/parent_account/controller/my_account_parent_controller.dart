@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../Utils/memory.dart';
 import '../../../../models/parents/child_model.dart';
 import '../../../../services/ParentsService.dart';

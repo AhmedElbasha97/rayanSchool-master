@@ -17,7 +17,7 @@ class AttendanceController extends GetxController {
 
       if (id != null) {
         final data = await ParentService().getAttendance(id: id);
-        attendanceList.assignAll(data ?? []);
+        attendanceList.assignAll(data);
       } else {
         attendanceList.clear();
       }
