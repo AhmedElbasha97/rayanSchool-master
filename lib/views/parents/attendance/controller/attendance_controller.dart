@@ -13,8 +13,8 @@ class AttendanceController extends GetxController {
     try {
       isLoading.value = true;
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? id = prefs.getString("id");
-
+      String? id = prefs.getString("User_Id");
+      print("id: $id");
       if (id != null) {
         final data = await ParentService().getAttendance(id: id);
         attendanceList.assignAll(data);

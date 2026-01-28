@@ -9,10 +9,11 @@ import 'controller/attendance_controller.dart';
 class AttendanceScreen extends StatelessWidget {
   AttendanceScreen({Key? key}) : super(key: key);
 
-  final AttendanceController controller = Get.put(AttendanceController(), permanent: false);
+
 
   @override
   Widget build(BuildContext context) {
+    final AttendanceController controller = Get.put(AttendanceController(), permanent: false);
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: mainColor),

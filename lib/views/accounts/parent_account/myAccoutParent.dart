@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rayanSchool/views/parents/attendance/AttendanceScreen.dart';
 
+import '../../../Utils/localization_services.dart';
 import '../../../Utils/memory.dart';
 import '../../../Utils/translation_key.dart';
 import '../../../Widgets/loader.dart';
@@ -12,6 +13,7 @@ import '../../../models/parents/child_model.dart';
 import '../../../web_view/web_view_screen.dart';
 import '../../parents/messages/sent_message_parent/sent_mesage_screen.dart';
 import '../../parents/messages/sented_mesages/sented_messages_screen.dart';
+import '../../parents/panalties/penalties_list_screen.dart';
 import 'controller/my_account_parent_controller.dart';
 
 class MyAccountParent extends StatelessWidget {
@@ -151,7 +153,7 @@ class MyAccountParent extends StatelessWidget {
               Divider(),
               ListTile(
                 onTap: () {
-                  Get.to(AttendanceScreen(),transition: Transition.rightToLeft,preventDuplicates: true);
+                  Get.to(()=>AttendanceScreen(),transition: Transition.rightToLeft,preventDuplicates: true);
 
 
                 },
@@ -164,7 +166,7 @@ class MyAccountParent extends StatelessWidget {
               Divider(),
               ListTile(
                 onTap: () {
-                  Get.to(SentedMessagesScreen(),transition: Transition.rightToLeft,preventDuplicates: true);
+                  Get.to(()=>SentedMessagesScreen(),transition: Transition.rightToLeft,preventDuplicates: true);
                 },
                 title: Text(
                   messages.tr,
@@ -174,13 +176,27 @@ class MyAccountParent extends StatelessWidget {
               Divider(),
               ListTile(
                 onTap: () {
-                  Get.to(SentMessageParentScreen(),transition: Transition.rightToLeft,preventDuplicates: true);
+                  Get.to(()=>SentMessageParentScreen(),transition: Transition.rightToLeft,preventDuplicates: true);
 
                 },
                 title: Text(
                   sendMessage.tr,
                 ),
                 trailing: Icon(Icons.message_rounded),
+              ),
+              Divider(),
+              ListTile(
+                onTap: () {
+                  Get.to(PenaltiesListScreen(),transition: Transition.rightToLeft,preventDuplicates: true);
+
+                },
+                title: Text(
+                  Get.find<StorageService>().activeLocale ==
+                      SupportedLocales.english
+                      ? "Conduct and penalties"
+                      : "السلوك والجزاءات",
+                ),
+                trailing: Icon(Icons.close),
               ),
               Divider(),
 
