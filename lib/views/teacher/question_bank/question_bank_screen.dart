@@ -6,13 +6,15 @@ import '../../../Utils/localization_services.dart';
 import '../../../Utils/memory.dart';
 import '../../../globals/commonStyles.dart';
 import '../../loggedUser/question/questions_bank/controller/question_bank_controller.dart';
-
+/// Question Bank Screen for teachers to view and manage questions
+/// This screen displays a list of questions available in the question bank. Teachers can tap on a question to view details or manage it.
 class QuestionBankScreen extends StatelessWidget {
   final QuestionBankController controller = Get.put(QuestionBankController(), permanent: false);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // AppBar with logo and custom colors
       appBar: AppBar(
         iconTheme: IconThemeData(color: mainColor),
         backgroundColor: const Color(0xFFdcdbdb),
@@ -23,10 +25,11 @@ class QuestionBankScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: Obx(() {
+        // Display a loading indicator while data is being fetched
         if (controller.isLoading.value) {
           return Loader();
         }
-
+// Display an empty state if there are no questions available
         if (controller.questions?.isEmpty??true) {
           return SizedBox(
             height: Get.height * 0.75,
@@ -51,7 +54,7 @@ class QuestionBankScreen extends StatelessWidget {
             ),
           );
         }
-
+// Display the list of questions using ListView.builder
         return ListView.builder(
           itemCount: controller.questions?.length,
           padding: const EdgeInsets.all(10),

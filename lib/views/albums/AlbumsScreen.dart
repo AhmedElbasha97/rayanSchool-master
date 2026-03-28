@@ -23,6 +23,7 @@ class AlbumsScreen extends StatelessWidget {
     controller.getData(isImg);
 
     return Scaffold(
+      // AppBar with logo and custom colors
       appBar:  AppBar(
 
     iconTheme: new IconThemeData(color: mainColor),
@@ -39,6 +40,7 @@ class AlbumsScreen extends StatelessWidget {
         }
 
         if (controller.isEmptyList.value) {
+          // Display a message when there are no albums available
           return Container(
             height: MediaQuery.of(context).size.height * 0.35,
             width: MediaQuery.of(context).size.width,
@@ -71,7 +73,7 @@ class AlbumsScreen extends StatelessWidget {
         }
 
 
-
+        // Display the list of albums using ListView.builder
         return isImg? ListView.builder(
           itemCount: controller.list?.length??0,
           itemBuilder: (BuildContext context, int index) {
@@ -175,7 +177,9 @@ class AlbumsScreen extends StatelessWidget {
               ),
             );
           },
-        ):ListView.builder(
+        ):
+        // Display the list of video albums using ListView.builder
+        ListView.builder(
           itemCount: controller.listVideos?.length??0,
           itemBuilder: (BuildContext context, int index) {
             return Padding(

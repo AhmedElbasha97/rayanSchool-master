@@ -22,6 +22,7 @@ class SubjectDetailsScreen extends StatelessWidget {
     Get.put(SubjectDetailsController(id ?? ""), permanent: false);
 
     return Scaffold(
+      // AppBar with logo and custom colors
       appBar: AppBar(
         iconTheme: IconThemeData(color: mainColor),
         backgroundColor: const Color(0xFFdcdbdb),
@@ -32,10 +33,11 @@ class SubjectDetailsScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: Obx(() {
+        // Display a loading indicator while data is being fetched
         if (controller.isLoading.value) {
           return Loader();
         }
-
+        // Display an error message if data is empty
         if (controller.details.isEmpty) {
           return Center(
             child: Padding(
@@ -53,7 +55,7 @@ class SubjectDetailsScreen extends StatelessWidget {
             ),
           );
         }
-
+// Display the subject details using ListView
         return ListView.builder(
           itemCount: controller.details.length,
           padding: const EdgeInsets.all(10),

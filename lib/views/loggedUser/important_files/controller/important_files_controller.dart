@@ -20,6 +20,7 @@ class FilesImportantController extends GetxController {
       showAlert(context);
     }
   }
+  // Alert dialog to show when the link cannot be opened
   void showAlert(BuildContext context) {
     showDialog(
       context: context,
@@ -35,6 +36,7 @@ class FilesImportantController extends GetxController {
       ),
     );
   }
+  // Fetch important files for the logged-in user
   Future<void> fetchFiles() async {
     isLoading.value = true;
 

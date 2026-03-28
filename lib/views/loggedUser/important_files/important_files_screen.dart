@@ -6,7 +6,8 @@ import '../../../Utils/memory.dart';
 import '../../../Widgets/loader.dart';
 import '../../../globals/commonStyles.dart';
 import 'controller/important_files_controller.dart';
-
+// This screen displays a list of important files for logged-in users. It uses the GetX package for state management and localization services to support multiple languages. The screen includes an AppBar with a logo and custom colors, and it handles loading states and empty data scenarios gracefully.
+//but the school asked to remove this screen from the app so i just hide it and keep the code for future use if they want to add it again
 class FilesImportantScreen extends StatelessWidget {
   const FilesImportantScreen({super.key});
 
@@ -15,6 +16,7 @@ class FilesImportantScreen extends StatelessWidget {
     final controller = Get.put(FilesImportantController(), permanent: false);
 
     return Scaffold(
+      // AppBar with logo and custom colors
       appBar: AppBar(
         iconTheme: IconThemeData(color: mainColor),
         backgroundColor: Color(0xFFdcdbdb),
@@ -22,9 +24,11 @@ class FilesImportantScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: Obx(() {
+        // Display a loading indicator while data is being fetched
         if (controller.isLoading.value) {
           return Loader();
         }
+        // Display an empty state if there are no important files available
         if (controller.files.isEmpty) {
           return Container(
             height: Get.height * 0.75,
@@ -49,7 +53,7 @@ class FilesImportantScreen extends StatelessWidget {
             ),
           );
         }
-
+// Display the important files list using ListView.builder
         return ListView.builder(
           itemCount: controller.files.length,
           padding: const EdgeInsets.all(10),

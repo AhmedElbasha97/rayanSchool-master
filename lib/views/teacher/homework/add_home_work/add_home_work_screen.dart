@@ -17,12 +17,15 @@ class AddHomeWorkScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Fetch data when screen is opened
     final c = Get.put(AddHomeworkController(), permanent: false);
+
     final locale = Get.find<StorageService>().activeLocale ==
         SupportedLocales.english
         ;
 
     return Scaffold(
+      // AppBar with logo and custom colors
       appBar: AppBar(
         iconTheme: IconThemeData(color: mainColor),
         backgroundColor: const Color(0xFFdcdbdb),
@@ -35,6 +38,7 @@ class AddHomeWorkScreen extends StatelessWidget {
           child: ListView(
             padding: const EdgeInsets.symmetric(vertical: 30),
             children: [
+              // Section Dropdown choice of section, stage, class
               Obx(
                     ()=> _buildDropdown(
                   context,
@@ -72,6 +76,7 @@ class AddHomeWorkScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 15),
+              // Homework Title
               Obx(
                     ()=>c.selectedLevel2.value == null?Container(): Obx(() => Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -88,7 +93,7 @@ class AddHomeWorkScreen extends StatelessWidget {
                           color: mainColor),
                       focusNode: c.titleNode,
                       controller: c.titleController,
-                      onchange: c.onNameUpdate,
+                      onchange: c.onHomeWorkUpdate,
                       validator: c.validateName,
                       icon: (c.nameValidated.value)
                           ? (c.nameState.value)
@@ -105,6 +110,7 @@ class AddHomeWorkScreen extends StatelessWidget {
                 ),),
               ),
               const SizedBox(height: 15),
+              // Homework Description
               Obx(
                     ()=> c.selectedLevel2.value == null?Container():Padding(
                       padding: const EdgeInsets.symmetric(horizontal:10.0),
@@ -135,6 +141,7 @@ class AddHomeWorkScreen extends StatelessWidget {
                     ),
               ),
               const SizedBox(height: 20),
+              // File picker button and display picked file info
               Obx(
                     ()=> c.selectedLevel2.value == null?Container():InkWell(
                   onTap: () => _showPickOptions(context, c, locale),
@@ -142,6 +149,7 @@ class AddHomeWorkScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
+              // Submit button
               Obx(
                     ()=> c.selectedLevel2.value == null?Container():c.sending.value
                     ? Container(

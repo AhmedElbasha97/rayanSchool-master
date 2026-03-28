@@ -15,6 +15,7 @@ class ActivityScreen extends StatelessWidget {
     final ActivityController controller = Get.put(ActivityController(), permanent: false);
 
     return Scaffold(
+      // AppBar with logo and custom colors
       appBar: AppBar(
         backgroundColor: Colors.grey[300],
         title: Text(
@@ -37,10 +38,11 @@ class ActivityScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: Obx(() {
+          // Display a loading indicator while data is being fetched
           if (controller.isLoading.value) {
             return Loader();
           }
-
+          // Display a message if there are no activities available
           if (controller.activityList.isEmpty) {
             return Container(
               height: Get.height,
@@ -67,7 +69,7 @@ class ActivityScreen extends StatelessWidget {
               ),
             );
           }
-
+          // Display the list of activities using ListView.builder
           return ListView.builder(
             physics: const BouncingScrollPhysics(),
             itemCount: controller.activityList.length,

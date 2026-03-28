@@ -20,6 +20,7 @@ class SchoolPolicyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      // AppBar with logo and custom colors
       appBar: AppBar(
         iconTheme: IconThemeData(color: mainColor),
         backgroundColor: const Color(0xFFdcdbdb),
@@ -30,10 +31,11 @@ class SchoolPolicyScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: Obx(() {
+        // Display a loading indicator while data is being fetched
         if (controller.isLoading.value) {
           return Loader();
         }
-
+        // Display an error message if data is null
         final policy = controller.policy.value;
         if (policy == null) {
           return  Center(
@@ -46,7 +48,7 @@ class SchoolPolicyScreen extends StatelessWidget {
             ),
           );
         }
-
+        // Display the school policy using ListView
         return ListView(
           children: [
             policy.image ==""?SizedBox():CachedNetworkImage(

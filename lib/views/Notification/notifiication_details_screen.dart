@@ -7,6 +7,7 @@ import '../../models/notification_model.dart';
 class NotifiicationDetailsScreen extends StatelessWidget {
   const NotifiicationDetailsScreen({Key? key, this.notification}) : super(key: key);
   final NotificationModel? notification;
+  // This method takes a NotificationModel object as input and returns a formatted string representing the date and time of the notification. It checks if the notification's date is the same day as the current date, and if so, it formats the time. Otherwise, it formats the date.
   String returnDateAndTime(NotificationModel? chat){
     String dateOrTime = "" ;
     print(chat?.date??"");
@@ -24,6 +25,7 @@ class NotifiicationDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
+      // AppBar with logo and custom colors
       appBar:  AppBar(
         backgroundColor: Colors.grey[300],
         title: Text(
@@ -40,6 +42,7 @@ class NotifiicationDetailsScreen extends StatelessWidget {
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
+        // Body of the screen displaying notification details
         body:Container(
           width: MediaQuery.of(context).size.width,
           height:MediaQuery.of(context).size.height,

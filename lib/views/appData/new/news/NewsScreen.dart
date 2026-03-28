@@ -16,6 +16,7 @@ class NewsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // AppBar with logo and custom colors
       appBar: AppBar(
         iconTheme: IconThemeData(color: mainColor),
         backgroundColor: const Color(0xFFdcdbdb),
@@ -26,10 +27,12 @@ class NewsScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: Obx(() {
+        // Display a loading indicator while data is being fetched
         if (controller.isLoading.value) {
           return Loader();
         }
 
+        // Display an empty state if there are no news items available
         if (controller.newsList.isEmpty) {
           return Container(
             height: Get.height * 0.75,
@@ -55,7 +58,7 @@ class NewsScreen extends StatelessWidget {
             ),
           );
         }
-
+        // Display the list of news items using ListView
         return ListView.separated(
           itemCount: controller.newsList.length,
           padding: const EdgeInsets.all(10),

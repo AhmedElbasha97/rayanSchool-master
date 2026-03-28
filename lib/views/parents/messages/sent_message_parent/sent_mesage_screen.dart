@@ -16,6 +16,7 @@ class SentMessageParentScreen extends StatelessWidget {
     @override
     Widget build(BuildContext context) {
       final controller = Get.put(SentMessageParent(), permanent: false);
+      // Helper function to create consistent input decorations
       InputDecoration _inputDecoration(BuildContext ctx, String key) {
         return InputDecoration(
           prefixIcon:  Icon(Icons.message,color: mainColor),
@@ -38,14 +39,17 @@ class SentMessageParentScreen extends StatelessWidget {
 
       }
       return GestureDetector(
+        // Unfocus text fields when tapping outside
         onTap: () => controller.unFocus(),
         child: Scaffold(
+          // AppBar with logo and custom colors
           appBar: AppBar(
             iconTheme: IconThemeData(color: mainColor),
             backgroundColor: Color(0xFFdcdbdb),
             title: Image.asset("assets/images/logo.png", scale: 4.5),
             centerTitle: true,
           ),
+          // Form to send a message
           body:Form(
             key: controller.formKey,
             child: ListView(
@@ -136,6 +140,7 @@ class SentMessageParentScreen extends StatelessWidget {
                 )),
 
                 SizedBox(height: 30),
+                // Send button with loading statew
                 Obx(() => controller.isLoading.value
                     ?Container(
                     decoration: BoxDecoration( color: mainColor, shape: BoxShape.circle ),

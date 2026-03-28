@@ -23,6 +23,7 @@ class ActivityDetailedScreen extends StatelessWidget {
 
     return Obx(() {
       if (controller.loading.value) {
+        // Display a loading indicator while data is being fetched
         return Scaffold(
           appBar: AppBar(
             iconTheme: IconThemeData(color: mainColor),
@@ -39,7 +40,7 @@ class ActivityDetailedScreen extends StatelessWidget {
       }
 
       final details = controller.activityDetails.value;
-
+  // Display an error message if data is null
       if (details == null) {
         return Scaffold(
           backgroundColor: Colors.white,
@@ -62,7 +63,7 @@ class ActivityDetailedScreen extends StatelessWidget {
           ),
         );
       }
-
+// Display the activity details using a Scaffold with an AppBar and body content
       return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(

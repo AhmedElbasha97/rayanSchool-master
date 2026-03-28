@@ -20,6 +20,7 @@ class NotificationsListScreen extends StatelessWidget {
     final controller = Get.put(NotificationsController(), permanent: false);
 
     return Scaffold(
+      // AppBar with logo and custom colors
       appBar: AppBar(
         iconTheme: IconThemeData(color: mainColor),
         backgroundColor: Color(0xFFdcdbdb),
@@ -41,8 +42,10 @@ class NotificationsListScreen extends StatelessWidget {
         ),
       ),
       body: Obx(() {
+        // Display a loading indicator while data is being fetched
         if (controller.isLoading.value) return const Loader();
 
+        // Display an empty state if there are no notifications available
         if (controller.notifications?.isEmpty??true) {
           return PopScope(
             canPop: false,
@@ -69,7 +72,7 @@ class NotificationsListScreen extends StatelessWidget {
             ),
           );
         }
-
+        // Display the notifications list using ListView.builder and NotificationCell widget
         return PopScope(
           canPop: false,
           onPopInvokedWithResult: (_, __) => Get.off(() =>  HomeLoggedInScreen()),

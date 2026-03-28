@@ -5,7 +5,8 @@ import 'package:rayanSchool/models/teacher/homeWork.dart';
 import 'package:rayanSchool/services/teachersService.dart';
 import 'package:rayanSchool/views/teacher/homework/homework_details/homework_detail_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+//this screen for teacher to show all homeworks that he added and when click on any homework it will show details of it
+//but the school asked to remove the add homework button from the app and make it only for admin to add homework and teacher can only see it and not add it so i removed the add homework button from the app and make it only for admin to add homework and teacher can only see it and not add it
 class HomeWorkScreen extends StatefulWidget {
   @override
   _HomeWorkScreenState createState() => _HomeWorkScreenState();

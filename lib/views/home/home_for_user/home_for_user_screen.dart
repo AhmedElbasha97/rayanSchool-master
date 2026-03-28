@@ -24,6 +24,7 @@ class HomeLoggedInScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Scaffold(
+      // AppBar with logo and custom colors
         appBar: AppBar(
           actions: [
             InkWell(

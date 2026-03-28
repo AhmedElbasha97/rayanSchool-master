@@ -20,7 +20,7 @@ import '../web_view/web_view_screen.dart';
 
 class NotificationServices{
   final ApiService api = ApiService();
-
+// Fetch notification counter for the logged-in user
   Future<NotificationCounterModel?> counterNotification() async {
     try {
       Map<String, dynamic>? body = {
@@ -44,6 +44,7 @@ class NotificationServices{
       return null;
     }
   }
+  // Fetch all notifications for the logged-in user
   Future<List<NotificationModel>?> listAllNotification() async {
     try {
       Map<String, dynamic>? body = {
@@ -159,7 +160,7 @@ class PushNotificationService {
       }
     });
   }
-
+// إعداد خيارات عرض الإشعارات في iOS
   Future<void> enableIOSNotifications() async {
     await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
       alert: true,
@@ -167,13 +168,13 @@ class PushNotificationService {
       sound: true,
     );
   }
-
+// التعامل مع الرسائل الواردة من الإشعارات وتخزين نوع الشاشة المستهدفة في SharedPreferences
   Future<void> _handleMessage(RemoteMessage message) async {
     final type = message.data["page"];
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("route", type);
   }
-
+// تعامل مع اختيار إشعار المستخدم وفتح الشاشة المناسبة بناءً على نوع الشاشة المخزنة في SharedPreferences
   static Future<void> notificationSelectingAction() async {
     String? userType =  Get.find<StorageService>().getUserType;
     String? screenType =  Get.find<StorageService>().getNotificationRoute;
@@ -245,7 +246,7 @@ class PushNotificationService {
   }
 
 
-
+// إنشاء قناة إشعارات خاصة بالتطبيق (Android)
   AndroidNotificationChannel androidNotificationChannel() =>
       const AndroidNotificationChannel(
         'high_importance_channel', // id

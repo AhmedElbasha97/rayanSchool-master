@@ -7,7 +7,7 @@ import '../Utils/services.dart';
 
 class AuthService {
   final ApiService api = ApiService();
-
+// Login method for user authentication
   Future<String> login({String? userName, String? type, String? password}) async {
 
 
@@ -42,6 +42,8 @@ print(response["status"]);
     }
 
   }
+  // Change password method for user password update
+
   Future<String> changePassword({String? oldPass, String? newPass,}) async {
     try {
       final data = await api.request(

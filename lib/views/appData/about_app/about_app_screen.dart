@@ -14,6 +14,7 @@ class AboutAppScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      // AppBar with logo and custom colors
       appBar: AppBar(
         iconTheme: IconThemeData(color: mainColor),
         backgroundColor: const Color(0xFFdcdbdb),
@@ -31,6 +32,7 @@ class AboutAppScreen extends StatelessWidget {
         final word = controller.word.value;
 
         if (word == null) {
+          // Display an error message if data is null
           return Center(
             child: Text(
               Get.find<StorageService>().activeLocale ==
@@ -40,7 +42,7 @@ class AboutAppScreen extends StatelessWidget {
             ),
           );
         }
-
+        // Display the about app data using ListView
         return ListView(
           children: [
             Container(

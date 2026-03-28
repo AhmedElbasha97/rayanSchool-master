@@ -6,7 +6,11 @@ class SchoolPolicyController extends GetxController {
 
   var isLoading = true.obs;
   var policy = Rxn<AboutSchool>();
-
+  @override
+  void onInit() {
+    super.onInit();
+    fetchPolicy();
+  }
   Future<void> fetchPolicy() async {
     try {
       isLoading.value = true;
@@ -18,9 +22,5 @@ class SchoolPolicyController extends GetxController {
     }
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-    fetchPolicy();
-  }
+
 }

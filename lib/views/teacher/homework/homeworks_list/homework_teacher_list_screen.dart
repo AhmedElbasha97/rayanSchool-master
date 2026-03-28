@@ -16,7 +16,7 @@ class HomeworkTeacherListScreen extends StatelessWidget {
   HomeworkTeacherListScreen({Key? key}) : super(key: key);
 
   final controller = Get.put(HomeworkTeacherListController(), permanent: false);
-
+// Format date and time based on current day
   String returnDateAndTime(HomeworkTeacherListModel chat) {
     final format = DateFormat('HH:mm a');
     final formatDate = DateFormat('MMM dd');
@@ -31,6 +31,7 @@ class HomeworkTeacherListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // AppBar with localized title and back button
       appBar: AppBar(
         iconTheme: IconThemeData(color: mainColor),
         backgroundColor: const Color(0xFFdcdbdb),
@@ -49,10 +50,11 @@ class HomeworkTeacherListScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: Obx(() {
+          // Display a loading indicator while data is being fetched
           if (controller.isLoading.value) {
             return const Loader();
           }
-
+// Display an error message if data is empty
           if (controller.homeworkList.isEmpty) {
             return Column(
               children: [
@@ -72,7 +74,7 @@ class HomeworkTeacherListScreen extends StatelessWidget {
               ],
             );
           }
-
+          // Display the homework list using ListView.builder
           return ListView.builder(
             physics: const BouncingScrollPhysics(),
             itemCount: controller.homeworkList.length,

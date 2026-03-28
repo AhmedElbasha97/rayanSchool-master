@@ -15,7 +15,7 @@ import '../models/school_social_media_link_model.dart';
 class AppInfoService {
 
   final ApiService api = ApiService();
-
+  // Fetch slider photos with enhanced error handling and logging
   Future<List<SliderData>> getSliderPhotos() async {
     try {
       final data = await api.request(Services.sliderLink,"GET");
@@ -34,7 +34,7 @@ class AppInfoService {
     }
 
   }
-
+// Fetch about school information with enhanced error handling and logging
   Future<AboutSchool?> getAboutSchool() async {
     try {
       final data = await api.request(Services.aboutSchool,"GET",);
@@ -51,6 +51,7 @@ class AppInfoService {
     }
 
   }
+  // Fetch school policy information with enhanced error handling and logging
   Future<AboutSchool?> getSchoolPolicy() async {
     try {
       final data = await api.request(Services.schoolPolicyUrl,"GET",);
@@ -67,7 +68,7 @@ class AppInfoService {
     }
 
   }
-
+// Fetch school word information with enhanced error handling and logging
   Future<AboutSchool?> getSchoolWord() async {
     try {
       final data = await api.request(Services.schoolWord,"GET",);
@@ -84,7 +85,7 @@ class AppInfoService {
     }
 
   }
-
+// Fetch about app information with enhanced error handling and logging
   Future<AboutSchool?> getaboutApp() async {
     try {
       final data = await api.request(Services.aboutApp,"GET",);
@@ -101,7 +102,7 @@ class AppInfoService {
     }
 
   }
-
+// Fetch privacy policy information with enhanced error handling and logging
   Future<AboutSchool?> getPrivacyPolicy() async {
     try {
       final data = await api.request(Services.privacyPolicy,"GET",);
@@ -117,6 +118,7 @@ class AppInfoService {
       return null;
     }
   }
+  // Fetch school social media link information with enhanced error handling and logging
   Future<SchoolSocialMediaLinkModel?> getSchoolSocialMediaLink() async {
     try {
       final data = await api.request(Services.schoolSocialMediaLink,"GET",);

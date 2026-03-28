@@ -12,8 +12,8 @@ import '../models/message_title_list_model.dart';
 
 class MessagesService {
   final ApiService api = ApiService();
-
-
+// Fetch student messages with enhanced error handling and logging
+  //but this call is not used in the app
   Future<List<Messages>> getMessages({String? id}) async {
     try {
       final data = await api.request(Services.messages,"GET",queryParameters: {"student_id":id});
@@ -31,7 +31,8 @@ class MessagesService {
       return [];
     }
   }
-
+// Fetch sent messages for a student with enhanced error handling and logging
+  //but this call is not used in the app
   Future<List<MessageSentStudent>> getSentMessages({String? id}) async {
     try {
       final data = await api.request(Services.sentMessages,"GET",queryParameters: {"student_id":id});
@@ -50,7 +51,8 @@ class MessagesService {
     }
 
   }
-
+// Fetch message details for a student with enhanced error handling and logging
+  //but this call is not used in the app
   Future<List<MessageDetails>> getMessageDetails(
       {String? id, String? msgId}) async {
     try {
@@ -69,7 +71,8 @@ class MessagesService {
       return [];
     }
   }
-
+// Fetch sent message details for a student with enhanced error handling and logging
+  //but this call is not used in the app
   Future<List<MessageDetailsStudent>> getSentMessageDetails(
       {String? id, String? msgId}) async {
     try {
@@ -89,7 +92,8 @@ class MessagesService {
     }
 
   }
-
+// Send a message from a student with enhanced error handling and logging
+  //but this call is not used in the app
   Future<String> sendMessage(
       {String? id,
       String? teacherId,
@@ -114,7 +118,8 @@ class MessagesService {
     }
 
   }
-
+// Fetch teacher list for a student with enhanced error handling and logging
+  //but this call is not used in the app
   Future<List<Teachers>> getTeacher() async {
     try {
 
@@ -137,6 +142,7 @@ class MessagesService {
 
 
   }
+// Fetch message titles for a student with enhanced error handling and logging
   Future<List<MessageTitleModel>> getMessageTitles() async {
     try {
       final data = await api.request(Services.messageTitleList,"GET");

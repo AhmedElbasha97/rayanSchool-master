@@ -56,12 +56,13 @@ class LoginController extends GetxController {
       );
     }
   }
-
+// Toggle password visibility
   void togglePasswordVisibility() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       isPasswordVisible.value = !isPasswordVisible.value;
     });
   }
+  // Update name state
   void onNameUpdate(String? value) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (value == "") {
@@ -71,7 +72,7 @@ class LoginController extends GetxController {
     print("hi from update");
 
   }
-
+  // Validate name and update state
   String? validateName(String? name) {
     print("hi from validate");
     var validateName = _validatorHelber.validateName(name);
@@ -88,6 +89,7 @@ class LoginController extends GetxController {
 
     return validateName;
   }
+  // Update password state
   void onPasswordUpdate(String? value) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (value == "") {
@@ -98,6 +100,7 @@ class LoginController extends GetxController {
 
   }
 
+  // Validate password and update state
   String? validatePassword(String? password) {
     print("hi from validate");
     var validatePassword = _validatorHelber.validateName(password);
@@ -114,7 +117,7 @@ class LoginController extends GetxController {
 
     return validatePassword;
   }
-
+  // Update account type based on dropdown selection
   void updateAccountType(String? value) {
     selectedType.value = value??"";
     accountType.value = value == "ولي امر"
@@ -123,7 +126,7 @@ class LoginController extends GetxController {
         ? "TEACHER"
         : "STUDENT";
   }
-
+  // Show alert dialog if account type is not selected
   void _showAlert(BuildContext context) {
     showDialog(
       context: context,
@@ -139,6 +142,7 @@ class LoginController extends GetxController {
       ),
     );
   }
+  // Handle send button press, validate form and login
   Future<void> sendPressed(context) async {
     formValidated = formKey.currentState!.validate();
     FocusScope.of(context).unfocus();

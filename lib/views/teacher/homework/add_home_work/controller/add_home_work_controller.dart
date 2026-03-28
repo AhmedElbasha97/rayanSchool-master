@@ -44,7 +44,8 @@ class AddHomeworkController extends GetxController {
     super.onInit();
     fetchCategories();
   }
-  void onNameUpdate(String? value) {
+  // Update the homework title state based on the input value, ensuring that the UI reflects whether the homework title field is empty or not
+  void onHomeWorkUpdate(String? value) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (value == "") {
         nameState.value = false;
@@ -70,7 +71,7 @@ class AddHomeworkController extends GetxController {
 
     return validateName;
   }
-
+// Fetch categories from API and update the categories list and loading state accordingly
   Future<void> fetchCategories() async {
     catLoading.value = true;
     final list = await TeacherService().getCategories();
@@ -118,7 +119,7 @@ class AddHomeworkController extends GetxController {
       selectedFileName.value = img.name;
     }
   }
-
+/// Format the file size of the selected file into a human-readable string (e.g., "2.5 MB")
   String formatFileSize() {
     final file = selectedFile.value;
     if (file == null) return '';
@@ -131,6 +132,7 @@ class AddHomeworkController extends GetxController {
     final gb = mb / 1024;
     return '${gb.toStringAsFixed(2)} GB';
   }
+  /// Validate the form and if valid, call the submit function to send the homework data to the server. It also unfocuses any focused input fields to improve user experience.
   Future<String> sendPressed(context) async {
     formValidated = formKey.currentState!.validate();
     FocusScope.of(context).unfocus();

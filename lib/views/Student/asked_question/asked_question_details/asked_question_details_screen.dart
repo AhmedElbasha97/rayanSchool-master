@@ -20,6 +20,7 @@ class AskedQuestionsDetailsScreen extends StatelessWidget {
     Get.put(AskedQuestionDetailsController(id), permanent: false);
 
     return Scaffold(
+      // AppBar with logo and custom colors
       appBar: AppBar(
         iconTheme: IconThemeData(color: mainColor),
         backgroundColor: const Color(0xFFdcdbdb),
@@ -30,10 +31,11 @@ class AskedQuestionsDetailsScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: Obx(() {
+        // Display a loading indicator while data is being fetched
         if (controller.isLoading.value) {
           return Loader();
         }
-
+        // Display an empty state if there are no details available
         if (controller.details.isEmpty) {
           return Center(
             child: Text(
@@ -48,6 +50,7 @@ class AskedQuestionsDetailsScreen extends StatelessWidget {
             ),
           );
         }
+        // Display the asked question details using ListView.builder
 
         return ListView.builder(
           itemCount: controller.details.length,

@@ -51,7 +51,7 @@ class ContactUsController extends GetxController {
     print("hi from update");
 
   }
-
+// validate name and update the validation state accordingly
   String? validateName(String? name) {
     print("hi from validate");
     var validateName = _validatorHelber.validateName(name);

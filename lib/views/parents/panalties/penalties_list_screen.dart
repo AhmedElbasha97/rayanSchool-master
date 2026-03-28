@@ -14,6 +14,7 @@ class PenaltiesListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // AppBar with logo and custom colors
       appBar: AppBar(
         iconTheme: IconThemeData(color: mainColor),
         backgroundColor: const Color(0xFFdcdbdb),
@@ -31,12 +32,13 @@ class PenaltiesListScreen extends StatelessWidget {
         ),
       ),
       body: Obx(() {
+        // Display a loading indicator while data is being fetched
         if (controller.isLoading.value) {
           return Loader(
             height: Get.height * 0.75,
           );
         }
-
+// Display an error message if data is empty
         if (controller.penaltiesList.isEmpty) {
           return Container(
             height: Get.height * 0.75,
@@ -62,7 +64,7 @@ class PenaltiesListScreen extends StatelessWidget {
             ),
           );
         }
-
+// Display the penalties list using ListView.builder
         return ListView.builder(
           physics: const BouncingScrollPhysics(),
           itemCount: controller.penaltiesList.length,

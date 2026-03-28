@@ -12,6 +12,7 @@ class MyAccount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // AppBar with logo and custom colors
       appBar: AppBar(
 
         iconTheme: new IconThemeData(color: mainColor),
@@ -26,6 +27,7 @@ class MyAccount extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: ListView(
           children: [
+            // ListTile for Homework with navigation to HomeWorkScreen
             ListTile(
               onTap: () {
                 Get.to(HomeWorkScreen(),transition: Transition.rightToLeft,preventDuplicates: true);
@@ -36,9 +38,7 @@ class MyAccount extends StatelessWidget {
               trailing: Icon(Icons.book),
             ),
             Divider(),
-
-
-
+            // ListTile for Books with navigation to BooksScreen
             ListTile(
               onTap: () {
                 Get.to(BooksScreen(),transition: Transition.rightToLeft,preventDuplicates: true);
@@ -49,6 +49,7 @@ class MyAccount extends StatelessWidget {
               trailing: Icon(Icons.book),
             ),
             Divider(),
+            // ListTile for Schedule with navigation to WebViewContainer showing the schedule page
             ListTile(
                 onTap: () async {
                   Get.to(WebViewContainer("https://alrayyanprivateschools.com/student_table_design.php?student_id=${Get

@@ -8,9 +8,9 @@ class ValidatorHelper {
   ValidatorHelper._privateConstructor();
 
   static final ValidatorHelper instance = ValidatorHelper._privateConstructor();
-
+// Validate name field using the validateEmptyField method
   String? validateName(String? name) => validateEmptyField(name);
-
+// Validate email field using the validateEmail method
   String? validateEmail(String? email) {
     if (email != null) {
       if (email.isNotEmpty) {
@@ -27,7 +27,7 @@ class ValidatorHelper {
     return null;
   }
 
-
+// Validate phone number field using the validatePhoneNumberField method
   String? validateEmptyField(String? firName) {
     if (firName == null) {
       return requiredFiled.tr;
@@ -37,7 +37,7 @@ class ValidatorHelper {
       return null;
     }
   }
-
+// Validate phone number field using the validatePhoneNumberField method
   String? validatePhoneNumberField(String? phone) {
     final notValid = phone!.isAlphabetOnly;
     if (phone == null) {
@@ -52,7 +52,7 @@ class ValidatorHelper {
   }
 
 
-
+// Validate password field using the validatePassword method
   String? validatePassword(String? password) {
     if (password != null) {
       if (password.isNotEmpty) {
@@ -69,20 +69,21 @@ class ValidatorHelper {
     return null;
   }
 
-
+// Helper method to check if the password is not valid based on the defined criteria
 
   bool isPasswordNotValid(String password) {
     return !RegExp(
             r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$')
         .hasMatch(password);
   }
-
+// Helper method to check if the email is not valid based on the defined regex pattern
   bool isEmailNotValid(String email) {
     return !RegExp(
             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
         .hasMatch(email);
   }
-  bool isPhoneNotValid(String email) {
+// Helper method to check if the phone number is not valid based on the defined regex pattern
+  bool isPhoneNotValid(String phone) {
     return !RegExp(
         r'(^(?:[+0]9)?[0-9]{8}$)')
         .hasMatch(email);

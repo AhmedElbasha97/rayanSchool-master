@@ -14,6 +14,7 @@ class FilesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // AppBar with logo and custom colors
       appBar: AppBar(
         iconTheme: IconThemeData(color: mainColor),
         backgroundColor: Color(0xFFdcdbdb),
@@ -21,10 +22,12 @@ class FilesScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: Obx(() {
+        // Display a loading indicator while data is being fetched
         if (controller.isLoading.value) {
           return Loader();
         }
 
+        // Display an error message if data is empty
         if (controller.files?.isEmpty??true) {
           return Container(
             height: Get.height * 0.75,
@@ -50,6 +53,7 @@ class FilesScreen extends StatelessWidget {
             ),
           );
         }
+        // Display the file list using ListView.builder
 
         return ListView.builder(
           itemCount: controller.files?.length,

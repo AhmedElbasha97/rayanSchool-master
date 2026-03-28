@@ -60,6 +60,7 @@ class SchoolPoliciesDetailsScreen extends StatelessWidget {
     controller.fetchDetails(id ?? "");
 
     return Scaffold(
+      // AppBar with logo and custom colors
       appBar: AppBar(
         iconTheme: IconThemeData(color: mainColor),
         backgroundColor: const Color(0xFFdcdbdb),
@@ -70,9 +71,11 @@ class SchoolPoliciesDetailsScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: Obx(() {
+        // Display a loading indicator while data is being fetched
         if (controller.isLoading.value) {
           return Loader();
         }
+        // Display an empty state if there are no details available
         if (controller.details.isEmpty) {
           return Center(
             child: Text(
@@ -87,6 +90,7 @@ class SchoolPoliciesDetailsScreen extends StatelessWidget {
             ),
           );
         }
+        // Display the policies details using ListView.builder
         return ListView.builder(
           itemCount: controller.details.length,
           padding: const EdgeInsets.all(10),

@@ -15,6 +15,7 @@ import '../../appData/school_policies/school_policy_screen.dart';
 import '../../auth/login/login_screen.dart';
 import 'controller/home_for_guest_controller.dart';
 
+//this screen shown when the user is not logged in and want to see the home screen so this controller will check if there is any notification for the user and navigate to the appropriate screen based on the notification type and user type and also fetch the school social media link data to show it on the home screen
 
 class HomeForGuestScreen extends StatelessWidget {
   final HomeForGuestController controller = Get.put(HomeForGuestController(), permanent: false);
@@ -23,6 +24,7 @@ class HomeForGuestScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Scaffold(
+      // AppBar with logo and custom colors
       appBar: AppBar(
 
         iconTheme: new IconThemeData(color: mainColor),
@@ -36,10 +38,11 @@ class HomeForGuestScreen extends StatelessWidget {
       drawer: AppDrawer(),
       body: SafeArea(
         child: Obx(() {
+          // Display a loading indicator while data is being fetched
           if (controller.isLoading.value) {
             return Loader();
           }
-
+// Display the home screen content when data is loaded
           return Container(
             width: MediaQuery.of(context).size.width,
             decoration: const BoxDecoration(
@@ -54,6 +57,7 @@ class HomeForGuestScreen extends StatelessWidget {
                 Image.asset("assets/images/logoname.png",
                     height: MediaQuery.of(context).size.height * 0.1,
                     width: MediaQuery.of(context).size.width * 0.7),
+                // Login Button
                 _buildButton(
                   context,
                   Get.find<StorageService>().activeLocale ==
@@ -62,6 +66,7 @@ class HomeForGuestScreen extends StatelessWidget {
                       () => Get.to(() => LoginScreen()),
                   icon: "assets/images/signInicons.png",
                 ),
+                // Admin Login Button for web view
                 _buildButton(
                   context,
                   Get.find<StorageService>().activeLocale ==
@@ -71,6 +76,7 @@ class HomeForGuestScreen extends StatelessWidget {
                       "https://alrayyanprivateschools.com/supervisor")),
                   icon: "assets/images/signInicons.png",
                 ),
+                // Submit an application for admission Button for web view
                 _buildButton(
                   context,
                     Get.find<StorageService>().activeLocale ==
@@ -80,6 +86,7 @@ class HomeForGuestScreen extends StatelessWidget {
                       "https://alrayyanprivateschools.com/application.php")),
                   icon: "assets/images/2icons.png",
                 ),
+                // School policies Button for school policies screen
                 _buildButton(
                   context,
                     Get.find<StorageService>().activeLocale ==
@@ -88,6 +95,7 @@ class HomeForGuestScreen extends StatelessWidget {
                       () => Get.to(() => SchoolPolicyScreen()),
                   icon: "assets/images/3icons.png",
                 ),
+                // News Button for news screen
                 _buildButton(
                   context,
                     Get.find<StorageService>().activeLocale ==
@@ -96,6 +104,7 @@ class HomeForGuestScreen extends StatelessWidget {
                       () => Get.to(() => NewsScreen()),
                   icon: "assets/images/newspaper.png",
                 ),
+                // Social Media Icons Row
                 controller.isLoading.value?SizedBox(): Row( mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Padding(padding: EdgeInsets.symmetric(horizontal: 1)),

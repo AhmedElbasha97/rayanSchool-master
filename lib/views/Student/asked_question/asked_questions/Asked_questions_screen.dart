@@ -19,6 +19,7 @@ class AskedQuestions extends StatelessWidget {
 
 
     return Scaffold(
+      // AppBar with logo and custom colors
       appBar: AppBar(
         iconTheme: IconThemeData(color: mainColor),
         backgroundColor: const Color(0xFFdcdbdb),
@@ -29,10 +30,11 @@ class AskedQuestions extends StatelessWidget {
         centerTitle: true,
       ),
       body: Obx(() {
+        // Display a loading indicator while data is being fetched
         if (controller.isLoading.value) {
           return Loader();
         }
-
+        // Display an empty state if there are no questions available
         if (controller.questions?.isEmpty??true) {
           return Container(
             height: Get.height * 0.75,
@@ -58,7 +60,7 @@ class AskedQuestions extends StatelessWidget {
             ),
           );
         }
-
+        // Display the asked questions using ListView.builder
         return ListView.separated(
           itemCount: controller.questions?.length??0,
           itemBuilder: (BuildContext context, int index) {

@@ -12,7 +12,10 @@ import '../../../../Utils/memory.dart';
 import '../../../../globals/commonStyles.dart';
 import 'controller/question_details_controller.dart';
 
+// This screen displays details of a specific question for logged-in users. It uses the GetX package for state management and localization services to support multiple languages. The screen includes an AppBar with a logo and custom colors, and it handles loading states and empty data scenarios gracefully.
+//but the school asked to remove this screen from the app so i just hide it and keep the code for future use if they want to add it again
 class QuestionDetailsScreen extends StatelessWidget {
+
   final String? id;
   QuestionDetailsScreen({this.id});
 
@@ -21,6 +24,7 @@ class QuestionDetailsScreen extends StatelessWidget {
     final controller = Get.put(QuestionDetailsController(id ?? ""));
 
     return Scaffold(
+      // AppBar with logo and custom colors
       appBar: AppBar(
         iconTheme: IconThemeData(color: mainColor),
         backgroundColor: Color(0xFFdcdbdb),
@@ -28,9 +32,11 @@ class QuestionDetailsScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: Obx(() {
+        // Display a loading indicator while data is being fetched
         if (controller.isLoading.value) {
           return Loader();
         }
+        // Display an empty state if there are no questions available
         if (controller.questions.isEmpty) {
           return Container(
             height: Get.height * 0.75,
@@ -55,6 +61,7 @@ class QuestionDetailsScreen extends StatelessWidget {
             ),
           );
         }
+        // Display the questions list using ListView.builder
         return ListView.builder(
           itemCount: controller.questions.length,
           padding: const EdgeInsets.all(10),

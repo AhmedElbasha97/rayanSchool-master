@@ -23,6 +23,7 @@ class SentMessagesDetailScreen extends StatelessWidget {
       SentMessagesDetailsController(id), permanent: false
   );
     return Scaffold(
+      // AppBar with logo and custom colors
       appBar: AppBar(
 
         iconTheme: new IconThemeData(color: mainColor),
@@ -35,10 +36,12 @@ class SentMessagesDetailScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: Obx(() {
+          // Display a loading indicator while data is being fetched
           if (controller.isLoading.value) {
             return Loader();
           }
 
+          // Display an error message if data is empty
           if (controller.sentMessagesList.isEmpty) {
             return Column(
               children: [
@@ -70,7 +73,7 @@ class SentMessagesDetailScreen extends StatelessWidget {
               ],
             );
           }
-
+          // Display the list of messages using ListView.builder
           return Column(
             children: [
               Expanded(

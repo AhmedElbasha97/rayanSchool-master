@@ -9,13 +9,12 @@ class ActivityDetailedController extends GetxController {
 
   var activityDetails = Rxn<ActivitiesDetailedModel>();
   var loading = true.obs;
-
   @override
   void onInit() {
     super.onInit();
     fetchActivityDetails();
   }
-
+//fetch activity details based on the provided activity ID and update the loading state accordingly
   Future<void> fetchActivityDetails() async {
     try {
       loading.value = true;

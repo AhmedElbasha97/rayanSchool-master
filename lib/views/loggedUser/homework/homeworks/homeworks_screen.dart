@@ -14,6 +14,7 @@ class HomeWorkScreen extends StatelessWidget {
     final controller = Get.put(HomeWorkController(), permanent: false);
 
     return Scaffold(
+      // AppBar with logo and custom colors
       appBar: AppBar(
         iconTheme: IconThemeData(color: mainColor),
         backgroundColor: Color(0xFFdcdbdb),
@@ -21,10 +22,11 @@ class HomeWorkScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: Obx(() {
+        // Display a loading indicator while data is being fetched
         if (controller.isLoading.value) {
           return Loader();
         }
-
+// Display an empty state if there are no homework items available
         final list = controller.homeworks;
         if (list.isEmpty) {
           return Container(
@@ -51,7 +53,7 @@ class HomeWorkScreen extends StatelessWidget {
             ),
           );
         }
-
+// Display the homework list using ListView.builder
         return ListView.builder(
           padding: const EdgeInsets.all(10),
           itemCount: list.length,

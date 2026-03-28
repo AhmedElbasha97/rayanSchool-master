@@ -5,6 +5,7 @@ import 'package:rayanSchool/services/loggedUser.dart';
 import '../../../../../Utils/memory.dart';
 
 class AskedQuestionDetailsController extends GetxController {
+  // Observables
   var isLoading = true.obs;
   var details = <AskedQuestionDetails>[].obs;
   final String? qId;

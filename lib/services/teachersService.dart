@@ -26,7 +26,9 @@ import '../models/teacher/homework_teacher_list_model.dart';
 class TeacherService {
   final ApiService api = ApiService();
 
-
+/// Fetch teacher reports, optionally filtered by teacher ID
+  /// [teacherId] - Optional ID to filter reports by specific teacher
+  /// but this call is not used in the app
   Future<List<TeacherReport>?> getReports({String? id}) async {
     try {
       final data = await api.request(Services.teacherReports,"GET",queryParameters: {

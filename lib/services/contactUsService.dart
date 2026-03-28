@@ -5,7 +5,7 @@ import '../Utils/services.dart';
 class ContactUsService {
 
   final ApiService api = ApiService();
-
+//  Send complain to the server with the provided details
   sendComplain(String name, String message, String email, String subject,
       String mobile) async {
     try {
@@ -27,7 +27,8 @@ class ContactUsService {
   }
 
 
-
+//  Send contact us message to the server with the provided details
+  //but this call is not used in the app
   contactUs(String name, String message, String email, String subject,
       String mobile) async {
     try {

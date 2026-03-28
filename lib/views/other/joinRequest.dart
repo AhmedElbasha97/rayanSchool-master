@@ -8,7 +8,8 @@ import 'package:rayanSchool/views/home/home_for_guests/home_for_guest_screen.dar
 import '../../Utils/memory.dart';
 import '../../globals/commonStyles.dart';
 import '../home/home_for_user/home_for_user_screen.dart';
-
+// this screen asked to be removed by the school but we made it just in case they changed their mind in the future and they want to allow the user to submit a join request to the school by himself without the need to contact the school and ask them to submit the request for him and instead of it we use web view container for this form but if they want to add it again in the future we can just use this screen and make it available for the user to submit the join request by himself without the need to contact the school and ask them to submit the request for him
+// This screen allows users to submit a join request to the school. It collects various details from the user and sends them to the server using the JoinApplicationService. The screen also handles loading state and displays appropriate messages based on the success or failure of the request.
 class JoinRequest extends StatefulWidget {
   @override
   _JoinRequestState createState() => _JoinRequestState();

@@ -18,6 +18,7 @@ class ContactUsScreen extends StatelessWidget {
     return GestureDetector(
       onTap: controller.unFocus,
       child: Scaffold(
+        // AppBar with logo and custom colors
         appBar: AppBar(
           iconTheme: IconThemeData(color: mainColor),
           backgroundColor: const Color(0xFFdcdbdb),
@@ -32,6 +33,7 @@ class ContactUsScreen extends StatelessWidget {
             absorbing: controller.isLoading.value,
             child: Form(
               key: controller.formKey,
+              // ListView to allow scrolling when the keyboard is open
               child: ListView(
                 padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
                 children: <Widget>[

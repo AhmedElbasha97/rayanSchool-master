@@ -14,21 +14,22 @@ import 'package:rayanSchool/services/teachersService.dart';
 import '../../../../../Utils/memory.dart';
 
 class HomeWorkDetailsController extends GetxController {
+
   final String homeWorkId;
   HomeWorkDetailsController(this.homeWorkId);
-
+  // Observables
   var isLoading = true.obs;
   var isDownloading = false.obs;
   var isFileDownloaded = false.obs;
   var homeworks = <HomeWorkDetails>[].obs;
   String? lastSavedFilePath;
-
+  // Initialize data fetching when the controller is created
   @override
   void onInit() {
     super.onInit();
     fetchData();
   }
-
+// Fetch data based on user type and update the loading state accordingly
   Future<void> fetchData() async {
     isLoading.value = true;
 
@@ -42,7 +43,7 @@ class HomeWorkDetailsController extends GetxController {
     await checkIfFileExists();
     isLoading.value = false;
   }
-
+// Check if the file exists at the last saved path and update the observable accordingly
   Future<void> checkIfFileExists() async {
     if (lastSavedFilePath == null) {
       isFileDownloaded.value = false;
@@ -50,7 +51,7 @@ class HomeWorkDetailsController extends GetxController {
     }
     isFileDownloaded.value = await File(lastSavedFilePath!).exists();
   }
-
+// Save the file and update the observable accordingly
   Future<bool> saveFile(context) async {
     if (homeworks.isEmpty) return false;
     final fileUrl = homeworks.first.homeworkFile;
@@ -94,13 +95,13 @@ class HomeWorkDetailsController extends GetxController {
 
     return false;
   }
-
+// Open the downloaded file if it exists
   Future<void> openDownloadedFile() async {
     if (lastSavedFilePath != null) {
       await OpenFile.open(lastSavedFilePath!);
     }
   }
-
+// Request permissions for saving files based on the platform and update the observable accordingly
   Future<bool> hasAcceptedPermissions() async {
     if (Platform.isAndroid) {
       final sdkInt = (await DeviceInfoPlugin().androidInfo).version.sdkInt;
@@ -111,7 +112,7 @@ class HomeWorkDetailsController extends GetxController {
     if (Platform.isIOS) return _requestPermission(Permission.photos);
     return false;
   }
-
+  // Helper method to request a specific permission and return whether it was granted
   Future<bool> _requestPermission(Permission p) async {
     if (await p.isGranted) return true;
     return (await p.request()) == PermissionStatus.granted;

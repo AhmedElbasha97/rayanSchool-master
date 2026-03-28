@@ -20,6 +20,7 @@ class FileDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final FileDetailsController controller = Get.put(FileDetailsController(id), permanent: false);
     return Scaffold(
+      // AppBar with logo and custom colors
       appBar: AppBar(
         iconTheme: IconThemeData(color: mainColor),
         backgroundColor: Color(0xFFdcdbdb),
@@ -27,10 +28,12 @@ class FileDetailsScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: Obx(() {
+        // Display a loading indicator while data is being fetched
         if (controller.isLoading.value) {
           return Loader();
         }
 
+        // Display an error message if data is empty
         if (controller.files.isEmpty) {
           return Container(
             height: Get.height * 0.75,
@@ -55,7 +58,7 @@ class FileDetailsScreen extends StatelessWidget {
             ),
           );
         }
-
+        // Display the file details using ListView.builder
         return ListView.builder(
           itemCount: controller.files.length,
           padding: EdgeInsets.all(10),

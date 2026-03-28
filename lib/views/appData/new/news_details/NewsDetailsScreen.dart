@@ -25,6 +25,7 @@ class NewsDetailsScreen extends StatelessWidget {
     final controller = Get.put(NewsDetailsController(id ?? ""), permanent: false);
 
     return Scaffold(
+      // AppBar with logo and custom colors
       appBar: AppBar(
         iconTheme: IconThemeData(color: mainColor),
         backgroundColor: const Color(0xFFdcdbdb),
@@ -35,9 +36,11 @@ class NewsDetailsScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: Obx(
+        // Display a loading indicator while data is being fetched
             () => controller.isLoading.value
             ? Loader()
             : controller.newsDetails.isEmpty
+            // Display an empty state if there are no news details available
             ? Center(
           child: Text(
             Get.find<StorageService>().activeLocale ==
@@ -47,6 +50,7 @@ class NewsDetailsScreen extends StatelessWidget {
             style: const TextStyle(fontSize: 16),
           ),
         )
+            // Display the news details using ListView.builder
             : ListView.builder(
           padding: const EdgeInsets.all(10),
           itemCount: controller.newsDetails.length,

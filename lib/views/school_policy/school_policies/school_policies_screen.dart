@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rayanSchool/Widgets/loader.dart';
 import '../../../Utils/localization_services.dart';
 import '../../../Utils/memory.dart';
 import '../../../globals/commonStyles.dart';
@@ -17,6 +18,7 @@ class SchoolPoliciesScreen extends StatelessWidget {
     controller.fetchPolicies();
 
     return Scaffold(
+      // AppBar with logo and custom colors
       appBar: AppBar(
 
         iconTheme: new IconThemeData(color: mainColor),
@@ -28,12 +30,11 @@ class SchoolPoliciesScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: Obx(() {
+        // Display a loading indicator while data is being fetched
         if (controller.isLoading.value) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return Loader(height: Get.height * 0.75);
         }
-
+        // Display an empty state if there are no policies available
         if (controller.subjects.isEmpty) {
           return Container(
             height: Get.height * 0.75,
@@ -59,7 +60,7 @@ class SchoolPoliciesScreen extends StatelessWidget {
             ),
           );
         }
-
+// Display the policies list using ListView.separated
         return ListView.separated(
           itemCount: controller.subjects.length,
           padding: const EdgeInsets.all(10),

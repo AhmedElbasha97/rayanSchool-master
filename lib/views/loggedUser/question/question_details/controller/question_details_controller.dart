@@ -10,7 +10,11 @@ class QuestionDetailsController extends GetxController {
 
   var isLoading = true.obs;
   var questions = <QuestionDetails>[].obs;
-
+  @override
+  void onInit() {
+    super.onInit();
+    fetchDetails();
+  }
   Future<void> fetchDetails() async {
     isLoading.value = true;
 
@@ -19,9 +23,5 @@ class QuestionDetailsController extends GetxController {
     isLoading.value = false;
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-    fetchDetails();
-  }
+
 }

@@ -15,6 +15,7 @@ class MyAccountTeacher extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // AppBar with logo and custom colors
       appBar: AppBar(
 
         iconTheme: new IconThemeData(color: mainColor),
@@ -29,7 +30,7 @@ class MyAccountTeacher extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: ListView(
           children: [
-
+            // ListTile for Reports with navigation to WebViewContainer showing the reports page
             ListTile(
               onTap: () {
                 Get.to(()=>WebViewContainer("https://alrayyanprivateschools.com/teacher/login.php?teacher_id=${Get
@@ -43,6 +44,7 @@ class MyAccountTeacher extends StatelessWidget {
             ),
 
             Divider(),
+            // ListTile for Schedule with navigation to WebViewContainer showing the schedule page
             ListTile(
                 onTap: () async {
                   Get.to(()=>WebViewContainer("https://alrayyanprivateschools.com/teacher_table_design.php?teacher_id=${Get
@@ -55,6 +57,7 @@ class MyAccountTeacher extends StatelessWidget {
                 trailing: Icon(Icons.timer)),
 
             Divider(),
+            // ListTile for Homework with navigation to HomeworkTeacherListScreen
             ListTile(
               onTap: () {
                 Get.to(()=>HomeworkTeacherListScreen(),transition: Transition.rightToLeft,preventDuplicates: true);
@@ -65,6 +68,7 @@ class MyAccountTeacher extends StatelessWidget {
               trailing: Icon(Icons.message),
             ),
             Divider(),
+            // ListTile for Add Homework with navigation to AddHomeWorkScreen
             ListTile(
               onTap: () {
                 Get.to(()=>AddHomeWorkScreen(),transition: Transition.rightToLeft,preventDuplicates: true);

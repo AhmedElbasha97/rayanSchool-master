@@ -5,7 +5,9 @@ import '../Utils/services.dart';
 
 class TeacherScheduleService {
   final ApiService api = ApiService();
-
+/// Fetch teacher schedule, optionally filtered by teacher ID
+  /// [teacherId] - Optional ID to filter schedule by specific teacher
+  /// but this call is not used in the app
   Future<List<Schedule>> getSchedule({String? id}) async {
     try {
       final data = await api.request(Services.schedule,"GET",queryParameters: {

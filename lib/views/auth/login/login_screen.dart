@@ -16,6 +16,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+        // AppBar with logo and custom colors
         appBar: AppBar(
 
           iconTheme: new IconThemeData(color: mainColor),
@@ -28,6 +29,7 @@ class LoginScreen extends StatelessWidget {
         ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
+        // Form to handle user input and validation
         child: Form(
           key: controller.formKey,
           child: Column(
@@ -119,7 +121,7 @@ class LoginScreen extends StatelessWidget {
 
               const SizedBox(height: 20),
 
-              // Dropdown
+              // Dropdown for user type selection
               Obx(() => Container(
                 width: 220,
                 height: 50,

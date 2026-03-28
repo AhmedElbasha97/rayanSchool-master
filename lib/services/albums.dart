@@ -28,7 +28,7 @@ class AlbumsService {
       return [];
     }
   }
-
+// Fetch video albums with enhanced error handling and logging
   Future<List<Videos>?> getVideoAlbums() async {
     try {
       final data = await api.request(Services.videoAlbums,"GET");
@@ -47,7 +47,7 @@ class AlbumsService {
     }
 
   }
-
+// Fetch photos for a specific album with enhanced error handling and logging
   Future<List<Photo>> getphotoAlbum(String id) async {  try {
     final data = await api.request(Services.photoAlbums,"GET",queryParameters: {
       "gid":id
@@ -67,7 +67,7 @@ class AlbumsService {
   }
 
   }
-
+// Fetch videos for a specific album with enhanced error handling and logging
   Future<List<Videos>> getVideoAlbum(String id) async {
 
     try {

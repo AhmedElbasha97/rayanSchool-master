@@ -14,7 +14,7 @@ class MyAccountParentController extends GetxController {
     super.onInit();
     fetchChildData();
   }
-
+//fetch children data and set the selected child based on stored user ID
   Future<void> fetchChildData() async {
     try {
       isLoading.value = true;
@@ -36,7 +36,7 @@ class MyAccountParentController extends GetxController {
       }
     }
   }
-
+//change the selected child and update the stored user ID accordingly this bec the parent id is for only getting children but every thing else work with the children id
   Future<void> selectChild(ChildModel child) async {
     chosenChild.value = child.name ?? "";
 

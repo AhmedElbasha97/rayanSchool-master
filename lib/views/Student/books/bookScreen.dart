@@ -25,10 +25,11 @@ class BooksScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: Obx(() {
+        // Show loader while fetching data
         if (controller.isLoading.value) {
           return Loader();
         }
-
+        // Show empty state if no books are available
         if (controller.books?.isEmpty??true) {
           return Container(
             height: Get.height * 0.75,
@@ -53,7 +54,7 @@ class BooksScreen extends StatelessWidget {
             ),
           );
         }
-
+        // Display the books using ListView.builder
         return ListView.separated(
           itemCount: controller.books?.length??0,
           itemBuilder: (BuildContext context, int index) {

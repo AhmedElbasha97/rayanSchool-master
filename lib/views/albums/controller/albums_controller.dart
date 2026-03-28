@@ -10,7 +10,7 @@ class AlbumsController extends GetxController {
 
   RxList<PhotoAlbum>? list = <PhotoAlbum>[].obs;
   RxList<Videos>? listVideos = <Videos>[].obs;
-
+//fetch albums data based on the type (photo or video) and update the loading and empty state accordingly
   Future<void> getData(bool isImg) async {
     isLoading.value = true;
     isEmptyList.value = false;

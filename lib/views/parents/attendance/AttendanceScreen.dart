@@ -15,6 +15,7 @@ class AttendanceScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final AttendanceController controller = Get.put(AttendanceController(), permanent: false);
     return Scaffold(
+      // AppBar with logo and custom colors
       appBar: AppBar(
         iconTheme: IconThemeData(color: mainColor),
         backgroundColor: const Color(0xFFdcdbdb),
@@ -25,10 +26,11 @@ class AttendanceScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: Obx(() {
+        // Display a loading indicator while data is being fetched
         if (controller.isLoading.value) {
           return Loader();
         }
-
+// Display an error message if data is empty
         if (controller.attendanceList.isEmpty) {
           return Center(
             child: Padding(
@@ -46,7 +48,7 @@ class AttendanceScreen extends StatelessWidget {
             ),
           );
         }
-
+// Display the attendance list using ListView.separated
         return ListView.separated(
           itemCount: controller.attendanceList.length,
           itemBuilder: (context, index) {

@@ -48,15 +48,15 @@ class HomeworkDetailsController extends GetxController {
     }
     return false;
   }
-
+// Request a specific permission and return whether it was granted
   Future<bool> _request(Permission p) async {
     if (await p.isGranted) return true;
     final res = await p.request();
     return res.isGranted;
   }
-
+// Extract the file name from a URL or path
   String fileName(String path) => path.split('/').last;
-
+// Save the homework file to external storage and return the saved file path
   Future<String?> saveFile() async {
     if (!await hasAcceptedPermissions()) return null;
     if (homework.isEmpty || homework.first.homeworkFile == null) return null;

@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import '../../../../../models/sent_message_detials_model.dart';
 import '../../../../../services/ParentsService.dart';
 class SentMessagesDetailsController extends GetxController{
+  // Observables
   var isLoading = true.obs;
   var isSendingMessage = false.obs;
   var sentMessagesList = <SentMessageDetailsModel>[].obs;
@@ -12,6 +13,7 @@ class SentMessagesDetailsController extends GetxController{
   final msgController = TextEditingController();
   late final ExpansibleController standardTileController;
   SentMessagesDetailsController(this.id);
+  // Lifecycle methods
   @override
   void onInit() {
     super.onInit();
@@ -31,6 +33,7 @@ class SentMessagesDetailsController extends GetxController{
     standardTileController.dispose(); // Don't forget to dispose!
     super.dispose();
   }
+  // Data fetching
   Future<void> fetchSentDetailsMessages() async {
     try {
       isLoading.value = true;
@@ -41,7 +44,7 @@ class SentMessagesDetailsController extends GetxController{
       isLoading.value = false;
     }
   }
-
+// Sending reply messages
   Future<void> sentReplyMessages(context) async {
     try {
       isSendingMessage.value = true;
@@ -72,6 +75,8 @@ class SentMessagesDetailsController extends GetxController{
     return htmlRegex.hasMatch(text);
   }
   /// Format penalty date & time
+  /// If the message is from today, it returns the time (e.g., "02:30 PM").
+  /// If the message is from a previous day, it returns the date (e.g., "Mar 15").
   String formatDate(SentMessageDetailsModel? message) {
     if (message == null || message.date == null) return "";
 

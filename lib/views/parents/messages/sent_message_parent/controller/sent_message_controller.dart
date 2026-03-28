@@ -8,6 +8,7 @@ import '../../../../../services/ParentsService.dart';
 import '../../../../../services/messagesService.dart';
 
 class SentMessageParent extends GetxController{
+  // Observables
   var isLoading = false.obs;
   var isLoadingMessageTitles = true.obs;
   var messageTitles = <MessageTitleModel>[].obs;
@@ -25,7 +26,7 @@ class SentMessageParent extends GetxController{
   RxBool nameValidated = false.obs;
   final formKey = GlobalKey<FormState>();
   var selectMessageTitle =  Rxn<MessageTitleModel>();
-
+  // Lifecycle methods
   @override
   void onInit() {
     super.onInit();
@@ -36,19 +37,20 @@ class SentMessageParent extends GetxController{
 
   }
 
-
+// fetch message titles , add selected title to the list and update the loading state accordingly
   Future<void> getMessagesTitle() async {
     isLoadingMessageTitles.value = true;
     var data = await MessagesService().getMessageTitles();
     messageTitles.value = [selectMessageTitle.value!, ...data];
     isLoadingMessageTitles.value = false;
   }
-
-  choosingMessageTitle( MessageTitleModel? chosenMessageTitle){
+// update the selected message title and details when a new title is chosen
+   void choosingMessageTitle( MessageTitleModel? chosenMessageTitle){
     selectMessageTitle.value = chosenMessageTitle;
     selectedMessageDetails.value = chosenMessageTitle;
     update();
   }
+  // send the message if the form is valid, show a snackbar with the result, and navigate back if successful
   Future<void> sendMessage(context) async {
     if (formKey.currentState!.validate()) {
       isLoading.value = true;
@@ -88,10 +90,12 @@ class SentMessageParent extends GetxController{
       sendMessage(context);
     }
   }
+  // Unfocus the title and message input fields
   void unFocus() {
     titleNode.unfocus();
     msgNode.unfocus();
   }
+  // Show an alert dialog with a custom message
   void showAlert(BuildContext context,String msg) {
     showDialog(
       context: context,

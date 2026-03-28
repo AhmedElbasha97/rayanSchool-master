@@ -5,6 +5,7 @@ import 'package:rayanSchool/services/notification.dart';
 import '../../../../Utils/memory.dart';
 
 class NotificationsController extends GetxController {
+  // Observables
   final isLoading = true.obs;
   final  RxList<NotificationModel>? notifications = <NotificationModel>[].obs;
   final type = RxnString();
@@ -14,7 +15,7 @@ class NotificationsController extends GetxController {
     super.onInit();
     fetchNotifications();
   }
-
+// Fetch data
   Future<void> fetchNotifications() async {
     try {
 

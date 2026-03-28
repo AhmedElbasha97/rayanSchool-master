@@ -12,13 +12,13 @@ import '../../../teacher/homework/homeworks_list/homework_teacher_list_screen.da
 class HomeForGuestController extends GetxController{
   var isLoading = true.obs;
   var dataLink = Rxn<SchoolSocialMediaLinkModel>();
-
   @override
   void onInit() {
     super.onInit();
     checkNotifications();
     getHomeData();
   }
+  // This method checks for notifications and navigates to the appropriate screen based on the notification type and user type.
   Future<void> checkNotifications() async {
     var type= Get.find<StorageService>().getNotificationRoute;
     if(Get.find<StorageService>().checkThereIsNotificationOrNot) {
@@ -76,6 +76,7 @@ class HomeForGuestController extends GetxController{
       }
     }
   }
+  // This method fetches the school social media link data.
   Future<void> getHomeData() async {
     dataLink.value = await AppInfoService().getSchoolSocialMediaLink();
     isLoading.value = false;

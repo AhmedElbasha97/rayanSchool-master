@@ -5,6 +5,8 @@ import '../Utils/api_service.dart';
 import '../Utils/services.dart';
 
 class JoinApplication {
+  //send application to the server with the provided details
+  //but this call is not used in the app because the application form is sent through web view
   String joinApplication = "${baseUrl}application.php";
   final ApiService api = ApiService();
 

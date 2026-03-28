@@ -66,7 +66,7 @@ bool emailvalidator(String email) {
 
 ////////////////////////////////////////////////
 ////////////////////////////////////////////////
-
+// show a dialog with a title, body, and an extra action button
 void showTheDialog(BuildContext context, String title, String body,
     {required Widget extraAction}) {
   showDialog(
@@ -112,7 +112,8 @@ void showTheDialog(BuildContext context, String title, String body,
     },
   );
 }
-
+// ignore: missing_return
+//launch a url in the browser
 launchURL(String url) async {
   final Uri launchUri = Uri.parse(url);
   await launchUrl(launchUri);

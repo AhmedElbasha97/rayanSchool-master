@@ -25,6 +25,7 @@ class NotificationCell extends StatefulWidget {
 }
 
 class _NotificationCellState extends State<NotificationCell> {
+  // This method formats the date and time of the notification based on whether it was sent today or on a previous day. If the notification was sent today, it returns the time in "HH:mm a" format; otherwise, it returns the date in "MMM dd" format.
   String returnDateAndTime(NotificationModel? chat){
     String dateOrTime = "" ;
     print(chat?.date??"");
@@ -39,6 +40,7 @@ class _NotificationCellState extends State<NotificationCell> {
     }
     return dateOrTime;
   }
+  // This method checks if there is a notification and if it is of a specific type. If so, it removes the notification and navigates to the appropriate screen based on the user type.
   decideIfThereIsNotificationDetectOrNotAndItIsBehavior(String? type) async {
 print(type);
 

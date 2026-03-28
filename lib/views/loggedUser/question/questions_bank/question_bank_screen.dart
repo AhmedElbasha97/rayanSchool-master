@@ -8,12 +8,15 @@ import '../../../../Utils/memory.dart';
 import '../../../../globals/commonStyles.dart';
 import 'controller/question_bank_controller.dart';
 
+// This screen displays a list of questions for logged-in users. It uses the GetX package for state management and localization services to support multiple languages. The screen includes an AppBar with a logo and custom colors, and it handles loading states and empty data scenarios gracefully.
+//but the school asked to remove this screen from the app so i just hide it and keep the code for future use if they want to add it again
 class QuestionBankScreen extends StatelessWidget {
   final QuestionBankController controller = Get.put(QuestionBankController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // AppBar with logo and custom colors
       appBar: AppBar(
         iconTheme: IconThemeData(color: mainColor),
         backgroundColor: Color(0xFFdcdbdb),
@@ -26,6 +29,7 @@ class QuestionBankScreen extends StatelessWidget {
         }
 
         if (controller.questions?.isEmpty??true) {
+          // Display an empty state if there are no questions available
           return Container(
             height: Get.height * 0.75,
             width: Get.width,
@@ -50,6 +54,7 @@ class QuestionBankScreen extends StatelessWidget {
             ),
           );
         }
+        // Display the questions list using ListView.builder
 
         return ListView.builder(
           itemCount: controller.questions?.length??0,

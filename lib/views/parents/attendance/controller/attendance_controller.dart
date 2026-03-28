@@ -27,6 +27,8 @@ class AttendanceController extends GetxController {
   }
 
   /// Format attendance date & time
+  // If the attendance date is today, return the time in "hh:mm a" format
+ // Otherwise, return the date in "MMM dd" format
   String formatDateOrTime(Attendance? attendance) {
     if (attendance == null || attendance.date == null) return "";
     final dateTime = DateTime.tryParse(attendance.date.toString());

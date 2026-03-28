@@ -39,6 +39,7 @@ class _WebViewContainerState extends State<WebViewContainer> {
      detectUserSignedInOrNot();
 
     // Platform-specific WebView controller
+    // For iOS, we use WebKitWebViewController with specific parameters
     late final PlatformWebViewControllerCreationParams params;
     if (WebViewPlatform.instance is WebKitWebViewPlatform) {
       params = WebKitWebViewControllerCreationParams(
@@ -48,7 +49,8 @@ class _WebViewContainerState extends State<WebViewContainer> {
     } else {
       params = const PlatformWebViewControllerCreationParams();
     }
-
+// Create the WebViewController using the platform-specific parameters
+    // This controller will be used to manage the WebView and handle navigation, JavaScript, etc.
     final WebViewController controller =
     WebViewController.fromPlatformCreationParams(params);
 
@@ -103,7 +105,8 @@ Page resource error:
         },
       )
       ..loadRequest(Uri.parse(widget.url));
-
+// Enable debugging and configure media playback for Android WebView
+    // This allows us to debug the WebView content and also enables media playback without user gestures
     if (controller.platform is webview_flutter_android.AndroidWebViewController) {
       webview_flutter_android.AndroidWebViewController.enableDebugging(true);
       (controller.platform as webview_flutter_android.AndroidWebViewController)
@@ -113,10 +116,12 @@ Page resource error:
     _controller = controller;
     initFilePicker();
   }
+  // Check if the user is signed in by looking for an "id" in shared preferences
 detectUserSignedInOrNot() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   userLogged = prefs.getString("id") == null ? false : true;
 }
+// Open a URL in the external browser
   _launchURL(String url) async {
     final Uri launchUri = Uri.parse(url);
     await launchUrl(launchUri);
@@ -130,7 +135,7 @@ detectUserSignedInOrNot() async {
       await androidController.setOnShowFileSelector(_androidFilePicker);
     }
   }
-
+// Handle file selection for Android WebView
   Future<List<String>> _androidFilePicker(
       webview_flutter_android.FileSelectorParams params) async {
     if (params.acceptTypes.any((type) => type == 'image/*')) {
@@ -170,6 +175,7 @@ detectUserSignedInOrNot() async {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // AppBar with logo, custom colors, and conditional notification icon
       appBar: AppBar(
         actions: [
           userLogged?InkWell(

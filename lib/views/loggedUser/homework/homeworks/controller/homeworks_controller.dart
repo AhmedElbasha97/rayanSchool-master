@@ -5,9 +5,14 @@ import 'package:rayanSchool/services/loggedUser.dart';
 import '../../../../../Utils/memory.dart';
 
 class HomeWorkController extends GetxController {
+  // Observables
   var isLoading = true.obs;
   var homeworks = <HomeWork>[].obs;
-
+  @override
+  void onInit() {
+    super.onInit();
+    fetchHomeworks();
+  }
   Future<void> fetchHomeworks() async {
     isLoading.value = true;
 
@@ -15,9 +20,5 @@ class HomeWorkController extends GetxController {
     isLoading.value = false;
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-    fetchHomeworks();
-  }
+
 }

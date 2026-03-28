@@ -18,7 +18,7 @@ import '../models/activity_list_model.dart';
 class LoggedUser {
 
   final ApiService api = ApiService();
-
+// Fetch student files with enhanced error handling and logging
   Future<List<Files>?> getFiles({String? id}) async {
     try {
     final data = await api.request(Services.filesLink,"GET",queryParameters: {"student_id":id});
@@ -37,7 +37,7 @@ class LoggedUser {
   }
 
   }
-
+// Fetch important files for a student with enhanced error handling and logging
   Future<List<ImportantFile>> getImportantFiles({String? id}) async {
     try {
       final data = await api.request(Services.importantFile,"GET",queryParameters: {"student_id":id});
@@ -56,7 +56,7 @@ class LoggedUser {
     }
 
   }
-
+// Fetch file details for a student with enhanced error handling and logging
   Future<List<FileDetails>> getFilesDetails({String? id, String? fileID}) async {
     try {
       final data = await api.request(Services.fileDetails,"GET",queryParameters: {"student_id":id,"file_id":fileID});
@@ -75,7 +75,7 @@ class LoggedUser {
     }
 
   }
-
+// Fetch home works for a student with enhanced error handling and logging
   Future<List<HomeWork>> getHomeWorks({String? id}) async {
     try {
       final data = await api.request(Services.homeWorks,"GET",queryParameters: {"student_id":id});
@@ -94,7 +94,7 @@ class LoggedUser {
     }
 
   }
-
+// Fetch home work details for a student with enhanced error handling and logging
   Future<List<HomeWorkDetails>> gethomeWorkDetails(
       {String? id, String? homeWorkId}) async {
     try {
@@ -114,7 +114,7 @@ class LoggedUser {
     }
 
   }
-
+// Fetch questions for a student with enhanced error handling and logging
   Future<List<Question>?> getQuestions({String? id}) async {
     try {
       final data = await api.request(Services.questionBank,"GET",queryParameters: {"student_id":id});
@@ -133,7 +133,7 @@ class LoggedUser {
     }
 
   }
-
+// Fetch question details for a student with enhanced error handling and logging
   Future<List<QuestionDetails>> getQuestionsDetails(
       {String? id, String? qId}) async {
     try {
@@ -171,7 +171,7 @@ class LoggedUser {
     }
 
   }
-
+// Fetch asked questions for a student with enhanced error handling and logging
   Future<List<AskedQuestion>?> getAskedQuestions({String? id}) async {
     try {
       final data = await api.request(Services.askedQuestions,"GET",queryParameters: {"student_id":id});
@@ -190,7 +190,7 @@ class LoggedUser {
     }
 
   }
-
+// Fetch asked question details for a student with enhanced error handling and logging
   Future<List<AskedQuestionDetails>> getAskedQuestionsDetails(
       {String? id, String? qid}) async {
     try {
@@ -211,6 +211,8 @@ class LoggedUser {
 
 
   }
+// Fetch student home works list with enhanced error handling and logging
+  //but this call is not used in the app
   Future<List<ActivitiesListModel>> getStudentHomeWorksList(String? id) async {
     try {
       final data = await api.request(Services.getHomeWorksURL,"GET",queryParameters: {"student_id":id});
@@ -229,6 +231,8 @@ class LoggedUser {
     }
 
   }
+// Fetch home work details for a student with enhanced error handling and logging
+  //but this call is not used in the app
   Future<ActivitiesDetailedModel?> getHomeWorkDetails(String? id ,String homeWorkId) async {
     try {
       final data = await api.request(Services.getHomeWorkDetailURL,"GET",queryParameters: {"student_id":id,"homework_id":homeWorkId});
@@ -245,6 +249,8 @@ class LoggedUser {
     }
 
   }
+// Fetch student schadules with enhanced error handling and logging
+  //but this call is not used in the app
   Future<SchadulesStudentModel?> getSchadules(String? id) async {
     try {
       final data = await api.request(Services.getSchadulesURL,"GET",queryParameters: {"student_id":id,});

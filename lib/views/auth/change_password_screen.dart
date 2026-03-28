@@ -8,7 +8,7 @@ import 'package:rayanSchool/services/authService.dart';
 import '../../Widgets/mainButton.dart';
 import '../../Widgets/textFiled.dart';
 import '../home/home_for_user/home_for_user_screen.dart';
-
+//this screen is used to change the password for the user but the school made the decision to not allow the user to change the password by himself and he should contact the school to change it for him but we made this screen just in case they changed their mind in the future and they want to allow the user to change his password by himself
 class ChangePasswordScreen extends StatefulWidget {
   @override
   _ChangePasswordScreenState createState() => _ChangePasswordScreenState();

@@ -3,6 +3,7 @@ import 'package:rayanSchool/I10n/app_localizations.dart';
 import 'package:rayanSchool/Widgets/mainButton.dart';
 import 'package:rayanSchool/Widgets/textFiled.dart';
 
+//this screen is used to sign up for the user but the school made the decision to not allow the user to sign up by himself and he should contact the school to sign up for him but we made this screen just in case they changed their mind in the future and they want to allow the user to sign up by himself
 class SignUpScreen extends StatefulWidget {
   @override
   _SignUpScreenState createState() => _SignUpScreenState();

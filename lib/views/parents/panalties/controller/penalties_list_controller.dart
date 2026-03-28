@@ -19,6 +19,7 @@ class PenaltiesController extends GetxController {
   }
 
   /// Format penalty date & time
+  /// If the penalty is from today, show time (e.g., "02:30 PM"), otherwise show date (e.g., "Mar 15")
   String formatDate(PenaltiesListModel? penalty) {
     if (penalty == null || penalty.date == null) return "";
 

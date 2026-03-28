@@ -17,8 +17,8 @@ import '../models/sent_message_detials_model.dart';
 
 class ParentService {
   final ApiService api = ApiService();
-
-
+  // Fetch reports for the logged-in parent
+  //but this call is not used in the app
   Future<List<Report>> getReports({String? id}) async {
     try {
       final data = await api.request(Services.reports,"GET",queryParameters: {
@@ -39,7 +39,8 @@ class ParentService {
     }
 
   }
-
+  // Fetch report details for the logged-in parent
+  //but this call is not used in the app
   Future<List<ReportDetails>> getReportDetails(
       {String? id, String? reportId}) async {
     try {
@@ -63,6 +64,9 @@ class ParentService {
 
 
   }
+  // Fetch recommendation list for the logged-in parent
+  //but this call is not used in the app
+
   Future<List<RecommendationListModel>> getRecommendationList(
       {String? typeId, }) async {
     try {
@@ -87,6 +91,7 @@ class ParentService {
     }
 
   }
+  // Fetch penalties list for the logged-in parent
 Future<List<PenaltiesListModel>> getPenaltiesList(
        ) async {
   try {
@@ -111,7 +116,7 @@ Future<List<PenaltiesListModel>> getPenaltiesList(
   }
 
   }
-
+  // Fetch attendance records for the logged-in parent
   Future<List<Attendance>> getAttendance({String? id}) async {
     try {
       final data = await api.request(Services.attendance,"GET",queryParameters: {
@@ -134,6 +139,8 @@ Future<List<PenaltiesListModel>> getPenaltiesList(
       return [];
     }
   }
+  // Fetch messages for the logged-in parent
+  //but this call is not used in the app
 
   Future<List<Messages>> getMessages({String? id}) async {
     try {
@@ -156,7 +163,7 @@ Future<List<PenaltiesListModel>> getPenaltiesList(
     }
 
   }
-
+  // Fetch sent messages for the logged-in parent
   Future<List<MessageSentStudent>> getSentMessages({String? id}) async {
     try {
       final data = await api.request(Services.parentSentMessages,"GET",queryParameters: {
@@ -176,7 +183,9 @@ Future<List<PenaltiesListModel>> getPenaltiesList(
       print("❌ getSentMessages error: $e");
       return [];
     }
-  } Future<List<SentMessageDetailsModel>> getSentMessageDetail({String? id}) async {
+  }
+  // Fetch sent message details for the logged-in parent
+  Future<List<SentMessageDetailsModel>> getSentMessageDetail({String? id}) async {
     try {
       final data = await api.request(Services.parentSentMessageDetails,"GET",queryParameters: {
         "parent_id":Get.find<StorageService>().getId,
@@ -198,7 +207,8 @@ Future<List<PenaltiesListModel>> getPenaltiesList(
       return [];
     }
   }
-
+// Fetch message details for the logged-in parent
+  //but this call is not used in the app
   Future<List<MessageDetails>> getMessageDetails(
       {String? id, String? msgId}) async {
     try {
@@ -221,6 +231,7 @@ Future<List<PenaltiesListModel>> getPenaltiesList(
     }
 
   }
+  // Fetch child list for the logged-in parent
   Future<List<ChildModel>> getChildList() async {
     try {
       final data = await api.request(Services.childList,"GET",queryParameters: {
@@ -244,7 +255,8 @@ Future<List<PenaltiesListModel>> getPenaltiesList(
     }
 
   }
-
+// Fetch sent message details for the logged-in parent
+  //but this call is not used in the app
   Future<List<MessageDetailsStudent>> getSentMessageDetails(
       {String? id, String? msgId}) async {
     try {
@@ -266,7 +278,7 @@ Future<List<PenaltiesListModel>> getPenaltiesList(
       return [];
     }
   }
-
+// Send a message from the logged-in parent
   Future<String> sendMessage(
       {String? id,
       String? msg,
@@ -292,6 +304,7 @@ Future<List<PenaltiesListModel>> getPenaltiesList(
     }
 
   }
+  // Send a reply to a message from the logged-in parent
   Future<String> sendReplyForMessage(
       {String? id,
       String? msg,
@@ -316,7 +329,8 @@ Future<List<PenaltiesListModel>> getPenaltiesList(
     }
 
   }
-
+// Fetch teacher list for the logged-in parent
+  //but this call is not used in the app
   Future<List<Teachers>> getTeacher() async {
     try {
       final data = await api.request(Services.teachers, "POST");
